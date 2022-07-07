@@ -1,0 +1,66 @@
+{
+  "Typescript React Function Component": {
+    "prefix": "rc",
+    "body": [
+      "import React from 'react'",
+      "",
+      "import * as S from './$TM_FILENAME_BASE.styles';",
+      "",
+      "interface Props {$1}",
+      "",
+      "export const $TM_FILENAME_BASE = (props: Props) => {",
+      "const { ...rest } = props",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t<S.Wrapper {...rest}>test</S.Wrapper>",
+      "\t\t</>",
+      "\t)",
+      "}"
+    ],
+    "description": "Typescript React Function Component with memo"
+  },
+  "Switch statement": {
+    "prefix": "ss",
+    "body": ["switch ($1){", "  case '$2' :", "    break", "  default :", "    break", "}"],
+    "description": "Switch statement"
+  },
+  "Console.log": {
+    "prefix": "clg",
+    "body": ["console.log($1)"],
+    "description": "Console log"
+  },
+  "create styled component": {
+    "prefix": "sc",
+    "body": ["export const Component = styled.div``"],
+    "description": "Creates styled component"
+  },
+  "framer-motion variants": {
+    "prefix": "dp",
+    "body": [" variants: {", "   initial: {},", "   animate: {},", "   exit: {},", " },"],
+    "description": "Generate default variants"
+  },
+  "import animation transitions": {
+    "prefix": "it",
+    "body": "import { springElastic } from 'components/Animations/framerTransitions';"
+  },
+  "media import": {
+    "prefix": "im",
+    "body": ["import { media } from 'utils/media'"],
+    "description": "Importing media"
+  },
+  "media sharedValues": {
+    "prefix": "is",
+    "body": ["import { sharedValues } from 'utils/sharedValues'"],
+    "description": "Importing sharedValues"
+  },
+  "import styled components library": {
+    "prefix": "isc",
+    "body": ["import styled, { css } from 'styled-components'"],
+    "description": "Import styled components library"
+  },
+  "insert breakpoint": {
+    "prefix": "br",
+    "body": ["${media.tablet} {", "", "}"],
+    "description": "Insert breakpoint to the styled component"
+  }
+}

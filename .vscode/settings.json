@@ -1,0 +1,18 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "editor.fontSize": 20,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "html.format.wrapAttributes": "force-aligned",
+  "editor.tabSize": 2,
+  "workbench.editor.labelFormat": "short",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "explorer.confirmDelete": false
+}
+// Installed extensions : "eslint, prettier ,bracketPairColorizer, GitLens, vscode-styled-components, indent-rainbow, path intellisense"
+// Installed git bash

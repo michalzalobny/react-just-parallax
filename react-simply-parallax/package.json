@@ -1,0 +1,43 @@
+{
+  "name": "react-just-parallax",
+  "version": "1.0.5",
+  "description": "React library for scroll and mousemove parallax effect ✨ Open source, production-ready",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "npm run lint && rimraf lib && tsc && npm run format && npm test",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react animation",
+    "react",
+    "parallax",
+    "animation",
+    "gestures",
+    "mousemove",
+    "scroll"
+  ],
+  "repository": "git://github.com/michalzalobny/react-just-parallax",
+  "bugs": {
+    "url": "https://github.com/michalzalobny/react-just-parallax/issues"
+  },
+  "homepage": "https://github.com/michalzalobny/react-just-parallax#readme",
+  "author": "Michal Zalobny <@michalzalobny> (https://twitter.com/michalzalobny)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^28.1.4",
+    "jest": "^28.1.2",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.7.4"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
