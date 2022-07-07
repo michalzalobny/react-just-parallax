@@ -8,7 +8,7 @@
 
 <br>
 
-This repo contains the source code for [React Just Parallax](https://github.com/michalzalobny/react-just-parallax/tree/main/packages/react-just-parallax) and source code for [documentation page](https://github.com/michalzalobny/react-just-parallax/tree/main/frontend).
+This repo contains the source code for [React Just Parallax](https://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax) and source code for [documentation page](https://github.com/michalzalobny/react-just-parallax/tree/main/frontend).
 
 ### 📜 Docs
 
