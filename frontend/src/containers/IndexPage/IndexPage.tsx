@@ -1,5 +1,5 @@
 import React from 'react';
-import { Greeter } from 'react-just-parallax';
+import { Greeter } from '../../../../react-just-parallax/lib'; //temp solution instead of npm link
 
 import { Head } from 'seo/Head/Head';
 

@@ -1,5 +1,5 @@
 import { Greeter } from '../index';
 
 test('My Greeter', () => {
-  expect(Greeter('Carl')).toBe('Hello 3 Carl');
+  expect(Greeter('Carl')).toBe('Hello 7 Carl');
 });
