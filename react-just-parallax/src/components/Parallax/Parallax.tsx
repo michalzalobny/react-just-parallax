@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { useMotionValue, motion } from 'framer-motion';
+import React, { useEffect, useRef } from "react";
+import { useMotionValue, motion } from "framer-motion";
 
-import { useWindowSize } from '../../hooks/useWindowSize';
-import { lerp } from '../../utils/lerp';
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { lerp } from "../../utils/lerp";
 
 export interface ParallaxProps {
   offsetXMultiplier?: number;
@@ -63,10 +63,18 @@ export const Parallax = (props: ParallaxProps) => {
     }
     lastFrameTime.current = time;
 
-    const newX = lerp(currentXMv.get(), targetX.current, LERP_EASE * slowDownFactor);
+    const newX = lerp(
+      currentXMv.get(),
+      targetX.current,
+      LERP_EASE * slowDownFactor
+    );
     currentXMv.set(newX);
 
-    const newY = lerp(currentYMv.get(), targetY.current, LERP_EASE * slowDownFactor);
+    const newY = lerp(
+      currentYMv.get(),
+      targetY.current,
+      LERP_EASE * slowDownFactor
+    );
     currentYMv.set(newY);
   };
 
@@ -93,8 +101,10 @@ export const Parallax = (props: ParallaxProps) => {
     if (refElement) {
       referenceElWidth = refElement.clientWidth;
       referenceElHeight = refElement.clientHeight;
-      relativeMousePositionX = event.clientX - refElement.getBoundingClientRect().x;
-      relativeMousePositionY = event.clientY - refElement.getBoundingClientRect().y;
+      relativeMousePositionX =
+        event.clientX - refElement.getBoundingClientRect().x;
+      relativeMousePositionY =
+        event.clientY - refElement.getBoundingClientRect().y;
     } else {
       referenceElWidth = windowSizeRef.current.windowWidth;
       referenceElHeight = windowSizeRef.current.windowHeight;
@@ -102,9 +112,11 @@ export const Parallax = (props: ParallaxProps) => {
       relativeMousePositionY = event.clientY;
     }
 
-    const offsetRatioX = -(relativeMousePositionX - referenceElWidth / 2) * offsetXMultiplier;
+    const offsetRatioX =
+      -(relativeMousePositionX - referenceElWidth / 2) * offsetXMultiplier;
 
-    const offsetRatioY = -(relativeMousePositionY - referenceElHeight / 2) * offsetYMultiplier;
+    const offsetRatioY =
+      -(relativeMousePositionY - referenceElHeight / 2) * offsetYMultiplier;
 
     targetX.current = offsetRatioX;
     targetY.current = offsetRatioY;
@@ -119,25 +131,25 @@ export const Parallax = (props: ParallaxProps) => {
 
   useEffect(() => {
     resumeAppFrame();
-    window.addEventListener('visibilitychange', onVisibilityChange);
+    window.addEventListener("visibilitychange", onVisibilityChange);
 
     if (refElement) {
-      refElement.addEventListener('mousemove', onMouseMove);
-      refElement.addEventListener('mouseout', onMouseOut);
+      refElement.addEventListener("mousemove", onMouseMove);
+      refElement.addEventListener("mouseout", onMouseOut);
     } else {
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseout', onMouseOut);
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseout", onMouseOut);
     }
 
     return () => {
       stopAppFrame();
-      window.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener("visibilitychange", onVisibilityChange);
       if (refElement) {
-        refElement.removeEventListener('mousemove', onMouseMove);
-        refElement.removeEventListener('mouseout', onMouseOut);
+        refElement.removeEventListener("mousemove", onMouseMove);
+        refElement.removeEventListener("mouseout", onMouseOut);
       } else {
-        window.removeEventListener('mousemove', onMouseMove);
-        window.removeEventListener('mouseout', onMouseOut);
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("mouseout", onMouseOut);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,7 +157,13 @@ export const Parallax = (props: ParallaxProps) => {
 
   return (
     <motion.span
-      style={{ x: currentXMv, y: currentYMv, backfaceVisibility: 'hidden', position: 'relative' }}
+      style={{
+        x: currentXMv,
+        y: currentYMv,
+        backfaceVisibility: "hidden",
+        position: "relative",
+        display: "block",
+      }}
     >
       {children}
     </motion.span>
