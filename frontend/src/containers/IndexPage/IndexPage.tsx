@@ -1,14 +1,15 @@
 import React from 'react';
-import { Greeter } from '../../../../react-just-parallax/lib'; //temp solution instead of npm link
+// import { Greeter } from '../../../../react-just-parallax/lib'; //temp solution instead of npm link
+import { Parallax } from 'react-just-parallax';
 
 import { Head } from 'seo/Head/Head';
 
 import * as S from './IndexPage.styles';
 
 export default function IndexPage() {
-  React.useEffect(() => {
-    console.log(Greeter('test4'));
-  }, []);
+  // React.useEffect(() => {
+  //   console.log(Greeter('test4'));
+  // }, []);
 
   return (
     <>
@@ -18,7 +19,9 @@ export default function IndexPage() {
           <S.Box />
         </S.Container>
         <S.Container>
-          <S.Box $floating />
+          <Parallax>
+            <S.Box $floating />
+          </Parallax>
         </S.Container>
         <S.Container>
           <S.Box />

@@ -2,16 +2,16 @@
   "name": "react-just-parallax",
   "version": "1.0.6",
   "description": "React library for scroll and mousemove parallax effect ✨ Open source, production-ready",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest",
-    "build": "npm run lint && rimraf lib && tsc && npm run format && npm test",
-    "dev-build": "rimraf lib && tsc -w",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist",
+    "build": "npm run clean && rollup -c"
   },
   "keywords": [
     "react animation",
@@ -30,16 +30,27 @@
   "homepage": "https://github.com/michalzalobny/react-just-parallax#readme",
   "author": "Michal Zalobny <@michalzalobny> (https://twitter.com/michalzalobny)",
   "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8 || ^17.0.0 || ^18.0.0",
+    "react-dom": ">=16.8 || ^17.0.0 || ^18.0.0"
+  },
   "devDependencies": {
-    "@types/jest": "^28.1.4",
-    "jest": "^28.1.2",
-    "prettier": "^2.7.1",
-    "ts-jest": "^28.0.5",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
+    "@types/lodash.debounce": "^4.0.7",
+    "@types/react": "^18.0.15",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.76.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   },
-  "files": [
-    "lib/**/*"
-  ]
+  "dependencies": {
+    "framer-motion": "^6.4.3",
+    "lodash.debounce": "^4.0.8"
+  }
 }

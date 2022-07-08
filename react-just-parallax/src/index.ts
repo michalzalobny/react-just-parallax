@@ -1,6 +1,3 @@
-// Package setup partly based on: https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package-44fe7164964c
+// Setup based on: https://dev.to/siddharthvenkatesh/component-library-setup-with-react-typescript-and-rollup-onj
 
-// patch: `npm version patch`
-// publish: `npm publish`
-
-export const Greeter = (name: string) => `Hello 11 ${name}`;
+export { Parallax } from "./components/Parallax/Parallax";
