@@ -3,4 +3,4 @@
 // patch: `npm version patch`
 // publish: `npm publish`
 
-export const Greeter = (name: string) => `Hello 8 ${name}`;
+export const Greeter = (name: string) => `Hello 11 ${name}`;

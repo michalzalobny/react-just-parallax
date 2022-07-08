@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest",
     "build": "npm run lint && rimraf lib && tsc && npm run format && npm test",
+    "dev-build": "rimraf lib && tsc -w",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
