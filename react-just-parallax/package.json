@@ -11,7 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf dist",
-    "build": "npm run clean && rollup -c"
+    "build": "yarn run clean && rollup -c",
+    "develop": "rollup -c rollup.config.js -w"
   },
   "keywords": [
     "react animation",
@@ -31,8 +32,7 @@
   "author": "Michal Zalobny <@michalzalobny> (https://twitter.com/michalzalobny)",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.8 || ^17.0.0 || ^18.0.0",
-    "react-dom": ">=16.8 || ^17.0.0 || ^18.0.0"
+    "react": ">=16.8 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.1",
@@ -40,6 +40,7 @@
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/lodash.debounce": "^4.0.7",
     "@types/react": "^18.0.15",
+    "postcss": "^8.4.14",
     "rimraf": "^3.0.2",
     "rollup": "^2.76.0",
     "rollup-plugin-dts": "^4.2.2",
@@ -50,7 +51,6 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "framer-motion": "^6.4.3",
     "lodash.debounce": "^4.0.8"
   }
 }
