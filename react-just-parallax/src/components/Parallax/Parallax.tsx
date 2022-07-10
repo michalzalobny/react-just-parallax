@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import sync, { cancelSync, FrameData, Process } from "framesync";
+import debounce from "lodash.debounce";
 
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { lerp } from "../../utils/lerp";
+import { MouseMove } from "../../utils/MouseMove";
+import { Event as DispatchEvent } from "../../utils/EventDispatcher";
 
 export interface ParallaxProps {
   strength?: number;
   children?: React.ReactNode;
-  refElement?: React.MutableRefObject<any | null>;
+  boundRef?: React.MutableRefObject<any>;
   shouldResetPosition?: boolean;
 }
 
@@ -15,8 +18,22 @@ const LERP_EASE = 0.06;
 const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
 
+interface BoundRefRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+const defaultRect: BoundRefRect = {
+  height: 1,
+  width: 1,
+  x: 1,
+  y: 1,
+};
+
 export const Parallax = (props: ParallaxProps) => {
-  const { children, strength = 0.2, refElement, shouldResetPosition } = props;
+  const { children, strength = 0.2, boundRef, shouldResetPosition } = props;
   const { windowSizeRef } = useWindowSize();
   const spanRef = useRef<null | HTMLSpanElement>(null);
   const currentX = useRef(0);
@@ -25,6 +42,8 @@ export const Parallax = (props: ParallaxProps) => {
   const targetY = useRef(0);
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
+  const boundRefRect = useRef<BoundRefRect>(defaultRect);
+  const mouseMove = useRef(new MouseMove());
 
   const resumeAppFrame = () => {
     syncRenderRef.current = sync.render(syncOnRender, true);
@@ -37,6 +56,8 @@ export const Parallax = (props: ParallaxProps) => {
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     let slowDownFactor = delta / DT_FPS;
+
+    mouseMove.current.update();
 
     // Rounded slowDown factor to the nearest integer reduces physics lags
     const slowDownFactorRounded = Math.round(slowDownFactor);
@@ -73,24 +94,22 @@ export const Parallax = (props: ParallaxProps) => {
     }
   };
 
-  const onMouseMove = (event: MouseEvent) => {
+  const onMouseMove = (event: DispatchEvent) => {
     let referenceElWidth = 0;
     let referenceElHeight = 0;
     let relativeMousePositionX = 0;
     let relativeMousePositionY = 0;
 
-    if (refElement && refElement.current) {
-      referenceElWidth = refElement.current.clientWidth;
-      referenceElHeight = refElement.current.clientHeight;
-      relativeMousePositionX =
-        event.clientX - refElement.current.getBoundingClientRect().x;
-      relativeMousePositionY =
-        event.clientY - refElement.current.getBoundingClientRect().y;
+    if (boundRef && boundRef.current) {
+      referenceElWidth = boundRefRect.current.width;
+      referenceElHeight = boundRefRect.current.height;
+      relativeMousePositionX = event.target.mouse.x - boundRefRect.current.x;
+      relativeMousePositionY = event.target.mouse.y - boundRefRect.current.y;
     } else {
       referenceElWidth = windowSizeRef.current.windowWidth;
       referenceElHeight = windowSizeRef.current.windowHeight;
-      relativeMousePositionX = event.clientX;
-      relativeMousePositionY = event.clientY;
+      relativeMousePositionX = event.target.mouse.x;
+      relativeMousePositionY = event.target.mouse.y;
     }
 
     const offsetRatioX =
@@ -110,31 +129,49 @@ export const Parallax = (props: ParallaxProps) => {
     }
   };
 
+  const handleBoundRefRecalc = () => {
+    if (!boundRef || !boundRef.current) return;
+    const boundingBox = boundRef.current.getBoundingClientRect();
+    boundRefRect.current = {
+      x: boundingBox.x,
+      y: boundingBox.y,
+      width: boundRef.current.clientWidth,
+      height: boundRef.current.clientHeight,
+    };
+  };
+
+  const handleBoundRefRecalcDebounced = debounce(handleBoundRefRecalc, 50);
+
   useEffect(() => {
+    mouseMove.current.init(boundRef);
     resumeAppFrame();
 
-    window.addEventListener("visibilitychange", onVisibilityChange);
-
-    if (refElement && refElement.current) {
-      refElement.current.addEventListener("mousemove", onMouseMove);
-      refElement.current.addEventListener("mouseout", onMouseOut);
-    } else {
-      window.addEventListener("mousemove", onMouseMove);
-      window.addEventListener("mouseout", onMouseOut);
+    if (boundRef && boundRef.current) {
+      window.addEventListener("scroll", handleBoundRefRecalcDebounced, {
+        passive: true,
+      });
+      window.addEventListener("resize", handleBoundRefRecalcDebounced, {
+        passive: true,
+      });
     }
+
+    window.addEventListener("visibilitychange", onVisibilityChange);
+    mouseMove.current.addEventListener("mousemove", onMouseMove);
+    mouseMove.current.addEventListener("left", onMouseOut);
 
     return () => {
       stopAppFrame();
-      window.removeEventListener("visibilitychange", onVisibilityChange);
-      if (refElement && refElement.current) {
-        refElement.current.removeEventListener("mousemove", onMouseMove);
-        refElement.current.removeEventListener("mouseout", onMouseOut);
-      } else {
-        window.removeEventListener("mousemove", onMouseMove);
-        window.removeEventListener("mouseout", onMouseOut);
+      mouseMove.current.destroy();
+
+      if (boundRef && boundRef.current) {
+        window.removeEventListener("scroll", handleBoundRefRecalcDebounced);
+        window.removeEventListener("resize", handleBoundRefRecalcDebounced);
       }
+
+      window.removeEventListener("visibilitychange", onVisibilityChange);
+      mouseMove.current.removeEventListener("mousemove", onMouseMove);
+      mouseMove.current.removeEventListener("left", onMouseOut);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
