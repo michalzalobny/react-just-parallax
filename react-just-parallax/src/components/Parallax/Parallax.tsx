@@ -5,12 +5,9 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { lerp } from "../../utils/lerp";
 
 export interface ParallaxProps {
-  offsetXMultiplier?: number;
-  offsetYMultiplier?: number;
-  stiffness?: number;
-  damping?: number;
-  children?: React.ReactChild;
-  refElement?: HTMLElement;
+  strength?: number;
+  children?: React.ReactNode;
+  refElement?: React.MutableRefObject<any | null>;
   shouldResetPosition?: boolean;
 }
 
@@ -19,27 +16,13 @@ const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
 
 export const Parallax = (props: ParallaxProps) => {
-  const {
-    children,
-    offsetXMultiplier = 0.2,
-    offsetYMultiplier = 0.2,
-    refElement,
-    shouldResetPosition,
-  } = props;
-
-  const spanRef = useRef<null | HTMLSpanElement>(null);
-
-  const rafId = useRef<number | null>(null);
-  const lastFrameTime = useRef<number | null>(null);
-  const isResumed = useRef(true);
-
+  const { children, strength = 0.2, refElement, shouldResetPosition } = props;
   const { windowSizeRef } = useWindowSize();
-  const currentXMv = useRef(0);
-  const currentYMv = useRef(0);
-
+  const spanRef = useRef<null | HTMLSpanElement>(null);
+  const currentX = useRef(0);
+  const currentY = useRef(0);
   const targetX = useRef(0);
   const targetY = useRef(0);
-
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
 
@@ -50,7 +33,7 @@ export const Parallax = (props: ParallaxProps) => {
 
   const syncOnRender = () => {
     if (!spanRef.current) return;
-    spanRef.current.style.transform = `translate(${currentXMv.current}px, ${currentYMv.current}px)`;
+    spanRef.current.style.transform = `translate(${currentX.current}px, ${currentY.current}px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     let slowDownFactor = delta / DT_FPS;
@@ -63,18 +46,18 @@ export const Parallax = (props: ParallaxProps) => {
     }
 
     const newX = lerp(
-      currentXMv.current,
+      currentX.current,
       targetX.current,
       LERP_EASE * slowDownFactor
     );
-    currentXMv.current = newX;
+    currentX.current = newX;
 
     const newY = lerp(
-      currentYMv.current,
+      currentY.current,
       targetY.current,
       LERP_EASE * slowDownFactor
     );
-    currentYMv.current = newY;
+    currentY.current = newY;
   };
 
   const stopAppFrame = () => {
@@ -96,13 +79,13 @@ export const Parallax = (props: ParallaxProps) => {
     let relativeMousePositionX = 0;
     let relativeMousePositionY = 0;
 
-    if (refElement) {
-      referenceElWidth = refElement.clientWidth;
-      referenceElHeight = refElement.clientHeight;
+    if (refElement && refElement.current) {
+      referenceElWidth = refElement.current.clientWidth;
+      referenceElHeight = refElement.current.clientHeight;
       relativeMousePositionX =
-        event.clientX - refElement.getBoundingClientRect().x;
+        event.clientX - refElement.current.getBoundingClientRect().x;
       relativeMousePositionY =
-        event.clientY - refElement.getBoundingClientRect().y;
+        event.clientY - refElement.current.getBoundingClientRect().y;
     } else {
       referenceElWidth = windowSizeRef.current.windowWidth;
       referenceElHeight = windowSizeRef.current.windowHeight;
@@ -111,10 +94,10 @@ export const Parallax = (props: ParallaxProps) => {
     }
 
     const offsetRatioX =
-      -(relativeMousePositionX - referenceElWidth / 2) * offsetXMultiplier;
+      -(relativeMousePositionX - referenceElWidth / 2) * strength;
 
     const offsetRatioY =
-      -(relativeMousePositionY - referenceElHeight / 2) * offsetYMultiplier;
+      -(relativeMousePositionY - referenceElHeight / 2) * strength;
 
     targetX.current = offsetRatioX;
     targetY.current = offsetRatioY;
@@ -132,9 +115,9 @@ export const Parallax = (props: ParallaxProps) => {
 
     window.addEventListener("visibilitychange", onVisibilityChange);
 
-    if (refElement) {
-      refElement.addEventListener("mousemove", onMouseMove);
-      refElement.addEventListener("mouseout", onMouseOut);
+    if (refElement && refElement.current) {
+      refElement.current.addEventListener("mousemove", onMouseMove);
+      refElement.current.addEventListener("mouseout", onMouseOut);
     } else {
       window.addEventListener("mousemove", onMouseMove);
       window.addEventListener("mouseout", onMouseOut);
@@ -143,9 +126,9 @@ export const Parallax = (props: ParallaxProps) => {
     return () => {
       stopAppFrame();
       window.removeEventListener("visibilitychange", onVisibilityChange);
-      if (refElement) {
-        refElement.removeEventListener("mousemove", onMouseMove);
-        refElement.removeEventListener("mouseout", onMouseOut);
+      if (refElement && refElement.current) {
+        refElement.current.removeEventListener("mousemove", onMouseMove);
+        refElement.current.removeEventListener("mouseout", onMouseOut);
       } else {
         window.removeEventListener("mousemove", onMouseMove);
         window.removeEventListener("mouseout", onMouseOut);
@@ -160,8 +143,10 @@ export const Parallax = (props: ParallaxProps) => {
       style={{
         backfaceVisibility: "hidden",
         position: "relative",
+        width: "100%",
+        height: "100%",
         display: "inline-block",
-        background: "red",
+        background: "rgba(255,255,0, 0.3)",
       }}
     >
       {children}
