@@ -33,7 +33,12 @@ const defaultRect: BoundRefRect = {
 };
 
 export const Parallax = (props: ParallaxProps) => {
-  const { children, strength = 0.2, boundRef, shouldResetPosition } = props;
+  const {
+    children,
+    strength = 0.2,
+    boundRef,
+    shouldResetPosition = false,
+  } = props;
   const { windowSizeRef } = useWindowSize();
   const spanRef = useRef<null | HTMLSpanElement>(null);
   const currentX = useRef(0);
@@ -112,30 +117,52 @@ export const Parallax = (props: ParallaxProps) => {
     }
   };
 
-  const onMouseMove = (e: DispatchEvent) => {
-    const mouseX = (e.target as MouseMove).mouse.x;
-    const mouseY = (e.target as MouseMove).mouse.y;
-
+  const normalizeXY = (x: number, y: number) => {
     let xComponent = windowSizeRef.current.windowWidth;
     let yComponent = windowSizeRef.current.windowHeight;
-    let relativeX = mouseX;
-    let relativeY = mouseY;
+    let relativeX = x;
+    let relativeY = y;
 
     if (boundRef && boundRef.current) {
       xComponent = boundRefRect.current.width;
       yComponent = boundRefRect.current.height;
-      relativeX = mouseX - boundRefRect.current.x;
-      relativeY = mouseY - boundRefRect.current.y;
+      relativeX = x - boundRefRect.current.x;
+      relativeY = y - boundRefRect.current.y;
     }
 
-    targetX.current = (relativeX / xComponent) * 2 - 1; // -1 to 1, left to right
-    targetY.current = (relativeY / yComponent) * 2 - 1; // -1 to 1, from top to bottom
+    return {
+      x: (relativeX / xComponent) * 2 - 1, // -1 to 1, left to right,
+      y: (relativeY / yComponent) * 2 - 1, // -1 to 1, from top to bottom
+    };
   };
 
-  const onMouseOut = () => {
+  const onMouseMove = (e: DispatchEvent) => {
+    const mouseX = (e.target as MouseMove).mouse.x;
+    const mouseY = (e.target as MouseMove).mouse.y;
+
+    const { x, y } = normalizeXY(mouseX, mouseY);
+
+    targetX.current = x;
+    targetY.current = y;
+  };
+
+  const handleMouseLeave = () => {
     if (shouldResetPosition) {
       targetX.current = 0;
       targetY.current = 0;
+    }
+  };
+
+  const onTouchStart = (event: TouchEvent | MouseEvent) => {
+    const mouseX =
+      "touches" in event ? event.touches[0].clientX : event.clientX;
+    const mouseY =
+      "touches" in event ? event.touches[0].clientY : event.clientY;
+
+    const { x, y } = normalizeXY(mouseX, mouseY);
+
+    if (x <= -1 || x >= 1 || y >= 1 || y <= -1) {
+      handleMouseLeave();
     }
   };
 
@@ -157,8 +184,11 @@ export const Parallax = (props: ParallaxProps) => {
     mouseMove.current.init(boundRef);
     resumeAppFrame();
 
+    let eventTarget = window;
+
     if (boundRef && boundRef.current) {
       handleBoundRefRecalc();
+      eventTarget = boundRef.current;
       window.addEventListener("scroll", handleBoundRefRecalcDebounced, {
         passive: true,
       });
@@ -167,9 +197,10 @@ export const Parallax = (props: ParallaxProps) => {
       });
     }
 
-    window.addEventListener("visibilitychange", onVisibilityChange);
     mouseMove.current.addEventListener("mousemove", onMouseMove);
-    mouseMove.current.addEventListener("left", onMouseOut);
+    window.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("touchstart", onTouchStart);
+    eventTarget.addEventListener("mouseout", handleMouseLeave);
 
     return () => {
       stopAppFrame();
@@ -180,9 +211,10 @@ export const Parallax = (props: ParallaxProps) => {
         window.removeEventListener("resize", handleBoundRefRecalcDebounced);
       }
 
-      window.removeEventListener("visibilitychange", onVisibilityChange);
       mouseMove.current.removeEventListener("mousemove", onMouseMove);
-      mouseMove.current.removeEventListener("left", onMouseOut);
+      window.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("touchstart", onTouchStart);
+      eventTarget.removeEventListener("mouseout", handleMouseLeave);
     };
   }, []);
 
