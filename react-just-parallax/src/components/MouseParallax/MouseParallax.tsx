@@ -86,6 +86,12 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     }px, ${currentY.current * yMultiplier}px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
+    const diffX = Math.abs(targetX.current - currentX.current);
+    const diffY = Math.abs(targetY.current - currentY.current);
+
+    //Don't update if difference is too low
+    if (diffX < 0.001 && diffY < 0.001) return;
+
     let slowDownFactor = delta / DT_FPS;
 
     mouseMove.current.update();
