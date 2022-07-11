@@ -17,9 +17,9 @@ function App() {
         </Parallax>
       </div>
       <div ref={wrapperRef} className="container">
-        {/* <Parallax boundRef={wrapperRef}> */}
-        <div className="box" data-box="floating" />
-        {/* </Parallax> */}
+        <Parallax boundRef={wrapperRef}>
+          <div className="box" data-box="floating" />
+        </Parallax>
       </div>
       <div className="container">
         <div className="box" />

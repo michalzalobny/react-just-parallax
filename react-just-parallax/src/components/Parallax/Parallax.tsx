@@ -6,6 +6,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { lerp } from "../../utils/lerp";
 import { MouseMove } from "../../utils/MouseMove";
 import { Event as DispatchEvent } from "../../utils/EventDispatcher";
+import { isTouchDevice } from "../../utils/isTouchDevice";
 
 export interface ParallaxProps {
   strength?: number;
@@ -39,7 +40,7 @@ export const Parallax = (props: ParallaxProps) => {
     strength = 0.2,
     boundRef,
     shouldResetPosition = false,
-    enableOnTouchDevice = false,
+    enableOnTouchDevice = true,
   } = props;
   const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -200,6 +201,7 @@ export const Parallax = (props: ParallaxProps) => {
   };
 
   useEffect(() => {
+    if (!enableOnTouchDevice && isTouchDevice()) return;
     mouseMove.current.init(boundRef);
     resumeAppFrame();
 
