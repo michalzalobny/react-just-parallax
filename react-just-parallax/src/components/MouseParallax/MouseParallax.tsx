@@ -8,7 +8,7 @@ import { MouseMove } from "../../utils/MouseMove";
 import { Event as DispatchEvent } from "../../utils/EventDispatcher";
 import { isTouchDevice } from "../../utils/isTouchDevice";
 
-export interface ParallaxProps {
+export interface MouseParallaxProps {
   strength?: number;
   children?: React.ReactNode;
   boundRef?: React.MutableRefObject<any>;
@@ -34,7 +34,7 @@ const defaultRect: BoundRefRect = {
   y: 1,
 };
 
-export const Parallax = (props: ParallaxProps) => {
+export const MouseParallax = (props: MouseParallaxProps) => {
   const {
     children,
     strength = 0.2,

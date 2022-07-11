@@ -1,3 +1,3 @@
 // Setup based on: https://dev.to/siddharthvenkatesh/component-library-setup-with-react-typescript-and-rollup-onj
 
-export { Parallax } from "./components/Parallax/Parallax";
+export { MouseParallax } from "./components/MouseParallax/MouseParallax";
