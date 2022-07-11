@@ -1,4 +1,5 @@
 import React from 'react';
+import { MouseParallax } from 'react-just-parallax';
 
 import { Head } from 'seo/Head/Head';
 
@@ -10,10 +11,14 @@ export default function IndexPage() {
       <Head />
       <S.Wrapper style={{ fontSize: 16 }}>
         <S.Container>
-          <S.Box />
+          <MouseParallax>
+            <S.Box />
+          </MouseParallax>
         </S.Container>
         <S.Container>
-          <S.Box $floating />
+          <MouseParallax strength={-0.1}>
+            <S.Box $floating />
+          </MouseParallax>
         </S.Container>
         <S.Container>
           <S.Box />
