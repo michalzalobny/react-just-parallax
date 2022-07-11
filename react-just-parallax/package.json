@@ -24,7 +24,7 @@
     "mousemove",
     "scroll"
   ],
-  "repository": "git://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax",
+  "repository": "git://github.com/michalzalobny/react-just-parallax/",
   "bugs": {
     "url": "https://github.com/michalzalobny/react-just-parallax/issues"
   },
