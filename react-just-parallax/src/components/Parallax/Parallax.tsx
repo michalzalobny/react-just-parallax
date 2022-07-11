@@ -12,6 +12,7 @@ export interface ParallaxProps {
   children?: React.ReactNode;
   boundRef?: React.MutableRefObject<any>;
   shouldResetPosition?: boolean;
+  enableOnTouchDevice?: boolean;
 }
 
 const LERP_EASE = 0.06;
@@ -38,6 +39,7 @@ export const Parallax = (props: ParallaxProps) => {
     strength = 0.2,
     boundRef,
     shouldResetPosition = false,
+    enableOnTouchDevice = false,
   } = props;
   const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -48,11 +50,13 @@ export const Parallax = (props: ParallaxProps) => {
   const targetY = useRef(0);
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
+  const shouldUpdate = useRef(false);
   const boundRefRect = useRef<BoundRefRect>(defaultRect);
   const mouseMove = useRef(new MouseMove());
   const observer = useRef<null | IntersectionObserver>(null);
 
   const resumeAppFrame = () => {
+    if (!shouldUpdate.current) return;
     syncRenderRef.current = sync.render(syncOnRender, true);
     syncUpdateRef.current = sync.update(syncOnUpdate, true);
   };
@@ -185,9 +189,11 @@ export const Parallax = (props: ParallaxProps) => {
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
     const isIntersecting = entries[0].isIntersecting;
     if (isIntersecting) {
+      shouldUpdate.current = true;
       resumeAppFrame();
       mouseMove.current.setShouldUpdate(true);
     } else {
+      shouldUpdate.current = false;
       stopAppFrame();
       mouseMove.current.setShouldUpdate(false);
     }
