@@ -14,7 +14,7 @@ export interface ParallaxProps {
   boundRef?: React.MutableRefObject<any>;
   shouldResetPosition?: boolean;
   enableOnTouchDevice?: boolean;
-  lerpEase: number;
+  lerpEase?: number;
 }
 
 const DEFAULT_FPS = 60;
@@ -260,8 +260,8 @@ export const Parallax = (props: ParallaxProps) => {
           width: "100%",
           height: "100%",
           display: "inline-block",
-          background: "rgba(0,255,0, 0.3)",
           userSelect: "none",
+          pointerEvents: "none",
         }}
       >
         <span
@@ -274,11 +274,11 @@ export const Parallax = (props: ParallaxProps) => {
             width: "100%",
             height: "100%",
             display: "inline-block",
-            background: "rgba(255,0,0, 0.3)",
             userSelect: "none",
+            pointerEvents: "none",
           }}
         >
-          {children}
+          <span style={{ pointerEvents: "initial" }}>{children}</span>
         </span>
       </span>
     </>

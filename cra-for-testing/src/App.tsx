@@ -12,21 +12,22 @@ function App() {
 
   return (
     <div className="wrapper" style={{ fontSize: 16 }}>
+      {display && (
+        <div className="container">
+          <Parallax>
+            <h1>weoijfsjf</h1>
+            <button style={{ cursor: "pointer" }}>parallax content btn</button>
+            <div className="box" />
+          </Parallax>
+        </div>
+      )}
+
       <button
         style={{ cursor: "pointer" }}
         onClick={() => setDisplay((prev) => !prev)}
       >
         UPDATE DISPLAY
       </button>
-      {display && (
-        <div className="container">
-          <Parallax>
-            <h1>weoijfsjf</h1>
-            <div className="box" />
-          </Parallax>
-        </div>
-      )}
-
       <div ref={wrapperRef} className="container">
         <Parallax boundRef={wrapperRef}>
           <div className="box" data-box="floating" />
