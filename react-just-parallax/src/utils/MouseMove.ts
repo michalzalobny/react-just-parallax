@@ -12,12 +12,14 @@ export class MouseMove extends EventDispatcher {
   _isTouching = false;
   mouse: Mouse = { x: 0, y: 0 };
   _targetEl: any | Window;
+  _shouldUpdate = false;
 
   constructor() {
     super();
   }
 
   _onTouchDown = (event: TouchEvent | MouseEvent) => {
+    if (!this._shouldUpdate) return;
     this._isTouching = true;
     this._mouseLast.x =
       "touches" in event ? event.touches[0].clientX : event.clientX;
@@ -32,6 +34,7 @@ export class MouseMove extends EventDispatcher {
   };
 
   _onTouchMove = (event: TouchEvent | MouseEvent) => {
+    if (!this._shouldUpdate) return;
     const touchX =
       "touches" in event ? event.touches[0].clientX : event.clientX;
     const touchY =
@@ -49,6 +52,7 @@ export class MouseMove extends EventDispatcher {
   };
 
   _onTouchUp = () => {
+    if (!this._shouldUpdate) return;
     this._isTouching = false;
     this.dispatchEvent({ type: "up" });
     this.dispatchEvent({ type: "mousemove" });
@@ -97,6 +101,10 @@ export class MouseMove extends EventDispatcher {
 
   destroy() {
     this._removeEvents();
+  }
+
+  setShouldUpdate(value: boolean) {
+    this._shouldUpdate = value;
   }
 
   update() {

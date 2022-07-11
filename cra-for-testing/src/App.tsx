@@ -11,14 +11,15 @@ function App() {
   return (
     <div className="wrapper" style={{ fontSize: 16 }}>
       <div className="container">
-        {/* <Parallax> */}
-        <div className="box" />
-        {/* </Parallax> */}
+        <Parallax>
+          <h1>weoijfsjf</h1>
+          <div className="box" />
+        </Parallax>
       </div>
       <div ref={wrapperRef} className="container">
-        <Parallax boundRef={wrapperRef}>
-          <div className="box" data-box="floating" />
-        </Parallax>
+        {/* <Parallax boundRef={wrapperRef}> */}
+        <div className="box" data-box="floating" />
+        {/* </Parallax> */}
       </div>
       <div className="container">
         <div className="box" />

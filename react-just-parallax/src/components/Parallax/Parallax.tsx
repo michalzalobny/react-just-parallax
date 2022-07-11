@@ -40,7 +40,8 @@ export const Parallax = (props: ParallaxProps) => {
     shouldResetPosition = false,
   } = props;
   const { windowSizeRef } = useWindowSize();
-  const spanRef = useRef<null | HTMLSpanElement>(null);
+  const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
+  const parentSpanRef = useRef<null | HTMLSpanElement>(null);
   const currentX = useRef(0);
   const currentY = useRef(0);
   const targetX = useRef(0);
@@ -49,6 +50,7 @@ export const Parallax = (props: ParallaxProps) => {
   const syncUpdateRef = useRef<null | Process>(null);
   const boundRefRect = useRef<BoundRefRect>(defaultRect);
   const mouseMove = useRef(new MouseMove());
+  const observer = useRef<null | IntersectionObserver>(null);
 
   const resumeAppFrame = () => {
     syncRenderRef.current = sync.render(syncOnRender, true);
@@ -56,7 +58,7 @@ export const Parallax = (props: ParallaxProps) => {
   };
 
   const syncOnRender = () => {
-    if (!spanRef.current) return;
+    if (!parallaxSpanRef.current) return;
     let xMultiplier = windowSizeRef.current.windowWidth;
     let yMultiplier = windowSizeRef.current.windowHeight;
 
@@ -73,7 +75,7 @@ export const Parallax = (props: ParallaxProps) => {
     xMultiplier *= -strength;
     yMultiplier *= -strength;
 
-    spanRef.current.style.transform = `translate(${
+    parallaxSpanRef.current.style.transform = `translate(${
       currentX.current * xMultiplier
     }px, ${currentY.current * yMultiplier}px)`;
   };
@@ -180,6 +182,17 @@ export const Parallax = (props: ParallaxProps) => {
 
   const handleBoundRefRecalcDebounced = debounce(handleBoundRefRecalc, 50);
 
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    const isIntersecting = entries[0].isIntersecting;
+    if (isIntersecting) {
+      resumeAppFrame();
+      mouseMove.current.setShouldUpdate(true);
+    } else {
+      stopAppFrame();
+      mouseMove.current.setShouldUpdate(false);
+    }
+  };
+
   useEffect(() => {
     mouseMove.current.init(boundRef);
     resumeAppFrame();
@@ -202,6 +215,13 @@ export const Parallax = (props: ParallaxProps) => {
     window.addEventListener("touchstart", onTouchStart);
     eventTarget.addEventListener("mouseout", handleMouseLeave);
 
+    observer.current = new IntersectionObserver(handleIntersection, {
+      threshold: 0.5,
+    });
+    if (parentSpanRef.current) {
+      observer.current.observe(parentSpanRef.current);
+    }
+
     return () => {
       stopAppFrame();
       mouseMove.current.destroy();
@@ -215,24 +235,43 @@ export const Parallax = (props: ParallaxProps) => {
       window.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("touchstart", onTouchStart);
       eventTarget.removeEventListener("mouseout", handleMouseLeave);
+
+      if (parentSpanRef.current && observer.current) {
+        observer.current.unobserve(parentSpanRef.current);
+      }
     };
   }, []);
 
   return (
-    <span
-      ref={spanRef}
-      style={{
-        backfaceVisibility: "hidden",
-        position: "relative",
-        width: "100%",
-        height: "100%",
-        display: "inline-block",
-        background: "rgba(255,255,0, 0.3)",
-        pointerEvents: "none",
-        userSelect: "none",
-      }}
-    >
-      {children}
-    </span>
+    <>
+      <span
+        ref={parentSpanRef}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          display: "inline-block",
+          background: "rgba(0,255,0, 0.3)",
+          userSelect: "none",
+        }}
+      >
+        <span
+          ref={parallaxSpanRef}
+          style={{
+            backfaceVisibility: "hidden",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "inline-block",
+            background: "rgba(255,0,0, 0.3)",
+            userSelect: "none",
+          }}
+        >
+          {children}
+        </span>
+      </span>
+    </>
   );
 };
