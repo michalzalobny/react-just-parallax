@@ -108,9 +108,7 @@ export class MouseMove extends EventDispatcher {
   }
 
   update() {
-    const { mouse, _mouseLast } = this;
-
-    _mouseLast.x = mouse.x;
-    _mouseLast.y = mouse.y;
+    this._mouseLast.x = this.mouse.x;
+    this._mouseLast.y = this.mouse.y;
   }
 }

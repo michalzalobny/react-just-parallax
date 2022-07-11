@@ -40,7 +40,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     strength = 0.2,
     boundRef,
     shouldResetPosition = false,
-    enableOnTouchDevice = true,
+    enableOnTouchDevice = false,
     lerpEase = 0.06,
   } = props;
   const { windowSizeRef } = useWindowSize();

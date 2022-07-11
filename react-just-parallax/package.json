@@ -24,11 +24,11 @@
     "mousemove",
     "scroll"
   ],
-  "repository": "git://github.com/michalzalobny/react-just-parallax",
+  "repository": "git://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax",
   "bugs": {
     "url": "https://github.com/michalzalobny/react-just-parallax/issues"
   },
-  "homepage": "https://github.com/michalzalobny/react-just-parallax#readme",
+  "homepage": "https://react-just-parallax.michalzalobny.com/",
   "author": "Michal Zalobny <@michalzalobny> (https://twitter.com/michalzalobny)",
   "license": "MIT",
   "peerDependencies": {
