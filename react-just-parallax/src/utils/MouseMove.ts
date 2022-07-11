@@ -18,7 +18,6 @@ export class MouseMove extends EventDispatcher {
   }
 
   _onTouchDown = (event: TouchEvent | MouseEvent) => {
-    this.dispatchEvent({ type: "mousemove" });
     this._isTouching = true;
     this._mouseLast.x =
       "touches" in event ? event.touches[0].clientX : event.clientX;
@@ -29,10 +28,10 @@ export class MouseMove extends EventDispatcher {
     this.mouse.y = this._mouseLast.y;
 
     this.dispatchEvent({ type: "down" });
+    this.dispatchEvent({ type: "mousemove" });
   };
 
   _onTouchMove = (event: TouchEvent | MouseEvent) => {
-    this.dispatchEvent({ type: "mousemove" });
     const touchX =
       "touches" in event ? event.touches[0].clientX : event.clientX;
     const touchY =
@@ -46,6 +45,7 @@ export class MouseMove extends EventDispatcher {
 
     this.mouse.x += deltaX;
     this.mouse.y += deltaY;
+    this.dispatchEvent({ type: "mousemove" });
   };
 
   _onTouchUp = () => {

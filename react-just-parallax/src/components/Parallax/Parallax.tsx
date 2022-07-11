@@ -52,7 +52,25 @@ export const Parallax = (props: ParallaxProps) => {
 
   const syncOnRender = () => {
     if (!spanRef.current) return;
-    spanRef.current.style.transform = `translate(${currentX.current}px, ${currentY.current}px)`;
+    let xMultiplier = windowSizeRef.current.windowWidth;
+    let yMultiplier = windowSizeRef.current.windowHeight;
+
+    if (boundRef && boundRef.current) {
+      xMultiplier = boundRefRect.current.width;
+      yMultiplier = boundRefRect.current.height;
+    }
+
+    //Maps movement to exact mouse position
+    xMultiplier *= 0.5;
+    yMultiplier *= 0.5;
+
+    //Changes direction and strength
+    xMultiplier *= -strength;
+    yMultiplier *= -strength;
+
+    spanRef.current.style.transform = `translate(${
+      currentX.current * xMultiplier
+    }px, ${currentY.current * yMultiplier}px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     let slowDownFactor = delta / DT_FPS;
@@ -94,32 +112,24 @@ export const Parallax = (props: ParallaxProps) => {
     }
   };
 
-  const onMouseMove = (event: DispatchEvent) => {
-    let referenceElWidth = 0;
-    let referenceElHeight = 0;
-    let relativeMousePositionX = 0;
-    let relativeMousePositionY = 0;
+  const onMouseMove = (e: DispatchEvent) => {
+    const mouseX = (e.target as MouseMove).mouse.x;
+    const mouseY = (e.target as MouseMove).mouse.y;
+
+    let xComponent = windowSizeRef.current.windowWidth;
+    let yComponent = windowSizeRef.current.windowHeight;
+    let relativeX = mouseX;
+    let relativeY = mouseY;
 
     if (boundRef && boundRef.current) {
-      referenceElWidth = boundRefRect.current.width;
-      referenceElHeight = boundRefRect.current.height;
-      relativeMousePositionX = event.target.mouse.x - boundRefRect.current.x;
-      relativeMousePositionY = event.target.mouse.y - boundRefRect.current.y;
-    } else {
-      referenceElWidth = windowSizeRef.current.windowWidth;
-      referenceElHeight = windowSizeRef.current.windowHeight;
-      relativeMousePositionX = event.target.mouse.x;
-      relativeMousePositionY = event.target.mouse.y;
+      xComponent = boundRefRect.current.width;
+      yComponent = boundRefRect.current.height;
+      relativeX = mouseX - boundRefRect.current.x;
+      relativeY = mouseY - boundRefRect.current.y;
     }
 
-    const offsetRatioX =
-      -(relativeMousePositionX - referenceElWidth / 2) * strength;
-
-    const offsetRatioY =
-      -(relativeMousePositionY - referenceElHeight / 2) * strength;
-
-    targetX.current = offsetRatioX;
-    targetY.current = offsetRatioY;
+    targetX.current = (relativeX / xComponent) * 2 - 1; // -1 to 1, left to right
+    targetY.current = (relativeY / yComponent) * 2 - 1; // -1 to 1, from top to bottom
   };
 
   const onMouseOut = () => {
@@ -131,6 +141,7 @@ export const Parallax = (props: ParallaxProps) => {
 
   const handleBoundRefRecalc = () => {
     if (!boundRef || !boundRef.current) return;
+
     const boundingBox = boundRef.current.getBoundingClientRect();
     boundRefRect.current = {
       x: boundingBox.x,
@@ -147,6 +158,7 @@ export const Parallax = (props: ParallaxProps) => {
     resumeAppFrame();
 
     if (boundRef && boundRef.current) {
+      handleBoundRefRecalc();
       window.addEventListener("scroll", handleBoundRefRecalcDebounced, {
         passive: true,
       });
@@ -184,6 +196,8 @@ export const Parallax = (props: ParallaxProps) => {
         height: "100%",
         display: "inline-block",
         background: "rgba(255,255,0, 0.3)",
+        pointerEvents: "none",
+        userSelect: "none",
       }}
     >
       {children}
