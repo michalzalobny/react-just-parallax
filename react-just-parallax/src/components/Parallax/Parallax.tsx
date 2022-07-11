@@ -14,9 +14,9 @@ export interface ParallaxProps {
   boundRef?: React.MutableRefObject<any>;
   shouldResetPosition?: boolean;
   enableOnTouchDevice?: boolean;
+  lerpEase: number;
 }
 
-const LERP_EASE = 0.06;
 const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
 
@@ -41,6 +41,7 @@ export const Parallax = (props: ParallaxProps) => {
     boundRef,
     shouldResetPosition = false,
     enableOnTouchDevice = true,
+    lerpEase = 0.06,
   } = props;
   const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -99,14 +100,14 @@ export const Parallax = (props: ParallaxProps) => {
     const newX = lerp(
       currentX.current,
       targetX.current,
-      LERP_EASE * slowDownFactor
+      lerpEase * slowDownFactor
     );
     currentX.current = newX;
 
     const newY = lerp(
       currentY.current,
       targetY.current,
-      LERP_EASE * slowDownFactor
+      lerpEase * slowDownFactor
     );
     currentY.current = newY;
   };
