@@ -59,8 +59,19 @@ export const MouseParallax = (props: MouseParallaxProps) => {
 
   const resumeAppFrame = () => {
     if (!shouldUpdate.current) return;
+    if (!parallaxSpanRef.current) return;
+    parallaxSpanRef.current.style.willChange = "transform";
+
     syncRenderRef.current = sync.render(syncOnRender, true);
     syncUpdateRef.current = sync.update(syncOnUpdate, true);
+  };
+
+  const stopAppFrame = () => {
+    if (!parallaxSpanRef.current) return;
+    parallaxSpanRef.current.style.willChange = "auto"; //initial
+
+    if (syncRenderRef.current) cancelSync.render(syncRenderRef.current);
+    if (syncUpdateRef.current) cancelSync.update(syncUpdateRef.current);
   };
 
   const syncOnRender = () => {
@@ -116,11 +127,6 @@ export const MouseParallax = (props: MouseParallaxProps) => {
       lerpEase * slowDownFactor
     );
     currentY.current = newY;
-  };
-
-  const stopAppFrame = () => {
-    if (syncRenderRef.current) cancelSync.render(syncRenderRef.current);
-    if (syncUpdateRef.current) cancelSync.update(syncUpdateRef.current);
   };
 
   const onVisibilityChange = () => {
