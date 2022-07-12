@@ -4,16 +4,12 @@ import debounce from "lodash.debounce";
 
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { lerp } from "../../utils/lerp";
-import { MouseMove } from "../../utils/MouseMove";
-import { Event as DispatchEvent } from "../../utils/EventDispatcher";
 import { isTouchDevice } from "../../utils/isTouchDevice";
 
-export interface MouseParallaxProps {
+export interface ScrollParallaxProps {
   strength?: number;
   children?: React.ReactNode;
-  boundRef?: React.MutableRefObject<any>;
-  scrollContainerRef?: React.MutableRefObject<any>; //Should be passed if parallaxed element is situated in other scrollable HTML element
-  shouldResetPosition?: boolean;
+  containerRef?: React.MutableRefObject<any>;
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
 }
@@ -21,27 +17,25 @@ export interface MouseParallaxProps {
 const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
 
-interface BoundRefRect {
+interface ContainerRefRect {
   x: number;
   y: number;
   width: number;
   height: number;
 }
 
-const defaultRect: BoundRefRect = {
+const defaultRect: ContainerRefRect = {
   height: 1,
   width: 1,
   x: 1,
   y: 1,
 };
 
-export const MouseParallax = (props: MouseParallaxProps) => {
+export const ScrollParallax = (props: ScrollParallaxProps) => {
   const {
     children,
     strength = 0.2,
-    boundRef,
-    scrollContainerRef,
-    shouldResetPosition = false,
+    containerRef,
     enableOnTouchDevice = false,
     lerpEase = 0.06,
   } = props;
@@ -55,8 +49,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
   const shouldUpdate = useRef(false);
-  const boundRefRect = useRef<BoundRefRect>(defaultRect);
-  const mouseMove = useRef(new MouseMove());
+  const containerRefRect = useRef<ContainerRefRect>(defaultRect);
   const observer = useRef<null | IntersectionObserver>(null);
 
   const resumeAppFrame = () => {
@@ -81,9 +74,9 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     let xMultiplier = windowSizeRef.current.windowWidth;
     let yMultiplier = windowSizeRef.current.windowHeight;
 
-    if (boundRef && boundRef.current) {
-      xMultiplier = boundRefRect.current.width;
-      yMultiplier = boundRefRect.current.height;
+    if (containerRef && containerRef.current) {
+      xMultiplier = containerRefRect.current.width;
+      yMultiplier = containerRefRect.current.height;
     }
 
     //Maps movement to exact mouse position
@@ -106,8 +99,6 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     if (diffX < 0.001 && diffY < 0.001) return;
 
     let slowDownFactor = delta / DT_FPS;
-
-    mouseMove.current.update();
 
     // Rounded slowDown factor to the nearest integer reduces physics lags
     const slowDownFactorRounded = Math.round(slowDownFactor);
@@ -145,11 +136,11 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     let relativeX = x;
     let relativeY = y;
 
-    if (boundRef && boundRef.current) {
-      xComponent = boundRefRect.current.width;
-      yComponent = boundRefRect.current.height;
-      relativeX = x - boundRefRect.current.x;
-      relativeY = y - boundRefRect.current.y;
+    if (containerRef && containerRef.current) {
+      xComponent = containerRefRect.current.width;
+      yComponent = containerRefRect.current.height;
+      relativeX = x - containerRefRect.current.x;
+      relativeY = y - containerRefRect.current.y;
     }
 
     return {
@@ -158,89 +149,53 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     };
   };
 
-  const onMouseMove = (e: DispatchEvent) => {
-    const mouseX = (e.target as MouseMove).mouse.x;
-    const mouseY = (e.target as MouseMove).mouse.y;
+  const handleContainerRefRecalc = () => {
+    if (!containerRef || !containerRef.current) return;
 
-    const { x, y } = normalizeXY(mouseX, mouseY);
-
-    targetX.current = x;
-    targetY.current = y;
-  };
-
-  const handleMouseLeave = () => {
-    if (shouldResetPosition) {
-      targetX.current = 0;
-      targetY.current = 0;
-    }
-  };
-
-  const onTouchStart = (event: TouchEvent | MouseEvent) => {
-    const mouseX =
-      "touches" in event ? event.touches[0].clientX : event.clientX;
-    const mouseY =
-      "touches" in event ? event.touches[0].clientY : event.clientY;
-
-    const { x, y } = normalizeXY(mouseX, mouseY);
-
-    if (x <= -1 || x >= 1 || y >= 1 || y <= -1) {
-      handleMouseLeave();
-    }
-  };
-
-  const handleBoundRefRecalc = () => {
-    if (!boundRef || !boundRef.current) return;
-    const boundingBox = boundRef.current.getBoundingClientRect();
-    boundRefRect.current = {
+    const boundingBox = containerRef.current.getBoundingClientRect();
+    containerRefRect.current = {
       x: boundingBox.x,
       y: boundingBox.y,
-      width: boundRef.current.clientWidth,
-      height: boundRef.current.clientHeight,
+      width: containerRef.current.clientWidth,
+      height: containerRef.current.clientHeight,
     };
   };
 
-  const handleBoundRefRecalcDebounced = debounce(handleBoundRefRecalc, 50);
+  const handleContainerRefRecalcDebounced = debounce(
+    handleContainerRefRecalc,
+    50
+  );
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
     const isIntersecting = entries[0].isIntersecting;
     if (isIntersecting) {
       shouldUpdate.current = true;
       resumeAppFrame();
-      mouseMove.current.setShouldUpdate(true);
     } else {
       shouldUpdate.current = false;
       stopAppFrame();
-      mouseMove.current.setShouldUpdate(false);
     }
   };
 
   useEffect(() => {
     if (!enableOnTouchDevice && isTouchDevice()) return;
-    mouseMove.current.init(boundRef);
+
     resumeAppFrame();
 
     let eventTarget = window;
-    let scrollTarget = window;
 
-    if (scrollContainerRef && scrollContainerRef.current) {
-      scrollTarget = scrollContainerRef.current;
-    }
-
-    if (boundRef && boundRef.current) {
-      handleBoundRefRecalc();
-      eventTarget = boundRef.current;
-      scrollTarget.addEventListener("scroll", handleBoundRefRecalcDebounced, {
+    if (containerRef && containerRef.current) {
+      handleContainerRefRecalc();
+      eventTarget = containerRef.current;
+      window.addEventListener("scroll", handleContainerRefRecalcDebounced, {
         passive: true,
       });
-      window.addEventListener("resize", handleBoundRefRecalcDebounced, {
+      window.addEventListener("resize", handleContainerRefRecalcDebounced, {
         passive: true,
       });
     }
 
-    mouseMove.current.addEventListener("mousemove", onMouseMove);
     window.addEventListener("visibilitychange", onVisibilityChange);
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    eventTarget.addEventListener("mouseout", handleMouseLeave);
 
     observer.current = new IntersectionObserver(handleIntersection, {
       threshold: 0.5,
@@ -252,23 +207,16 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     return () => {
       stopAppFrame();
 
-      if (boundRef && boundRef.current) {
-        scrollTarget.removeEventListener(
-          "scroll",
-          handleBoundRefRecalcDebounced
-        );
-        window.removeEventListener("resize", handleBoundRefRecalcDebounced);
+      if (containerRef && containerRef.current) {
+        window.removeEventListener("scroll", handleContainerRefRecalcDebounced);
+        window.removeEventListener("resize", handleContainerRefRecalcDebounced);
       }
 
-      mouseMove.current.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("visibilitychange", onVisibilityChange);
-      window.removeEventListener("touchstart", onTouchStart);
-      eventTarget.removeEventListener("mouseout", handleMouseLeave);
 
       if (parentSpanRef.current && observer.current) {
         observer.current.unobserve(parentSpanRef.current);
       }
-      mouseMove.current.destroy();
     };
   }, []);
 

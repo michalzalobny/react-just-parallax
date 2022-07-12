@@ -69,7 +69,9 @@ export class MouseMove extends EventDispatcher {
     });
     this._targetEl.addEventListener("mouseup", this._onTouchUp);
 
-    this._targetEl.addEventListener("touchstart", this._onTouchDown);
+    this._targetEl.addEventListener("touchstart", this._onTouchDown, {
+      passive: true,
+    });
     this._targetEl.addEventListener("touchmove", this._onTouchMove, {
       passive: true,
     });
