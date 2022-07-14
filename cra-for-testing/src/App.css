@@ -2,6 +2,18 @@ html {
   font-size: calc(100vw / 375 * 10);
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  background-color: red;
+  height: 2px;
+  z-index: 200;
+}
+
 .wrapper {
   margin: 0 auto;
   width: 80%;
@@ -16,6 +28,18 @@ html {
   height: 40rem;
   margin-top: 15rem;
   position: relative;
+}
+
+.container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  background-color: yellow;
+  height: 2px;
+  z-index: 200;
 }
 
 .container:last-child {

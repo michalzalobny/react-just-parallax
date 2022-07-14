@@ -199,7 +199,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     };
   };
 
-  const handleBoundRefRecalcDebounced = debounce(handleBoundRefRecalc, 50);
+  const handleBoundRefRecalcDebounced = debounce(handleBoundRefRecalc, 150);
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
     const isIntersecting = entries[0].isIntersecting;

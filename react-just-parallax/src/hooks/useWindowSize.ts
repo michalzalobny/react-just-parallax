@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import debounce from 'lodash.debounce';
+import { useState, useEffect, useCallback, useRef } from "react";
+import debounce from "lodash.debounce";
 
 interface WindowSize {
   windowWidth: number;
@@ -35,11 +35,11 @@ export const useWindowSize = () => {
   }, []);
 
   useEffect(() => {
-    const onResizeDebounced = debounce(onResize, 200);
-    window.addEventListener('resize', onResizeDebounced);
+    const onResizeDebounced = debounce(onResize, 100);
+    window.addEventListener("resize", onResizeDebounced);
     onResize();
     return () => {
-      window.removeEventListener('resize', onResizeDebounced);
+      window.removeEventListener("resize", onResizeDebounced);
     };
   }, [onResize]);
 

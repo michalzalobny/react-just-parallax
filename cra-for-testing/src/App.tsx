@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 //@ts-ignore
-import { MouseParallax } from "react-just-parallax";
+import { ScrollParallax, MouseParallax } from "react-just-parallax";
 
 import "./App.css";
 
@@ -14,15 +14,18 @@ function App() {
     <div className="wrapper" style={{ fontSize: 16 }}>
       {display && (
         <div className="container">
-          <MouseParallax>
+          <ScrollParallax strength={0.4}>
             <h1>weoijfsjf</h1>
             <button style={{ cursor: "pointer" }}>
               Mouseparallax content btn
             </button>
             <div className="box" />
-          </MouseParallax>
+          </ScrollParallax>
         </div>
       )}
+      <div className="container">
+        <div className="box" />
+      </div>
 
       <button
         style={{ cursor: "pointer" }}
@@ -31,9 +34,9 @@ function App() {
         UPDATE DISPLAY
       </button>
       <div ref={wrapperRef} className="container">
-        <MouseParallax boundRef={wrapperRef}>
+        <ScrollParallax>
           <div className="box" data-box="floating" />
-        </MouseParallax>
+        </ScrollParallax>
       </div>
       <div className="container">
         <div className="box" />

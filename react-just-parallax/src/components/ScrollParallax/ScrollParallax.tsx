@@ -2,58 +2,53 @@ import React, { useEffect, useRef } from "react";
 import sync, { cancelSync, FrameData, Process } from "framesync";
 import debounce from "lodash.debounce";
 
-import { useWindowSize } from "../../hooks/useWindowSize";
 import { lerp } from "../../utils/lerp";
 import { isTouchDevice } from "../../utils/isTouchDevice";
+import {
+  defaultScrollValues,
+  ScrollValues,
+  getElementScrollOffsets,
+  getViewportScrollOffsets,
+} from "../../utils/getScrollOffsets";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export interface ScrollParallaxProps {
   strength?: number;
   children?: React.ReactNode;
-  containerRef?: React.MutableRefObject<any>;
+  scrollContainerRef?: React.MutableRefObject<any>;
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
+  isHorizontal?: boolean;
 }
 
 const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
-
-interface ContainerRefRect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-const defaultRect: ContainerRefRect = {
-  height: 1,
-  width: 1,
-  x: 1,
-  y: 1,
-};
+const SHOULD_UPDATE_OFFSET = 1.5; // 1 means, that after element is out of 1 screen size (height or width) it stops updating,
 
 export const ScrollParallax = (props: ScrollParallaxProps) => {
   const {
     children,
     strength = 0.2,
-    containerRef,
-    enableOnTouchDevice = false,
+    scrollContainerRef,
+    enableOnTouchDevice = true,
     lerpEase = 0.06,
+    isHorizontal = false,
   } = props;
-  const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
   const parentSpanRef = useRef<null | HTMLSpanElement>(null);
-  const currentX = useRef(0);
-  const currentY = useRef(0);
-  const targetX = useRef(0);
-  const targetY = useRef(0);
+  const currentX = useRef(1);
+  const currentY = useRef(1);
+  const targetX = useRef(1);
+  const targetY = useRef(1);
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
-  const shouldUpdate = useRef(false);
-  const containerRefRect = useRef<ContainerRefRect>(defaultRect);
-  const observer = useRef<null | IntersectionObserver>(null);
+  const shouldUpdate = useRef(true);
+  const scrollValues = useRef<ScrollValues>(defaultScrollValues);
+  const parentOffsetX = useRef(1);
+  const parentOffsetY = useRef(1);
+  const { windowSizeRef } = useWindowSize();
 
   const resumeAppFrame = () => {
-    if (!shouldUpdate.current) return;
     if (!parallaxSpanRef.current) return;
     parallaxSpanRef.current.style.willChange = "transform";
 
@@ -63,6 +58,7 @@ export const ScrollParallax = (props: ScrollParallaxProps) => {
 
   const stopAppFrame = () => {
     if (!parallaxSpanRef.current) return;
+
     parallaxSpanRef.current.style.willChange = "auto"; //initial
 
     if (syncRenderRef.current) cancelSync.render(syncRenderRef.current);
@@ -70,28 +66,17 @@ export const ScrollParallax = (props: ScrollParallaxProps) => {
   };
 
   const syncOnRender = () => {
+    if (!shouldUpdate.current) return;
     if (!parallaxSpanRef.current) return;
-    let xMultiplier = windowSizeRef.current.windowWidth;
-    let yMultiplier = windowSizeRef.current.windowHeight;
 
-    if (containerRef && containerRef.current) {
-      xMultiplier = containerRefRect.current.width;
-      yMultiplier = containerRefRect.current.height;
-    }
-
-    //Maps movement to exact mouse position
-    xMultiplier *= 0.5;
-    yMultiplier *= 0.5;
-
-    //Changes direction and strength
-    xMultiplier *= -strength;
-    yMultiplier *= -strength;
+    let isHorizontalValue = isHorizontal ? 1 : 0;
 
     parallaxSpanRef.current.style.transform = `translate(${
-      currentX.current * xMultiplier
-    }px, ${currentY.current * yMultiplier}px)`;
+      currentX.current * -strength * isHorizontalValue
+    }px, ${currentY.current * -strength * (1 - isHorizontalValue)}px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
+    if (!shouldUpdate.current) return;
     const diffX = Math.abs(targetX.current - currentX.current);
     const diffY = Math.abs(targetY.current - currentY.current);
 
@@ -130,50 +115,53 @@ export const ScrollParallax = (props: ScrollParallaxProps) => {
     }
   };
 
-  const normalizeXY = (x: number, y: number) => {
-    let xComponent = windowSizeRef.current.windowWidth;
-    let yComponent = windowSizeRef.current.windowHeight;
-    let relativeX = x;
-    let relativeY = y;
-
-    if (containerRef && containerRef.current) {
-      xComponent = containerRefRect.current.width;
-      yComponent = containerRefRect.current.height;
-      relativeX = x - containerRefRect.current.x;
-      relativeY = y - containerRefRect.current.y;
-    }
-
-    return {
-      x: (relativeX / xComponent) * 2 - 1, // -1 to 1, left to right,
-      y: (relativeY / yComponent) * 2 - 1, // -1 to 1, from top to bottom
-    };
+  const calculateParentSpanOffset = () => {
+    if (!parentSpanRef || !parentSpanRef.current) return;
+    updateScrollValues();
+    const boundingBox = parentSpanRef.current.getBoundingClientRect();
+    parentOffsetX.current =
+      scrollValues.current.xOffset + boundingBox.x + boundingBox.width * 0.5;
+    parentOffsetY.current =
+      scrollValues.current.yOffset + boundingBox.y + boundingBox.height * 0.5;
   };
 
-  const handleContainerRefRecalc = () => {
-    if (!containerRef || !containerRef.current) return;
-
-    const boundingBox = containerRef.current.getBoundingClientRect();
-    containerRefRect.current = {
-      x: boundingBox.x,
-      y: boundingBox.y,
-      width: containerRef.current.clientWidth,
-      height: containerRef.current.clientHeight,
-    };
+  const updateValues = () => {
+    calculateParentSpanOffset();
+    handleScroll();
   };
+  const updateValuesDebounced = debounce(updateValues, 150);
 
-  const handleContainerRefRecalcDebounced = debounce(
-    handleContainerRefRecalc,
-    50
-  );
-
-  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    const isIntersecting = entries[0].isIntersecting;
-    if (isIntersecting) {
-      shouldUpdate.current = true;
-      resumeAppFrame();
+  const updateScrollValues = () => {
+    if (scrollContainerRef && scrollContainerRef.current) {
+      scrollValues.current = getElementScrollOffsets(
+        scrollContainerRef.current
+      );
     } else {
+      scrollValues.current = getViewportScrollOffsets();
+    }
+  };
+
+  const handleScroll = () => {
+    updateScrollValues();
+    let offsetX = scrollValues.current.xOffset - parentOffsetX.current;
+    let offsetY = scrollValues.current.yOffset - parentOffsetY.current;
+
+    //Normalize offset to be 0 if element is in the middle of the screen
+    offsetX = offsetX + 0.5 * windowSizeRef.current.windowWidth;
+    offsetY = offsetY + 0.5 * windowSizeRef.current.windowHeight;
+
+    targetX.current = offsetX;
+    targetY.current = offsetY;
+
+    if (
+      Math.abs(targetY.current) >
+        windowSizeRef.current.windowHeight * SHOULD_UPDATE_OFFSET ||
+      Math.abs(targetX.current) >
+        windowSizeRef.current.windowWidth * SHOULD_UPDATE_OFFSET
+    ) {
       shouldUpdate.current = false;
-      stopAppFrame();
+    } else {
+      shouldUpdate.current = true;
     }
   };
 
@@ -181,42 +169,23 @@ export const ScrollParallax = (props: ScrollParallaxProps) => {
     if (!enableOnTouchDevice && isTouchDevice()) return;
 
     resumeAppFrame();
-
     let eventTarget = window;
-
-    if (containerRef && containerRef.current) {
-      handleContainerRefRecalc();
-      eventTarget = containerRef.current;
-      window.addEventListener("scroll", handleContainerRefRecalcDebounced, {
-        passive: true,
-      });
-      window.addEventListener("resize", handleContainerRefRecalcDebounced, {
-        passive: true,
-      });
+    if (scrollContainerRef && scrollContainerRef.current) {
+      eventTarget = scrollContainerRef.current;
     }
 
+    eventTarget.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("resize", updateValuesDebounced);
 
-    observer.current = new IntersectionObserver(handleIntersection, {
-      threshold: 0.5,
-    });
-    if (parentSpanRef.current) {
-      observer.current.observe(parentSpanRef.current);
-    }
+    updateValues();
 
     return () => {
       stopAppFrame();
 
-      if (containerRef && containerRef.current) {
-        window.removeEventListener("scroll", handleContainerRefRecalcDebounced);
-        window.removeEventListener("resize", handleContainerRefRecalcDebounced);
-      }
-
+      eventTarget.removeEventListener("scroll", handleScroll);
       window.removeEventListener("visibilitychange", onVisibilityChange);
-
-      if (parentSpanRef.current && observer.current) {
-        observer.current.unobserve(parentSpanRef.current);
-      }
+      window.removeEventListener("resize", updateValuesDebounced);
     };
   }, []);
 
