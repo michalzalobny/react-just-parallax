@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://res.cloudinary.com/dpv0ukspz/image/upload/v1657188122/rsp-logo_pb6mlj.png" width="106" height="106" alt="React Just Parallax" />
+  <img src="https://res.cloudinary.com/dpv0ukspz/image/upload/v1657904071/rjp-logo_ov5fwk.png" width="106" height="106" alt="React Just Parallax" />
 </p>
 <h1 align="center">React Just Parallax</h1>
 <h3 align="center">
