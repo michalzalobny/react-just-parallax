@@ -15,7 +15,6 @@ function App() {
       {display && (
         <div className="container">
           <ScrollParallax strength={0.4}>
-            <h1>weoijfsjf</h1>
             <button style={{ cursor: "pointer" }}>
               Mouseparallax content btn
             </button>
@@ -39,10 +38,14 @@ function App() {
         </ScrollParallax>
       </div>
       <div className="container">
-        <div className="box" />
+        <MouseParallax>
+          <div className="box" />
+        </MouseParallax>
       </div>
       <div className="container">
-        <div className="box" data-box="floating" />
+        <MouseParallax>
+          <div className="box" data-box="floating" />
+        </MouseParallax>
       </div>
     </div>
   );
