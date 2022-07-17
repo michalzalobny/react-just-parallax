@@ -11,7 +11,7 @@ import { isTouchDevice } from "../../utils/isTouchDevice";
 export interface MouseParallaxProps {
   strength?: number;
   children?: React.ReactNode;
-  boundRef?: React.MutableRefObject<any>;
+  parallaxContainerRef?: React.MutableRefObject<any>;
   scrollContainerRef?: React.MutableRefObject<any>; //Should be passed if parallaxed element is situated in other scrollable HTML element
   shouldResetPosition?: boolean;
   enableOnTouchDevice?: boolean;
@@ -21,14 +21,14 @@ export interface MouseParallaxProps {
 const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
 
-interface BoundRefRect {
+interface Rect {
   x: number;
   y: number;
   width: number;
   height: number;
 }
 
-const defaultRect: BoundRefRect = {
+const defaultRect: Rect = {
   height: 1,
   width: 1,
   x: 1,
@@ -39,7 +39,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const {
     children,
     strength = 0.2,
-    boundRef,
+    parallaxContainerRef,
     scrollContainerRef,
     shouldResetPosition = false,
     enableOnTouchDevice = false,
@@ -55,7 +55,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
   const shouldUpdate = useRef(false);
-  const boundRefRect = useRef<BoundRefRect>(defaultRect);
+  const parallaxContainerRefRect = useRef<Rect>(defaultRect);
   const mouseMove = useRef(new MouseMove());
   const observer = useRef<null | IntersectionObserver>(null);
 
@@ -81,9 +81,9 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     let xMultiplier = windowSizeRef.current.windowWidth;
     let yMultiplier = windowSizeRef.current.windowHeight;
 
-    if (boundRef && boundRef.current) {
-      xMultiplier = boundRefRect.current.width;
-      yMultiplier = boundRefRect.current.height;
+    if (parallaxContainerRef && parallaxContainerRef.current) {
+      xMultiplier = parallaxContainerRefRect.current.width;
+      yMultiplier = parallaxContainerRefRect.current.height;
     }
 
     //Maps movement to exact mouse position
@@ -140,16 +140,17 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   };
 
   const normalizeXY = (x: number, y: number) => {
+    //might need to substract scrollbar width for perfect alignment (same for yComponent if scrolling horizontally)
     let xComponent = windowSizeRef.current.windowWidth;
     let yComponent = windowSizeRef.current.windowHeight;
     let relativeX = x;
     let relativeY = y;
 
-    if (boundRef && boundRef.current) {
-      xComponent = boundRefRect.current.width;
-      yComponent = boundRefRect.current.height;
-      relativeX = x - boundRefRect.current.x;
-      relativeY = y - boundRefRect.current.y;
+    if (parallaxContainerRef && parallaxContainerRef.current) {
+      xComponent = parallaxContainerRefRect.current.width;
+      yComponent = parallaxContainerRefRect.current.height;
+      relativeX = x - parallaxContainerRefRect.current.x;
+      relativeY = y - parallaxContainerRefRect.current.y;
     }
 
     return {
@@ -188,18 +189,18 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     }
   };
 
-  const handleBoundRefRecalc = () => {
-    if (!boundRef || !boundRef.current) return;
-    const boundingBox = boundRef.current.getBoundingClientRect();
-    boundRefRect.current = {
+  const updateValues = () => {
+    if (!parallaxContainerRef || !parallaxContainerRef.current) return;
+    const boundingBox = parallaxContainerRef.current.getBoundingClientRect();
+    parallaxContainerRefRect.current = {
       x: boundingBox.x,
       y: boundingBox.y,
-      width: boundRef.current.clientWidth,
-      height: boundRef.current.clientHeight,
+      width: parallaxContainerRef.current.clientWidth,
+      height: parallaxContainerRef.current.clientHeight,
     };
   };
 
-  const handleBoundRefRecalcDebounced = debounce(handleBoundRefRecalc, 150);
+  const updateValuesDebounced = debounce(updateValues, 150);
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
     const isIntersecting = entries[0].isIntersecting;
@@ -216,7 +217,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
 
   useEffect(() => {
     if (!enableOnTouchDevice && isTouchDevice()) return;
-    mouseMove.current.init(boundRef);
+    mouseMove.current.init(parallaxContainerRef);
     resumeAppFrame();
 
     let eventTarget = window;
@@ -226,13 +227,13 @@ export const MouseParallax = (props: MouseParallaxProps) => {
       scrollTarget = scrollContainerRef.current;
     }
 
-    if (boundRef && boundRef.current) {
-      handleBoundRefRecalc();
-      eventTarget = boundRef.current;
-      scrollTarget.addEventListener("scroll", handleBoundRefRecalcDebounced, {
+    if (parallaxContainerRef && parallaxContainerRef.current) {
+      updateValues();
+      eventTarget = parallaxContainerRef.current;
+      scrollTarget.addEventListener("scroll", updateValuesDebounced, {
         passive: true,
       });
-      window.addEventListener("resize", handleBoundRefRecalcDebounced, {
+      window.addEventListener("resize", updateValuesDebounced, {
         passive: true,
       });
     }
@@ -252,12 +253,9 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     return () => {
       stopAppFrame();
 
-      if (boundRef && boundRef.current) {
-        scrollTarget.removeEventListener(
-          "scroll",
-          handleBoundRefRecalcDebounced
-        );
-        window.removeEventListener("resize", handleBoundRefRecalcDebounced);
+      if (parallaxContainerRef && parallaxContainerRef.current) {
+        scrollTarget.removeEventListener("scroll", updateValuesDebounced);
+        window.removeEventListener("resize", updateValuesDebounced);
       }
 
       mouseMove.current.removeEventListener("mousemove", onMouseMove);
@@ -289,17 +287,15 @@ export const MouseParallax = (props: MouseParallaxProps) => {
           ref={parallaxSpanRef}
           style={{
             backfaceVisibility: "hidden",
-            position: "absolute",
-            top: 0,
-            left: 0,
+            position: "relative",
             width: "100%",
             height: "100%",
             display: "inline-block",
-            userSelect: "none",
-            pointerEvents: "none",
+            userSelect: "initial",
+            pointerEvents: "initial",
           }}
         >
-          <span style={{ pointerEvents: "initial" }}>{children}</span>
+          {children}
         </span>
       </span>
     </>

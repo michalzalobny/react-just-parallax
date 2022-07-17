@@ -1,4 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import sync, { cancelSync, FrameData, Process } from "framesync";
 import debounce from "lodash.debounce";
 
@@ -21,11 +26,21 @@ export interface ScrollParallaxProps {
   isHorizontal?: boolean;
 }
 
+export type ScrollParallaxHandle = {
+  updateValues: () => void;
+};
+
 const DEFAULT_FPS = 60;
 const DT_FPS = 1000 / DEFAULT_FPS;
 const SHOULD_UPDATE_OFFSET = 1.5; // 1 means, that after element is out of 1 screen size (height or width) it stops updating,
 
-export const ScrollParallax = (props: ScrollParallaxProps) => {
+export const ScrollParallax = forwardRef<
+  ScrollParallaxHandle,
+  ScrollParallaxProps
+>((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    updateValues,
+  }));
   const {
     children,
     strength = 0.2,
@@ -206,19 +221,17 @@ export const ScrollParallax = (props: ScrollParallaxProps) => {
           ref={parallaxSpanRef}
           style={{
             backfaceVisibility: "hidden",
-            position: "absolute",
-            top: 0,
-            left: 0,
+            position: "relative",
             width: "100%",
             height: "100%",
             display: "inline-block",
-            userSelect: "none",
-            pointerEvents: "none",
+            userSelect: "initial",
+            pointerEvents: "initial",
           }}
         >
-          <span style={{ pointerEvents: "initial" }}>{children}</span>
+          {children}
         </span>
       </span>
     </>
   );
-};
+});
