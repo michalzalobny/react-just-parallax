@@ -1,5 +1,5 @@
 import React from 'react';
-import { MouseParallax } from 'react-just-parallax';
+import { MouseParallax, ScrollParallax } from 'react-just-parallax';
 
 import { Head } from 'seo/Head/Head';
 
@@ -21,10 +21,14 @@ export default function IndexPage() {
           </MouseParallax>
         </S.Container>
         <S.Container>
-          <S.Box />
+          <ScrollParallax>
+            <S.Box />
+          </ScrollParallax>
         </S.Container>
         <S.Container>
-          <S.Box $floating />
+          <ScrollParallax>
+            <S.Box $floating />
+          </ScrollParallax>
         </S.Container>
       </S.Wrapper>
     </>
