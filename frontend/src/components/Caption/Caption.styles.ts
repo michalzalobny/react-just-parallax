@@ -43,11 +43,8 @@ export const CanvasWrapper = styled.div<CanvasWrapperProps>`
   width: 1px;
   height: 100%;
   z-index: 1;
-  background: red;
   user-select: none;
   pointer-events: none;
-
-  opacity: 0.3;
 
   ${props =>
     props.$elWidth &&

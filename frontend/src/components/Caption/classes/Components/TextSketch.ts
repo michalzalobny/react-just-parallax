@@ -9,7 +9,7 @@ export class TextSketch {
   _rendererBounds: Bounds = { width: 100, height: 100 };
   _translateOffset = { x: 0, y: 0 };
   _textValue: string;
-  _opacity = 0;
+  _opacity = 1;
   _ctx: CanvasRenderingContext2D | null;
   _pixelRatio = 1;
   _textMeasures = { width: 0, height: 0, fontSize: 0 };
@@ -40,6 +40,7 @@ export class TextSketch {
 
     this._textMeasures.height = actualHeight;
     this._textMeasures.width = metrics.width;
+    this._textMeasures.fontSize = this._rendererBounds.height * 0.4;
   }
 
   setPixelRatio(value: number) {
