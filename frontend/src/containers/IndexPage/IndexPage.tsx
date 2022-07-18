@@ -14,9 +14,9 @@ export default function IndexPage() {
 
   const { size: wrapperSize } = useElementSize(wrapperRef);
 
-  useEffect(() => {
-    console.log(wrapperSize);
-  }, [wrapperSize]);
+  // useEffect(() => {
+  //   console.log(wrapperSize);
+  // }, [wrapperSize]);
 
   return (
     <>

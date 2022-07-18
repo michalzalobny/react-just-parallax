@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import FontFaceObserver from 'fontfaceobserver';
 
 import { sharedValues } from 'utils/sharedValues';
 
@@ -22,6 +23,7 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererEl.appendChild(this._canvas);
 
+    this._preloadFont();
     this._onResize();
     this._addListeners();
     this._resumeAppFrame();
@@ -34,6 +36,28 @@ export class App {
     this._pixelRatio = Math.min(window.devicePixelRatio, 2);
     // this.cursor2D.setPixelRatio(this._pixelRatio);
     // this.cursor2D.setRendererBounds(rendererBounds);
+  }
+
+  _preloadFont() {
+    const fontA = new FontFaceObserver('opensans');
+    Promise.all([fontA.load(null, 2500)])
+      .then(
+        () => {
+          this._onLoaded();
+        },
+        () => {
+          this._onLoaded();
+          console.warn('Fonts were loading too long (over 1500ms)');
+        }
+      )
+      .catch(err => {
+        this._onLoaded();
+        console.warn('Some critical font are not available:', err);
+      });
+  }
+
+  _onLoaded() {
+    this._setShouldRevealReact(true);
   }
 
   _onVisibilityChange = () => {
