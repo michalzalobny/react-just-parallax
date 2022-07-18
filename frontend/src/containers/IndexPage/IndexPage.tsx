@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { useElementSize } from 'hooks/useElementSize';
 import { DocsInfo } from 'sections/DocsInfo/DocsInfo';
+import { Caption } from 'components/Caption/Caption';
 
 import { Head } from 'seo/Head/Head';
 
@@ -22,6 +23,9 @@ export default function IndexPage() {
       <Head />
       <S.ScrollContainer ref={scrollContainerRef}>
         <S.Wrapper ref={wrapperRef}>
+          <S.CaptionWrapper>
+            <Caption />
+          </S.CaptionWrapper>
           <S.DocsWrapper>
             <DocsInfo scrollContainerRef={scrollContainerRef} />
           </S.DocsWrapper>

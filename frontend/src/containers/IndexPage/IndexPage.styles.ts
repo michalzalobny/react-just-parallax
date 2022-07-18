@@ -13,6 +13,8 @@ export const ScrollContainer = styled.div`
 
 export const DocsWrapper = styled.div``;
 
+export const CaptionWrapper = styled.div``;
+
 export const Wrapper = styled.div`
   margin: 0 auto;
   width: 80%;
