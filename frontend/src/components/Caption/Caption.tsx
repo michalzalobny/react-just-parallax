@@ -13,7 +13,6 @@ export const Caption = () => {
 
   useEffect(() => {
     if (!rendererEl.current) return;
-
     appState.app = new App({ rendererEl: rendererEl.current, setShouldReveal });
 
     return () => {
@@ -22,7 +21,7 @@ export const Caption = () => {
         appState.app = null;
       }
     };
-  }, [windowSize]);
+  }, []);
 
   return (
     <>

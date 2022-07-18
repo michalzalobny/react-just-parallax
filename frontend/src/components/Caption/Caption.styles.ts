@@ -40,7 +40,7 @@ export const CanvasWrapper = styled.div<CanvasWrapperProps>`
   position: fixed;
   top: 0;
   left: 0;
-  width: 1px;
+  width: 100%;
   height: 100%;
   z-index: 1;
   user-select: none;
