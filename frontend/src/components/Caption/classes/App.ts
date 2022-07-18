@@ -5,7 +5,7 @@ import { getScrollbarWidth } from 'utils/functions/getScrollbarWidth';
 import { sharedValues } from 'utils/sharedValues';
 import { Bounds } from 'utils/sharedTypes';
 
-import { TextSketchAnimated } from './Components/TextSketchAnimated';
+import { TextSketch } from './Components/TextSketch';
 
 interface Constructor {
   rendererEl: HTMLDivElement;
@@ -22,7 +22,7 @@ export class App {
   _ctx: CanvasRenderingContext2D | null;
   _setShouldRevealReact;
   _rendererBounds: Bounds = { width: 100, height: 100 };
-  _textSketch: TextSketchAnimated;
+  _textSketch: TextSketch;
 
   constructor({ rendererEl, setShouldReveal }: Constructor) {
     this._rendererEl = rendererEl;
@@ -30,7 +30,10 @@ export class App {
     this._canvas = document.createElement('canvas');
     this._rendererEl.appendChild(this._canvas);
     this._ctx = this._canvas.getContext('2d');
-    this._textSketch = new TextSketchAnimated({ ctx: this._ctx, text: 'REACT JUST PARALLAX' });
+    this._textSketch = new TextSketch({
+      ctx: this._ctx,
+      text: 'JUST PARALLAX',
+    });
 
     this._preloadFont();
     this._onResize();
@@ -88,6 +91,7 @@ export class App {
   _onLoaded() {
     this._textSketch.setRendererBounds(this._rendererBounds);
     this._setShouldRevealReact(true);
+    this._textSketch.animateIn();
   }
 
   _onVisibilityChange = () => {
