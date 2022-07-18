@@ -38,7 +38,7 @@ export default class Document extends NextDocument {
             rel="preload"
             as="font"
             type="font/woff2"
-            href={'/fonts/openSans800.woff2'}
+            href={'/fonts/roboto900.woff2'}
             crossOrigin="anonymous"
           />
 

@@ -22,6 +22,30 @@ html {
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background-color: red;
+  z-index: 100;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 1px;
+  width: 100%;
+  background-color: red;
+  z-index: 100;
+}
+
 //Moved to /utils/GlobalStyles.ts (to get access to breakpoints variables)
 // html {
 //   font-size: calc(100vw / 375 * 10);

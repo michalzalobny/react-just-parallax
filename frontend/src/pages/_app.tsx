@@ -16,8 +16,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const fontA = new FontFaceObserver('opensans');
+    const fontB = new FontFaceObserver('roboto');
 
-    Promise.all([fontA.load(null, 1500)])
+    Promise.all([fontA.load(null, 2500), fontB.load(null, 2500)])
       .then(
         () => {
           setIsReady(true);

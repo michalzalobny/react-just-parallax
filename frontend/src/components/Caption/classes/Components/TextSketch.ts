@@ -21,7 +21,7 @@ export class TextSketch {
 
   update(updateInfo: UpdateInfo) {
     if (!this._ctx) return;
-    this._ctx.font = `bold ${this._textMeasures.fontSize}px opensans`;
+    this._ctx.font = `bold ${this._textMeasures.fontSize}px roboto`;
 
     this._ctx.fillStyle = `rgba(0,0,0,${this._opacity})`;
 
@@ -35,12 +35,15 @@ export class TextSketch {
   setRendererBounds(bounds: Bounds) {
     this._rendererBounds = bounds;
     if (!this._ctx) return;
+
+    this._textMeasures.fontSize = this._rendererBounds.height * 0.1;
+    this._ctx.font = `bold ${this._textMeasures.fontSize}px roboto`;
+
     const metrics = this._ctx.measureText(this._textValue);
     const actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 
     this._textMeasures.height = actualHeight;
     this._textMeasures.width = metrics.width;
-    this._textMeasures.fontSize = this._rendererBounds.height * 0.4;
   }
 
   setPixelRatio(value: number) {

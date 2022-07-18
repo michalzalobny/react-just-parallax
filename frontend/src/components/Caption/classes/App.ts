@@ -67,7 +67,9 @@ export class App {
 
   _preloadFont() {
     const fontA = new FontFaceObserver('opensans');
-    Promise.all([fontA.load(null, 2500)])
+    const fontB = new FontFaceObserver('roboto');
+
+    Promise.all([fontA.load(null, 2500), fontB.load(null, 2500)])
       .then(
         () => {
           this._onLoaded();
