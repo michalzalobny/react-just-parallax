@@ -30,3 +30,14 @@ export interface PageProps {
   head: HeadProps;
   repoHref?: string;
 }
+
+export interface UpdateInfo {
+  slowDownFactor: number;
+  delta: number;
+  time: number;
+}
+
+export interface Bounds {
+  width: number;
+  height: number;
+}
