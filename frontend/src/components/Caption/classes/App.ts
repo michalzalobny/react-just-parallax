@@ -1,6 +1,7 @@
 import debounce from 'lodash.debounce';
 import FontFaceObserver from 'fontfaceobserver';
 
+import { getScrollbarWidth } from 'utils/functions/getScrollbarWidth';
 import { sharedValues } from 'utils/sharedValues';
 import { Bounds } from 'utils/sharedTypes';
 
@@ -41,7 +42,7 @@ export class App {
 
   _onResize() {
     const clientRect = this._rendererEl.getBoundingClientRect();
-    this._rendererBounds.width = clientRect.width;
+    this._rendererBounds.width = clientRect.width - getScrollbarWidth(); //substract scrollbar width to perfectly fit
     this._rendererBounds.height = clientRect.height;
     this._pixelRatio = Math.min(window.devicePixelRatio, 2);
     this._setSizes();
@@ -106,11 +107,13 @@ export class App {
   }
 
   _clear() {
-    if (this._ctx) {
-      this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-      this._ctx.fillStyle = 'rgba(255,255,255,1)';
-      this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
-    }
+    if (!this._ctx) return;
+    this._ctx.save();
+    this._ctx.setTransform(1, 0, 0, 1, 0, 0);
+    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.fillStyle = 'rgba(255,255,255,1)';
+    this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.restore();
   }
 
   _resumeAppFrame() {
@@ -144,7 +147,6 @@ export class App {
     if (this._ctx) {
       this._ctx.globalCompositeOperation = 'xor';
     }
-
     this._clear();
     this._textSketch.update({ delta, slowDownFactor, time });
   };

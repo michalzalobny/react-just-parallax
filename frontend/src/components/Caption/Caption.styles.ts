@@ -32,11 +32,7 @@ export const ReadyWrapper = styled.div<ReadyWrapperProps>`
     `}
 `;
 
-interface CanvasWrapperProps {
-  $elWidth: number;
-}
-
-export const CanvasWrapper = styled.div<CanvasWrapperProps>`
+export const CanvasWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -45,10 +41,4 @@ export const CanvasWrapper = styled.div<CanvasWrapperProps>`
   z-index: 1;
   user-select: none;
   pointer-events: none;
-
-  ${props =>
-    props.$elWidth &&
-    css`
-      width: ${props.$elWidth}px;
-    `}
 `;

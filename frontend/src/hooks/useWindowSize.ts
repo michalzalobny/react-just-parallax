@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 
+import { getScrollbarWidth } from 'utils/functions/getScrollbarWidth';
+
 interface WindowSize {
   windowWidth: number;
   windowHeight: number;
@@ -17,18 +19,6 @@ const windowSizeSSR: WindowSize = {
 
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>(windowSizeSSR);
-
-  const getScrollbarWidth = () => {
-    // Create the div
-    const scrollDiv = document.createElement('div');
-    scrollDiv.className = 'scrollbar-measure';
-    document.body.appendChild(scrollDiv);
-    // Get the scrollbar width
-    const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-    // Delete the div
-    document.body.removeChild(scrollDiv);
-    return scrollbarWidth;
-  };
 
   const onResize = useCallback(() => {
     const newWindowSize: WindowSize = {
