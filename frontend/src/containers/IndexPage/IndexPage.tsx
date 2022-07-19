@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { useElementSize } from 'hooks/useElementSize';
 import { DocsInfo } from 'sections/DocsInfo/DocsInfo';
 import { Caption } from 'components/Caption/Caption';
+// import { Caption } from 'components/CaptionText/Caption';
 
 import { Head } from 'seo/Head/Head';
 
