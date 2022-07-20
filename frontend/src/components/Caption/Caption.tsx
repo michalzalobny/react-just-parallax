@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MotionValue } from 'framer-motion';
 
 import { useWindowSize } from 'hooks/useWindowSize';
+import { ShowOff } from 'sections/ShowOff/ShowOff';
 
 import { appState } from './Caption.state';
 import { App } from './classes/App';
@@ -39,6 +40,7 @@ export const Caption = (props: Props) => {
     <>
       <S.Wrapper $elHeight={windowSize.windowHeight}>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
+        <ShowOff />
         <S.CanvasWrapper ref={rendererEl} />
       </S.Wrapper>
     </>
