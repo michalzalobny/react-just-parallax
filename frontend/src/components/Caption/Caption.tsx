@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MotionValue } from 'framer-motion';
 
+import { useWindowSize } from 'hooks/useWindowSize';
+
 import { appState } from './Caption.state';
 import { App } from './classes/App';
 import * as S from './Caption.styles';
@@ -13,6 +15,7 @@ export const Caption = (props: Props) => {
   const { scrollRatio } = props;
   const rendererEl = useRef<HTMLDivElement | null>(null);
   const [shouldReveal, setShouldReveal] = useState(false);
+  const { windowSize } = useWindowSize();
 
   useEffect(() => {
     if (!rendererEl.current) return;
@@ -28,7 +31,7 @@ export const Caption = (props: Props) => {
 
   return (
     <>
-      <S.Wrapper>
+      <S.Wrapper $elHeight={windowSize.windowHeight}>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
         <S.CanvasWrapper ref={rendererEl} />
       </S.Wrapper>

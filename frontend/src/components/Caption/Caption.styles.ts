@@ -1,11 +1,28 @@
 import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div`
+interface WrapperProps {
+  $elHeight: number;
+}
+
+export const Wrapper = styled.div<WrapperProps>`
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${props => props.$elHeight}px;
+`;
+
+export const CanvasWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.9;
+  display: none;
 `;
 
 interface ReadyWrapperProps {
@@ -30,17 +47,4 @@ export const ReadyWrapper = styled.div<ReadyWrapperProps>`
       user-select: none;
       pointer-events: none;
     `}
-`;
-
-export const CanvasWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.9;
-  display: none;
 `;

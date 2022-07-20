@@ -40,10 +40,10 @@ export default function IndexPage() {
     <>
       <Head />
       <S.ScrollContainer ref={scrollContainerRef}>
+        <S.CaptionWrapper ref={captionWrapperRef}>
+          <Caption scrollRatio={scrollRatio} />
+        </S.CaptionWrapper>
         <S.Wrapper>
-          <S.CaptionWrapper ref={captionWrapperRef}>
-            <Caption scrollRatio={scrollRatio} />
-          </S.CaptionWrapper>
           <S.DocsWrapper>
             <DocsInfo scrollContainerRef={scrollContainerRef} />
           </S.DocsWrapper>
