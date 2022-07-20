@@ -8,9 +8,9 @@ interface Constructor {
 }
 
 export class TextSketch {
-  static defaultEase = 'power2.inOut';
+  static defaultEase = 'expo.inOut';
 
-  _rendererBounds: Bounds = { width: 100, height: 100 };
+  _rendererBounds: Bounds = { width: 100, height: 0 };
   _translateOffset = { x: 0, y: 0 };
   _textValue: string;
   _opacity = 1;
@@ -59,23 +59,13 @@ export class TextSketch {
       duration,
       ease: TextSketch.defaultEase,
       onUpdate: () => {
-        if (!this._ctx) return;
-        this._ctx.font = `bold ${this._textMeasures.fontSize}px roboto`;
-
-        const metrics = this._ctx.measureText(this._textValue);
-        const actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-
-        this._textMeasures.height = actualHeight;
-        this._textMeasures.width = metrics.width;
+        this._updateFontSize();
       },
     });
   }
 
-  setRendererBounds(bounds: Bounds) {
-    this._rendererBounds = bounds;
+  _updateFontSize() {
     if (!this._ctx) return;
-
-    this._textMeasures.fontSize = this._rendererBounds.height * 0.1;
     this._ctx.font = `bold ${this._textMeasures.fontSize}px roboto`;
 
     const metrics = this._ctx.measureText(this._textValue);
@@ -85,6 +75,14 @@ export class TextSketch {
     this._textMeasures.width = metrics.width;
   }
 
+  setRendererBounds(bounds: Bounds) {
+    this._rendererBounds = bounds;
+    if (!this._ctx) return;
+
+    this._textMeasures.fontSize = this._rendererBounds.height * 0.1 * 10;
+    this._updateFontSize();
+  }
+
   setPixelRatio(value: number) {
     this._pixelRatio = value;
   }
@@ -92,11 +90,11 @@ export class TextSketch {
   animateIn() {
     this._transitionTl = gsap.timeline();
 
-    this._transitionTl
-      .add(this._animateOffsetX(-300, 1.2))
-      .add(this._animateFontSize(300, 0.8))
-      .add(this._animateOffsetX(0, 1.2))
-      .add(this._animateFontSize(100, 0.8));
+    this._transitionTl;
+    // .add(this._animateOffsetX(-300, 1.2))
+    // .add(this._animateFontSize(900, 2.5));
+    // .add(this._animateOffsetX(0, 1.2))
+    // .add(this._animateFontSize(100, 0.8));
   }
 
   destroy() {
