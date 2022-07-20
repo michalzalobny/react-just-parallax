@@ -2,7 +2,6 @@ import debounce from 'lodash.debounce';
 import FontFaceObserver from 'fontfaceobserver';
 import { MotionValue } from 'framer-motion';
 
-import { getScrollbarWidth } from 'utils/functions/getScrollbarWidth';
 import { sharedValues } from 'utils/sharedValues';
 import { Bounds } from 'utils/sharedTypes';
 
@@ -12,6 +11,7 @@ interface Constructor {
   rendererEl: HTMLDivElement;
   setShouldReveal: React.Dispatch<React.SetStateAction<boolean>>;
   scrollRatio: MotionValue<any>;
+  scrollRatioQuicker: MotionValue<any>;
 }
 
 export class App {
@@ -28,7 +28,7 @@ export class App {
   _rendererBounds: Bounds = { width: 100, height: 100 };
   _textSketch: TextSketch;
 
-  constructor({ rendererEl, setShouldReveal, scrollRatio }: Constructor) {
+  constructor({ rendererEl, setShouldReveal, scrollRatio, scrollRatioQuicker }: Constructor) {
     this._rendererEl = rendererEl;
     this._setShouldRevealReact = setShouldReveal;
     this._canvas = document.createElement('canvas');
@@ -46,6 +46,10 @@ export class App {
 
     scrollRatio.onChange(v => {
       this._textSketch.setScrollRatio(v as number);
+    });
+
+    scrollRatioQuicker.onChange(v => {
+      this._textSketch.setScrollRatioQuicker(v as number);
     });
   }
 

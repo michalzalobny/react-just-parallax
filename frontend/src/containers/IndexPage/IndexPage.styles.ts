@@ -9,7 +9,6 @@ export const ScrollContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  background: pink;
 `;
 
 export const DocsWrapper = styled.div`
@@ -17,7 +16,7 @@ export const DocsWrapper = styled.div`
 `;
 
 export const CaptionWrapper = styled.div`
-  height: 200vh;
+  height: 250vh;
   background-color: blue;
 `;
 
