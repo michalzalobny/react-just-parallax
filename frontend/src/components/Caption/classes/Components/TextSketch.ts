@@ -37,10 +37,9 @@ export class TextSketch {
     this._ctx.fillText(
       this._textValue,
       this._rendererBounds.width * TextSketch.edgeSize +
-        (this._rendererBounds.width / 2) * 0 -
-        (this._textMeasures.width / 2) * 0 +
         this._translateOffset.x -
-        2000 * this._scrollRatio,
+        this._textMeasures.width * this._scrollRatio * 0.52 - //defines when to stop offseting
+        this._textMeasures.width * 0.01, //extra letter offset due to font settings
       this._rendererBounds.height / 2 + this._textMeasures.height / 2 + this._translateOffset.y
     );
 
@@ -109,7 +108,7 @@ export class TextSketch {
     this._rendererBounds = bounds;
     if (!this._ctx) return;
 
-    this._textMeasures.fontSize = this._rendererBounds.height * 0.1 * 7;
+    this._textMeasures.fontSize = this._rendererBounds.width * 0.417;
     this._updateFontSize();
   }
 
