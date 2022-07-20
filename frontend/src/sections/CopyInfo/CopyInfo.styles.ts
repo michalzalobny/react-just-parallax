@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { media } from 'utils/media';
-import { underline, s2, s1 } from 'utils/sharedStyled';
+import { underline, s1 } from 'utils/sharedStyled';
 
 export const GithubWrapper = styled.div`
   display: initial;
