@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'roboto';
-  font-weight: 900;
+  font-family: 'teko';
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/roboto900.woff2') format('woff2');
+  src: url('/fonts/teko700.woff2') format('woff2');
 }
 
 @font-face {
@@ -12,4 +12,12 @@
   font-weight: normal;
   font-display: swap;
   src: url('/fonts/openSans400.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/openSans800.woff2') format('woff2');
 }

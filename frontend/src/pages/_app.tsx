@@ -16,7 +16,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const fontA = new FontFaceObserver('opensans');
-    const fontB = new FontFaceObserver('roboto');
+    const fontB = new FontFaceObserver('teko');
 
     Promise.all([fontA.load(null, 2500), fontB.load(null, 2500)])
       .then(

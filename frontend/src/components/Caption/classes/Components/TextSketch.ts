@@ -11,7 +11,7 @@ interface Constructor {
 
 export class TextSketch {
   static defaultEase = 'expo.inOut';
-  static edgeSize = 0.08;
+  static edgeSize = 0.07;
 
   _rendererBounds: Bounds = { width: 100, height: 0 };
   _translateOffset = { x: 0, y: 0 };
@@ -30,7 +30,7 @@ export class TextSketch {
 
   update(updateInfo: UpdateInfo) {
     if (!this._ctx) return;
-    this._ctx.font = `bold ${this._textMeasures.fontSize}px roboto`;
+    this._ctx.font = `bold ${this._textMeasures.fontSize}px teko`;
 
     this._ctx.fillStyle = `rgba(0,0,0,${this._opacity})`;
 
@@ -96,7 +96,7 @@ export class TextSketch {
 
   _updateFontSize() {
     if (!this._ctx) return;
-    this._ctx.font = `bold ${this._textMeasures.fontSize}px roboto`;
+    this._ctx.font = `bold ${this._textMeasures.fontSize}px teko`;
 
     const metrics = this._ctx.measureText(this._textValue);
     const actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
@@ -109,7 +109,7 @@ export class TextSketch {
     this._rendererBounds = bounds;
     if (!this._ctx) return;
 
-    this._textMeasures.fontSize = this._rendererBounds.height * 0.1 * 8;
+    this._textMeasures.fontSize = this._rendererBounds.height * 0.1 * 7;
     this._updateFontSize();
   }
 

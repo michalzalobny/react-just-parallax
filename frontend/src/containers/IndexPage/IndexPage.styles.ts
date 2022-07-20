@@ -23,9 +23,9 @@ export const CaptionWrapper = styled.div`
 
 export const Wrapper = styled.div`
   margin: 0 auto;
-  width: 80%;
+  width: 90%;
 
   ${media.tablet} {
-    width: 100rem;
+    width: 130rem;
   }
 `;

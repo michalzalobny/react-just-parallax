@@ -36,7 +36,7 @@ export class App {
     this._ctx = this._canvas.getContext('2d');
     this._textSketch = new TextSketch({
       ctx: this._ctx,
-      text: 'WPARA LLAX',
+      text: 'PARA LLAX',
     });
 
     this._preloadFont();
@@ -78,7 +78,7 @@ export class App {
 
   _preloadFont() {
     const fontA = new FontFaceObserver('opensans');
-    const fontB = new FontFaceObserver('roboto');
+    const fontB = new FontFaceObserver('teko');
 
     Promise.all([fontA.load(null, 2500), fontB.load(null, 2500)])
       .then(
