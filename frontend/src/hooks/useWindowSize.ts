@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
 import { getScrollbarWidth } from 'utils/functions/getScrollbarWidth';
@@ -19,6 +19,7 @@ const windowSizeSSR: WindowSize = {
 
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>(windowSizeSSR);
+  const windowSizeRef = useRef<WindowSize>(windowSizeSSR);
 
   const onResize = useCallback(() => {
     const newWindowSize: WindowSize = {
@@ -29,10 +30,11 @@ export const useWindowSize = () => {
     };
 
     setWindowSize(newWindowSize);
+    windowSizeRef.current = newWindowSize;
   }, []);
 
   useEffect(() => {
-    const onResizeDebounced = debounce(onResize, 200);
+    const onResizeDebounced = debounce(onResize, 100);
     window.addEventListener('resize', onResizeDebounced);
     onResize();
     return () => {
@@ -40,5 +42,5 @@ export const useWindowSize = () => {
     };
   }, [onResize]);
 
-  return { windowSize };
+  return { windowSize, windowSizeRef };
 };

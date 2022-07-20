@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import { DomRectSSR } from 'utils/sharedTypes';
@@ -32,18 +32,22 @@ const emptySize: Size = {
 
 export const useElementSize = (elRef: ElRef) => {
   const [size, setSize] = useState<Size>(emptySize);
+  const sizeRef = useRef<Size>(emptySize);
 
   useEffect(() => {
     const onResize = () => {
       if (!elRef.current) return;
       const rect = elRef.current.getBoundingClientRect();
 
-      return setSize({
+      const size = {
         clientRect: rect,
         isReady: true,
         offsetTop: elRef.current.offsetTop, //Retruns offset to relative element (not to the whole page)
         offsetLeft: elRef.current.offsetLeft,
-      });
+      };
+
+      sizeRef.current = size;
+      setSize(size);
     };
 
     const onResizeDebounced = debounce(onResize, 100);
@@ -58,5 +62,6 @@ export const useElementSize = (elRef: ElRef) => {
 
   return {
     size,
+    sizeRef,
   };
 };

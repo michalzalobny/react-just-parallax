@@ -41,4 +41,6 @@ export const CanvasWrapper = styled.div`
   z-index: 1;
   user-select: none;
   pointer-events: none;
+  opacity: 0.9;
+  display: none;
 `;

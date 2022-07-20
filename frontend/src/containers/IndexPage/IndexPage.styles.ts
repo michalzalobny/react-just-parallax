@@ -12,10 +12,12 @@ export const ScrollContainer = styled.div`
   background: pink;
 `;
 
-export const DocsWrapper = styled.div``;
+export const DocsWrapper = styled.div`
+  background-color: green;
+`;
 
 export const CaptionWrapper = styled.div`
-  height: 2000px;
+  height: 350vh;
   background-color: blue;
 `;
 

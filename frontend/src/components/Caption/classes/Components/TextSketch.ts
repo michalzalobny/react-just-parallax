@@ -18,6 +18,7 @@ export class TextSketch {
   _pixelRatio = 1;
   _textMeasures = { width: 0, height: 0, fontSize: 0 };
   _transitionTl: gsap.core.Timeline | null = null;
+  _scrollRatio = 0;
 
   constructor({ text, ctx }: Constructor) {
     this._ctx = ctx;
@@ -32,7 +33,10 @@ export class TextSketch {
 
     this._ctx.fillText(
       this._textValue,
-      this._rendererBounds.width / 2 - this._textMeasures.width / 2 + this._translateOffset.x,
+      this._rendererBounds.width / 2 -
+        this._textMeasures.width / 2 +
+        this._translateOffset.x -
+        2000 * this._scrollRatio,
       this._rendererBounds.height / 2 + this._textMeasures.height / 2 + this._translateOffset.y
     );
   }
@@ -85,6 +89,10 @@ export class TextSketch {
 
   setPixelRatio(value: number) {
     this._pixelRatio = value;
+  }
+
+  setScrollRatio(value: number) {
+    this._scrollRatio = value;
   }
 
   animateIn() {

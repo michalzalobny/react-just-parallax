@@ -1,5 +1,6 @@
 import debounce from 'lodash.debounce';
 import FontFaceObserver from 'fontfaceobserver';
+import { MotionValue } from 'framer-motion';
 
 import { getScrollbarWidth } from 'utils/functions/getScrollbarWidth';
 import { sharedValues } from 'utils/sharedValues';
@@ -10,6 +11,7 @@ import { TextSketch } from './Components/TextSketch';
 interface Constructor {
   rendererEl: HTMLDivElement;
   setShouldReveal: React.Dispatch<React.SetStateAction<boolean>>;
+  scrollRatio: MotionValue<any>;
 }
 
 export class App {
@@ -24,7 +26,7 @@ export class App {
   _rendererBounds: Bounds = { width: 100, height: 100 };
   _textSketch: TextSketch;
 
-  constructor({ rendererEl, setShouldReveal }: Constructor) {
+  constructor({ rendererEl, setShouldReveal, scrollRatio }: Constructor) {
     this._rendererEl = rendererEl;
     this._setShouldRevealReact = setShouldReveal;
     this._canvas = document.createElement('canvas');
@@ -32,13 +34,17 @@ export class App {
     this._ctx = this._canvas.getContext('2d');
     this._textSketch = new TextSketch({
       ctx: this._ctx,
-      text: 'JUST PARALLAX',
+      text: 'PARA LLAX',
     });
 
     this._preloadFont();
     this._onResize();
     this._addListeners();
     this._resumeAppFrame();
+
+    scrollRatio.onChange(v => {
+      this._textSketch.setScrollRatio(v as number);
+    });
   }
 
   _onResizeDebounced = debounce(() => this._onResize(), 300);

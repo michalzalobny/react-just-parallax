@@ -3,8 +3,11 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 40rem;
-  margin-top: 15rem;
   position: relative;
+
+  &:not(:first-child) {
+    margin-top: 15rem;
+  }
 
   &:last-child {
     margin-bottom: 15rem;
