@@ -2,6 +2,8 @@ import { gsap } from 'gsap';
 
 import { Bounds, UpdateInfo } from 'utils/sharedTypes';
 
+import { App } from '../App';
+
 interface Constructor {
   text: string;
   ctx: CanvasRenderingContext2D | null;
@@ -9,6 +11,7 @@ interface Constructor {
 
 export class TextSketch {
   static defaultEase = 'expo.inOut';
+  static edgeSize = 0.08;
 
   _rendererBounds: Bounds = { width: 100, height: 0 };
   _translateOffset = { x: 0, y: 0 };
@@ -33,12 +36,35 @@ export class TextSketch {
 
     this._ctx.fillText(
       this._textValue,
-      this._rendererBounds.width / 2 -
-        this._textMeasures.width / 2 +
+      this._rendererBounds.width * TextSketch.edgeSize +
+        (this._rendererBounds.width / 2) * 0 -
+        (this._textMeasures.width / 2) * 0 +
         this._translateOffset.x -
         2000 * this._scrollRatio,
       this._rendererBounds.height / 2 + this._textMeasures.height / 2 + this._translateOffset.y
     );
+
+    this._drawRects();
+  }
+
+  _drawRects() {
+    if (!this._ctx) return;
+    this._ctx.fillStyle = App.backgroundColor;
+    const edgeRounded = Math.round(this._rendererBounds.width * TextSketch.edgeSize);
+
+    const leftX = edgeRounded;
+    const leftY = this._rendererBounds.height;
+
+    this._ctx.clearRect(0, 0, leftX, leftY);
+    this._ctx.fillRect(0, 0, leftX, leftY);
+
+    const rightXStart = this._rendererBounds.width - edgeRounded;
+    const rightYStart = 0;
+    const rightXEnd = this._rendererBounds.width;
+    const rightYEnd = this._rendererBounds.height;
+
+    this._ctx.clearRect(rightXStart, rightYStart, rightXEnd, rightYEnd);
+    this._ctx.fillRect(rightXStart, rightYStart, rightXEnd, rightYEnd);
   }
 
   _animateOffsetY(destination: number, duration: number) {
@@ -83,7 +109,7 @@ export class TextSketch {
     this._rendererBounds = bounds;
     if (!this._ctx) return;
 
-    this._textMeasures.fontSize = this._rendererBounds.height * 0.1 * 10;
+    this._textMeasures.fontSize = this._rendererBounds.height * 0.1 * 8;
     this._updateFontSize();
   }
 

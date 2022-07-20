@@ -15,6 +15,8 @@ interface Constructor {
 }
 
 export class App {
+  static backgroundColor = 'rgba(255,255,255,1)';
+
   _rendererEl: HTMLDivElement;
   _rafId: number | null = null;
   _isResumed = true;
@@ -34,7 +36,7 @@ export class App {
     this._ctx = this._canvas.getContext('2d');
     this._textSketch = new TextSketch({
       ctx: this._ctx,
-      text: 'PARA LLAX',
+      text: 'WPARA LLAX',
     });
 
     this._preloadFont();
@@ -123,7 +125,7 @@ export class App {
     this._ctx.save();
     this._ctx.setTransform(1, 0, 0, 1, 0, 0);
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-    this._ctx.fillStyle = 'rgba(255,255,255,1)';
+    this._ctx.fillStyle = App.backgroundColor;
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
     this._ctx.restore();
   }
