@@ -9,7 +9,8 @@ export const Wrapper = styled.div<WrapperProps>`
   top: 0;
   left: 0;
   width: 100%;
-  height: ${props => props.$elHeight}px;
+  height: 100vh;
+  overflow: hidden;
 `;
 
 export const CanvasWrapper = styled.div`
@@ -22,7 +23,7 @@ export const CanvasWrapper = styled.div`
   user-select: none;
   pointer-events: none;
   opacity: 1;
-  display: none;
+  /* display: none; */
 `;
 
 interface ReadyWrapperProps {

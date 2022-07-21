@@ -3,17 +3,21 @@ import { MouseParallax } from 'react-just-parallax';
 
 import * as S from './ShowOff.styles';
 
-export const ShowOff = () => {
+interface Props {
+  scrollContainer: React.MutableRefObject<HTMLDivElement | null>;
+}
+
+export const ShowOff = ({ scrollContainer }: Props) => {
   return (
     <>
       <S.Wrapper>
         <S.Container>
-          <MouseParallax>
+          <MouseParallax scrollContainerRef={scrollContainer}>
             <S.Box />
           </MouseParallax>
         </S.Container>
         <S.Container>
-          <MouseParallax strength={-0.1}>
+          <MouseParallax scrollContainerRef={scrollContainer} strength={-0.1}>
             <S.Box $floating />
           </MouseParallax>
         </S.Container>

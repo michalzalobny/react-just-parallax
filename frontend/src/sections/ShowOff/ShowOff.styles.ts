@@ -6,36 +6,15 @@ export const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 `;
 
 export const Container = styled.div`
-  width: 100%;
-  height: 30rem;
+  width: 30rem;
+  height: 40rem;
   position: absolute;
-  top: 30%;
-  left: 0%;
-
-  &:not(:first-child) {
-    margin-top: 15rem;
-  }
-
-  &:last-child {
-    margin-bottom: 15rem;
-  }
-
-  &:nth-child(1) {
-    background-color: red;
-  }
-  &:nth-child(2) {
-    background-color: purple;
-  }
-  &:nth-child(3) {
-    background-color: green;
-  }
-  &:nth-child(4) {
-    background-color: violet;
-  }
+  top: 50%;
+  left: 50%;
+  background-color: green;
 `;
 
 interface BoxProps {

@@ -11,10 +11,11 @@ import * as S from './Caption.styles';
 interface Props {
   scrollRatio: MotionValue<any>;
   scrollRatioQuicker: MotionValue<any>;
+  scrollContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const Caption = (props: Props) => {
-  const { scrollRatioQuicker, scrollRatio } = props;
+  const { scrollRatioQuicker, scrollRatio, scrollContainerRef } = props;
   const rendererEl = useRef<HTMLDivElement | null>(null);
   const [shouldReveal, setShouldReveal] = useState(false);
   const { windowSize } = useWindowSize();
@@ -40,7 +41,7 @@ export const Caption = (props: Props) => {
     <>
       <S.Wrapper $elHeight={windowSize.windowHeight}>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
-        <ShowOff />
+        <ShowOff scrollContainer={scrollContainerRef} />
         <S.CanvasWrapper ref={rendererEl} />
       </S.Wrapper>
     </>

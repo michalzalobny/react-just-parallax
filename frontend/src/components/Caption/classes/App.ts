@@ -58,8 +58,7 @@ export class App {
   _onResize() {
     const clientRect = this._rendererEl.getBoundingClientRect();
     this._rendererBounds.width = clientRect.width;
-    //using window height instead of element to prevent from bugs on mobile, where 100% of height is not the exact inner height of window
-    this._rendererBounds.height = window.innerHeight;
+    this._rendererBounds.height = clientRect.height;
     this._pixelRatio = Math.min(window.devicePixelRatio, 2);
     this._setSizes();
     this._textSketch.setRendererBounds(this._rendererBounds);
