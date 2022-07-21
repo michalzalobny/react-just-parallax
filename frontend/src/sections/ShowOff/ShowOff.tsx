@@ -1,6 +1,9 @@
 import React from 'react';
 import { MouseParallax } from 'react-just-parallax';
 
+import { PreloadImage } from 'components/PreloadImage/PreloadImage';
+
+import frameSrc from './images/frame.svg';
 import * as S from './ShowOff.styles';
 
 interface Props {
@@ -12,6 +15,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
     <>
       <S.Wrapper>
         <S.Container>
+          <PreloadImage imageSrc={frameSrc} alt="leafs contour" />
           <MouseParallax scrollContainerRef={scrollContainer}>
             <S.Box />
           </MouseParallax>

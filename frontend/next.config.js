@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+
+const withPlugins = require('next-compose-plugins');
+const withOptimizedImages = require('next-optimized-images');
+
+const nextConfig = {
   reactStrictMode: true,
   i18n: {
     locales: ['en-US'],
@@ -13,3 +17,5 @@ module.exports = {
     return config;
   },
 };
+
+module.exports = withPlugins([[withOptimizedImages]], nextConfig);
