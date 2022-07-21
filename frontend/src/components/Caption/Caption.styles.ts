@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface WrapperProps {
   $elHeight: number;
+  isHeightReady: boolean;
 }
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -9,7 +10,10 @@ export const Wrapper = styled.div<WrapperProps>`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: ${props =>
+    props.isHeightReady
+      ? props.$elHeight.toString() + 'px'
+      : '100vh'}; //It's only used to fix height on mobile (normally 100vh would be enough)
   overflow: hidden;
 `;
 
@@ -22,8 +26,8 @@ export const CanvasWrapper = styled.div`
   z-index: 1;
   user-select: none;
   pointer-events: none;
-  opacity: 1;
-  /* display: none; */
+  opacity: 0.8;
+  display: none;
 `;
 
 interface ReadyWrapperProps {

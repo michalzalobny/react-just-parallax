@@ -6,15 +6,24 @@ export const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: red;
 `;
 
 export const Container = styled.div`
-  width: 30rem;
-  height: 40rem;
+  width: 150px;
+  height: 150px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  bottom: 0;
+  left: 30%;
   background-color: green;
+  transform: translate(-50%, 0%);
+
+  &:nth-child(2) {
+    left: 60%;
+    top: 0;
+    bottom: initial;
+    background-color: blue;
+  }
 `;
 
 interface BoxProps {

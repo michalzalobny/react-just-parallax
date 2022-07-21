@@ -58,7 +58,7 @@ export class App {
   _onResize() {
     const clientRect = this._rendererEl.getBoundingClientRect();
     this._rendererBounds.width = clientRect.width;
-    this._rendererBounds.height = clientRect.height;
+    this._rendererBounds.height = window.innerHeight; //It's only used to fix height on mobile (normally 100vh would be enough)
     this._pixelRatio = Math.min(window.devicePixelRatio, 2);
     this._setSizes();
     this._textSketch.setRendererBounds(this._rendererBounds);

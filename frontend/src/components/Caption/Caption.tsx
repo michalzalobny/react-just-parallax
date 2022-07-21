@@ -39,7 +39,7 @@ export const Caption = (props: Props) => {
 
   return (
     <>
-      <S.Wrapper $elHeight={windowSize.windowHeight}>
+      <S.Wrapper isHeightReady={windowSize.isReady} $elHeight={windowSize.windowHeight}>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
         <ShowOff scrollContainer={scrollContainerRef} />
         <S.CanvasWrapper ref={rendererEl} />
