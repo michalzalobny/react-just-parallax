@@ -1,8 +1,6 @@
 import styled, { css } from 'styled-components';
 
 import { sharedValues } from 'utils/sharedValues';
-import { underline, s1 } from 'utils/sharedStyled';
-import { media } from 'utils/media';
 
 interface ReadyWrapperProps {
   isReady: boolean;
@@ -35,5 +33,5 @@ export const AppBackground = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-color: white;
+  background-color: rgba(246, 246, 246, 1);
 `;

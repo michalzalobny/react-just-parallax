@@ -15,7 +15,7 @@ interface Constructor {
 }
 
 export class App {
-  static backgroundColor = 'rgba(255,255,255,1)';
+  static backgroundColor = 'rgba(246,246,246,1)';
 
   _rendererEl: HTMLDivElement;
   _rafId: number | null = null;
