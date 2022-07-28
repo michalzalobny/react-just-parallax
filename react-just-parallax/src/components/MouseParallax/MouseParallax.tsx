@@ -16,6 +16,7 @@ export interface MouseParallaxProps {
   shouldResetPosition?: boolean;
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
+  isAbsolutelyPositioned?: boolean;
 }
 
 const DEFAULT_FPS = 60;
@@ -43,6 +44,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     scrollContainerRef,
     shouldResetPosition = false,
     enableOnTouchDevice = false,
+    isAbsolutelyPositioned = false,
     lerpEase = 0.06,
   } = props;
   const { windowSizeRef } = useWindowSize();
@@ -275,12 +277,14 @@ export const MouseParallax = (props: MouseParallaxProps) => {
       <span
         ref={parentSpanRef}
         style={{
-          position: "relative",
           width: "100%",
           height: "100%",
           display: "inline-block",
           userSelect: "none",
           pointerEvents: "none",
+          position: isAbsolutelyPositioned ? "absolute" : "relative",
+          top: 0,
+          left: 0,
         }}
       >
         <span

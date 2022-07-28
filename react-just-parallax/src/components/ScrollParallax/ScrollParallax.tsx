@@ -24,6 +24,7 @@ export interface ScrollParallaxProps {
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
   isHorizontal?: boolean;
+  isAbsolutelyPositioned?: boolean;
 }
 
 export type ScrollParallaxHandle = {
@@ -48,6 +49,7 @@ export const ScrollParallax = forwardRef<
     enableOnTouchDevice = true,
     lerpEase = 0.06,
     isHorizontal = false,
+    isAbsolutelyPositioned = false,
   } = props;
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
   const parentSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -209,12 +211,14 @@ export const ScrollParallax = forwardRef<
       <span
         ref={parentSpanRef}
         style={{
-          position: "relative",
           width: "100%",
           height: "100%",
           display: "inline-block",
           userSelect: "none",
           pointerEvents: "none",
+          position: isAbsolutelyPositioned ? "absolute" : "relative",
+          top: 0,
+          left: 0,
         }}
       >
         <span
