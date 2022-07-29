@@ -24,10 +24,10 @@ const mulC = 1.2;
 const mul1 = 0.84;
 const mul2 = 0.82;
 const mul3 = 0.7;
-const mul4 = 0.82;
-const mul5 = 0.81;
+const mul4 = 0.32;
+const mul5 = 0.21;
 const mul6 = 0.56;
-const mul7 = 0.66;
+const mul7 = 0.46;
 const mul8 = 0.91;
 const mul9 = 0.91;
 
