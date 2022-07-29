@@ -23,6 +23,7 @@ export class TextSketch {
   _transitionTl: gsap.core.Timeline | null = null;
   _scrollRatio = 0;
   _scrollRatioQuicker = 0;
+  _scrollRatioRest = 0;
 
   constructor({ text, ctx }: Constructor) {
     this._ctx = ctx;
@@ -37,11 +38,15 @@ export class TextSketch {
 
     this._ctx.fillText(
       this._textValue,
-      this._rendererBounds.width * TextSketch.edgeSize +
+      this._textMeasures.width * this._scrollRatioRest * 0.53 +
+        this._rendererBounds.width * TextSketch.edgeSize +
         this._translateOffset.x -
         this._textMeasures.width * this._scrollRatioQuicker * 0.52 - //defines when to stop offseting
         this._textMeasures.width * 0.01, //extra letter offset due to font settings
-      this._rendererBounds.height / 2 + this._textMeasures.height / 2 + this._translateOffset.y
+      this._rendererBounds.height / 2 +
+        this._textMeasures.height / 2 +
+        this._translateOffset.y -
+        this._textMeasures.width * -this._scrollRatioRest * 0.05
     );
 
     this._drawRects();
@@ -123,6 +128,13 @@ export class TextSketch {
 
   setScrollRatioQuicker(value: number) {
     this._scrollRatioQuicker = value;
+  }
+
+  setScrollRatioRest(value: number) {
+    this._scrollRatioRest = value;
+    const defaultValue = this._rendererBounds.width * 0.417;
+    this._textMeasures.fontSize = defaultValue - defaultValue * 0.53 * value;
+    this._updateFontSize();
   }
 
   animateIn() {

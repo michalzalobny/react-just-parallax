@@ -43,6 +43,7 @@ export const Caption = (props: Props) => {
       setShouldReveal,
       scrollRatio,
       scrollRatioQuicker,
+      scrollRatioRest,
     });
 
     return () => {

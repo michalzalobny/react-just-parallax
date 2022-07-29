@@ -12,6 +12,7 @@ interface Constructor {
   setShouldReveal: React.Dispatch<React.SetStateAction<boolean>>;
   scrollRatio: MotionValue<any>;
   scrollRatioQuicker: MotionValue<any>;
+  scrollRatioRest: MotionValue<any>;
 }
 
 export class App {
@@ -28,7 +29,13 @@ export class App {
   _rendererBounds: Bounds = { width: 100, height: 100 };
   _textSketch: TextSketch;
 
-  constructor({ rendererEl, setShouldReveal, scrollRatio, scrollRatioQuicker }: Constructor) {
+  constructor({
+    scrollRatioRest,
+    rendererEl,
+    setShouldReveal,
+    scrollRatio,
+    scrollRatioQuicker,
+  }: Constructor) {
     this._rendererEl = rendererEl;
     this._setShouldRevealReact = setShouldReveal;
     this._canvas = document.createElement('canvas');
@@ -50,6 +57,10 @@ export class App {
 
     scrollRatioQuicker.onChange(v => {
       this._textSketch.setScrollRatioQuicker(v as number);
+    });
+
+    scrollRatioRest.onChange(v => {
+      this._textSketch.setScrollRatioRest(v as number);
     });
   }
 
