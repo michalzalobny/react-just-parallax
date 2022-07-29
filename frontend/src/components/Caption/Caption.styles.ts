@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 interface WrapperProps {
   $elHeight: number;
@@ -52,4 +53,12 @@ export const ReadyWrapper = styled.div<ReadyWrapperProps>`
       user-select: none;
       pointer-events: none;
     `}
+`;
+
+export const MotionWrapper = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;

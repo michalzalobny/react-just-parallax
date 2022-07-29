@@ -11,19 +11,29 @@ import * as S from './Caption.styles';
 interface Props {
   scrollRatio: MotionValue<any>;
   scrollRatioQuicker: MotionValue<any>;
+  scrollRatioRest: MotionValue<any>;
   scrollContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const Caption = (props: Props) => {
-  const { scrollRatioQuicker, scrollRatio, scrollContainerRef } = props;
+  const { scrollRatioRest, scrollRatioQuicker, scrollRatio, scrollContainerRef } = props;
   const rendererEl = useRef<HTMLDivElement | null>(null);
   const [shouldReveal, setShouldReveal] = useState(false);
   const { windowSize, windowSizeRef } = useWindowSize();
 
   const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.25 + 0.75);
-  const translateXValue = useTransform(
-    scrollRatioQuicker,
-    v => v * windowSizeRef.current.windowWidth * -0.35
+  const translateXValue = useTransform(scrollRatioQuicker, v => {
+    return v * windowSizeRef.current.windowWidth * -0.35;
+  });
+
+  const translateXValue2 = useTransform(
+    scrollRatioRest,
+    v => v * windowSizeRef.current.windowWidth * 0.35 + v * windowSizeRef.current.windowWidth * 0.5
+  );
+
+  const translateXValue3 = useTransform(
+    scrollRatioRest,
+    v => v * windowSizeRef.current.windowWidth * -0.6
   );
 
   useEffect(() => {
@@ -47,19 +57,35 @@ export const Caption = (props: Props) => {
     <>
       <S.Wrapper isHeightReady={windowSize.isReady} $elHeight={windowSize.windowHeight}>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
-        <motion.div
+        <S.MotionWrapper
           style={{
-            scale: scaleValue,
-            x: translateXValue,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
+            x: translateXValue2,
           }}
         >
-          <ShowOff scrollContainer={scrollContainerRef} />
-        </motion.div>
+          <S.MotionWrapper
+            style={{
+              scale: scaleValue,
+              x: translateXValue,
+            }}
+          >
+            <ShowOff scrollContainer={scrollContainerRef} />
+          </S.MotionWrapper>
+        </S.MotionWrapper>
+
+        <S.MotionWrapper
+          style={{
+            x: translateXValue3,
+            zIndex: 2,
+          }}
+        >
+          <S.MotionWrapper
+            style={{
+              x: windowSizeRef.current.windowWidth * 0.7,
+            }}
+          >
+            <ShowOff scrollContainer={scrollContainerRef} />
+          </S.MotionWrapper>
+        </S.MotionWrapper>
 
         <S.CanvasWrapper ref={rendererEl} />
       </S.Wrapper>
