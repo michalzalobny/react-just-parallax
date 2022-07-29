@@ -20,7 +20,7 @@ export const Caption = (props: Props) => {
   const [shouldReveal, setShouldReveal] = useState(false);
   const { windowSize, windowSizeRef } = useWindowSize();
 
-  const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.2 + 0.8);
+  const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.25 + 0.75);
   const translateXValue = useTransform(
     scrollRatioQuicker,
     v => v * windowSizeRef.current.windowWidth * -0.35

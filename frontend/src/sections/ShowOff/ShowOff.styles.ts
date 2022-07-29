@@ -55,8 +55,8 @@ export const PicturesContainer = styled.div`
   position: absolute;
   top: 50%;
   right: 0%;
-  transform: translate(-20%, -50%);
-  width: 45%;
+  transform: translate(-8%, -50%);
+  width: 58%;
   &:before {
     content: '';
     display: block;
