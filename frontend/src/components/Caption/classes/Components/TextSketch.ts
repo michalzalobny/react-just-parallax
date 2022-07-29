@@ -46,7 +46,7 @@ export class TextSketch {
       this._rendererBounds.height / 2 +
         this._textMeasures.height / 2 +
         this._translateOffset.y -
-        this._textMeasures.width * -this._scrollRatioRest * 0.05
+        this._textMeasures.width * -this._scrollRatioRest * 0.05 * 0
     );
 
     this._drawRects();

@@ -21,7 +21,7 @@ export const Caption = (props: Props) => {
   const [shouldReveal, setShouldReveal] = useState(false);
   const { windowSize, windowSizeRef } = useWindowSize();
 
-  const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.25 + 0.75);
+  const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.2 + 0.8);
   const translateXValue = useTransform(scrollRatioQuicker, v => {
     return v * windowSizeRef.current.windowWidth * -0.35;
   });
@@ -33,7 +33,7 @@ export const Caption = (props: Props) => {
 
   const translateXValue3 = useTransform(
     scrollRatioRest,
-    v => v * windowSizeRef.current.windowWidth * -0.6
+    v => v * windowSizeRef.current.windowWidth * -0.5
   );
 
   useEffect(() => {

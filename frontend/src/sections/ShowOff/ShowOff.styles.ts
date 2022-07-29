@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: absolute;
@@ -13,7 +13,7 @@ export const PicturesContainer = styled.div`
   top: 50%;
   right: 0%;
   transform: translate(-8%, -50%);
-  width: 58%;
+  width: 50%;
   &:before {
     content: '';
     display: block;
