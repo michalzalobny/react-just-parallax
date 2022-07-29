@@ -47,7 +47,7 @@ export default function IndexPage() {
   const scrollYPaddedQuicker = useTransform(scrollYPadded, v => remap(0, quickerPoint, 0, 1, v));
   const scrollYPaddedRest = useTransform(
     scrollYPadded,
-    v => remap(quickerPoint + 0.1, 0.75, 0, 1, v) //+0.1 starts the animation a bit later and ends it at 0.75
+    v => remap(quickerPoint + 0.25, 0.85, 0, 1, v) //+0.1 starts the animation a bit later and ends it at 0.75
   );
   const scrollRatio = useSpring(scrollYPadded, springSettings);
   const scrollRatioQuicker = useSpring(scrollYPaddedQuicker, springSettings);

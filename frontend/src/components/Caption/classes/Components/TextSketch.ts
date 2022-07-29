@@ -16,7 +16,6 @@ export class TextSketch {
   _rendererBounds: Bounds = { width: 100, height: 0 };
   _translateOffset = { x: 0, y: 0 };
   _textValue: string;
-  _opacity = 1;
   _ctx: CanvasRenderingContext2D | null;
   _pixelRatio = 1;
   _textMeasures = { width: 0, height: 0, fontSize: 0 };
@@ -30,11 +29,58 @@ export class TextSketch {
     this._textValue = text;
   }
 
+  _drawBackground() {
+    if (!this._ctx) return;
+
+    this._ctx.beginPath();
+
+    const segments = 20;
+
+    const widthSegments = Math.ceil(this._rendererBounds.width / segments);
+    this._ctx.moveTo(this._rendererBounds.width, this._rendererBounds.height);
+    this._ctx.lineTo(0, this._rendererBounds.height);
+
+    const t = (1 - this._scrollRatioRest) * this._rendererBounds.height;
+    const amplitude = this._rendererBounds.width * 0.1 * Math.sin(this._scrollRatioRest * Math.PI);
+
+    this._ctx.lineTo(0, t);
+
+    for (let index = 0; index <= widthSegments; index++) {
+      const n = segments * index;
+      const r = t - Math.sin((n / this._rendererBounds.width) * Math.PI) * amplitude;
+
+      this._ctx.lineTo(n, r);
+    }
+
+    this._ctx.fillStyle = 'white';
+    this._ctx.fill();
+  }
+
+  _clipRect() {
+    if (!this._ctx) return;
+    const edgeRounded = Math.round(this._rendererBounds.width * TextSketch.edgeSize);
+    const leftX = edgeRounded;
+
+    this._ctx.beginPath();
+    this._ctx.rect(leftX, 0, this._rendererBounds.width - 2 * leftX, this._rendererBounds.height);
+    this._ctx.clip();
+  }
+
   update(updateInfo: UpdateInfo) {
     if (!this._ctx) return;
+
     this._ctx.font = `bold ${this._textMeasures.fontSize}px teko`;
 
-    this._ctx.fillStyle = `rgba(0,0,0,${this._opacity})`;
+    if (this._ctx) this._ctx.globalCompositeOperation = 'source-over';
+    this._ctx.fillStyle = App.backgroundColor;
+    this._ctx.fillRect(0, 0, this._rendererBounds.width, this._rendererBounds.height);
+
+    if (this._ctx) this._ctx.globalCompositeOperation = 'source-over';
+    this._drawBackground();
+    if (this._ctx) this._ctx.globalCompositeOperation = 'xor';
+
+    this._ctx.save();
+    this._clipRect();
 
     this._ctx.fillText(
       this._textValue,
@@ -49,27 +95,7 @@ export class TextSketch {
         this._textMeasures.width * -this._scrollRatioRest * 0.05 * 0
     );
 
-    this._drawRects();
-  }
-
-  _drawRects() {
-    if (!this._ctx) return;
-    this._ctx.fillStyle = App.backgroundColor;
-    const edgeRounded = Math.round(this._rendererBounds.width * TextSketch.edgeSize);
-
-    const leftX = edgeRounded;
-    const leftY = this._rendererBounds.height;
-
-    this._ctx.clearRect(0, 0, leftX, leftY);
-    this._ctx.fillRect(0, 0, leftX, leftY);
-
-    const rightXStart = this._rendererBounds.width - edgeRounded;
-    const rightYStart = 0;
-    const rightXEnd = this._rendererBounds.width;
-    const rightYEnd = this._rendererBounds.height;
-
-    this._ctx.clearRect(rightXStart, rightYStart, rightXEnd, rightYEnd);
-    this._ctx.fillRect(rightXStart, rightYStart, rightXEnd, rightYEnd);
+    this._ctx.restore();
   }
 
   _animateOffsetY(destination: number, duration: number) {

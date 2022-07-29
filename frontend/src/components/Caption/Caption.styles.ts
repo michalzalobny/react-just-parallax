@@ -27,8 +27,17 @@ export const CanvasWrapper = styled.div`
   z-index: 1;
   user-select: none;
   pointer-events: none;
-  /* opacity: 0.3; */
-  /* display: none; */
+`;
+
+export const BackgroundCanvasWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  user-select: none;
+  pointer-events: none;
 `;
 
 interface ReadyWrapperProps {

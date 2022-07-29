@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, MotionValue, useTransform } from 'framer-motion';
+import { MotionValue, useTransform } from 'framer-motion';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 import { ShowOff } from 'sections/ShowOff/ShowOff';
 
 import { appState } from './Caption.state';
 import { App } from './classes/App';
+import * as Background from './backgroundClasses/App';
 import * as S from './Caption.styles';
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 export const Caption = (props: Props) => {
   const { scrollRatioRest, scrollRatioQuicker, scrollRatio, scrollContainerRef } = props;
   const rendererEl = useRef<HTMLDivElement | null>(null);
+  const backgroundRendererEl = useRef<HTMLDivElement | null>(null);
   const [shouldReveal, setShouldReveal] = useState(false);
   const { windowSize, windowSizeRef } = useWindowSize();
 
@@ -50,6 +52,21 @@ export const Caption = (props: Props) => {
       if (appState.app) {
         appState.app.destroy();
         appState.app = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!rendererEl.current) return;
+    appState.background = new Background.App({
+      rendererEl: backgroundRendererEl.current,
+      scrollRatioRest,
+    });
+
+    return () => {
+      if (appState.background) {
+        appState.background.destroy();
+        appState.background = null;
       }
     };
   }, []);
@@ -88,6 +105,7 @@ export const Caption = (props: Props) => {
           </S.MotionWrapper>
         </S.MotionWrapper>
 
+        <S.BackgroundCanvasWrapper ref={backgroundRendererEl} />
         <S.CanvasWrapper ref={rendererEl} />
       </S.Wrapper>
     </>

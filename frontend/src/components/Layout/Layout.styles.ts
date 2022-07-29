@@ -33,5 +33,4 @@ export const AppBackground = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-color: rgba(246, 246, 246, 1);
 `;
