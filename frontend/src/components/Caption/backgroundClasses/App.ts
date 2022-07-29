@@ -91,8 +91,10 @@ export class App {
 
   _clear() {
     if (!this._ctx) return;
+    this._ctx.save();
     this._ctx.setTransform(1, 0, 0, 1, 0, 0);
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+    this._ctx.restore();
   }
 
   _resumeAppFrame() {

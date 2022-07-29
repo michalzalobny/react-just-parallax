@@ -25,12 +25,12 @@ export const Caption = (props: Props) => {
 
   const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.2 + 0.8);
   const translateXValue = useTransform(scrollRatioQuicker, v => {
-    return v * windowSizeRef.current.windowWidth * -0.35;
+    return v * windowSizeRef.current.windowWidth * -0.45;
   });
 
   const translateXValue2 = useTransform(
     scrollRatioRest,
-    v => v * windowSizeRef.current.windowWidth * 0.35 + v * windowSizeRef.current.windowWidth * 0.5
+    v => v * windowSizeRef.current.windowWidth * 0.45 + v * windowSizeRef.current.windowWidth * 0.5
   );
 
   const translateXValue3 = useTransform(
@@ -82,7 +82,7 @@ export const Caption = (props: Props) => {
         >
           <S.MotionWrapper
             style={{
-              scale: scaleValue,
+              // scale: scaleValue,
               x: translateXValue,
             }}
           >
