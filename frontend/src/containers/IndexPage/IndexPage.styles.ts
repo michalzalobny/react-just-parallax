@@ -17,7 +17,7 @@ export const DocsWrapper = styled.div`
 
 export const CaptionWrapper = styled.div`
   height: 250vh;
-  background-color: blue;
+  background-color: #b0a3e2; //A59BDD
 `;
 
 export const Wrapper = styled.div`

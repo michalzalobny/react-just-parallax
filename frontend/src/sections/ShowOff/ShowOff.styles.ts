@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #b0a3e2; //A59BDD
 `;
 
 export const Container = styled.div`
