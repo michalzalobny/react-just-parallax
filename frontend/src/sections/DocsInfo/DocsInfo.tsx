@@ -24,7 +24,7 @@ export const DocsInfo = (props: Props) => {
       </S.Container>
       <S.Container>
         <ScrollParallax scrollContainerRef={scrollContainerRef}>
-          <S.Box />
+          <S.Box $floating />
         </ScrollParallax>
       </S.Container>
       <S.Container>

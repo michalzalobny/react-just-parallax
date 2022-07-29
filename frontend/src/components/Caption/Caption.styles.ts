@@ -26,8 +26,8 @@ export const CanvasWrapper = styled.div`
   z-index: 1;
   user-select: none;
   pointer-events: none;
-  opacity: 0.8;
-  display: none;
+  /* opacity: 0.3; */
+  /* display: none; */
 `;
 
 interface ReadyWrapperProps {

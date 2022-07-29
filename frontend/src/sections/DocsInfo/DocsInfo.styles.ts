@@ -20,7 +20,7 @@ export const Container = styled.div`
     background-color: purple;
   }
   &:nth-child(3) {
-    background-color: green;
+    background-color: brown;
   }
   &:nth-child(4) {
     background-color: violet;

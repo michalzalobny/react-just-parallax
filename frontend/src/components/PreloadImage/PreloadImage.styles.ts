@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface ImageProps {
   isLoaded: boolean;
+  shouldContain: boolean;
 }
 
 export const Image = styled.img<ImageProps>`
@@ -15,6 +16,12 @@ export const Image = styled.img<ImageProps>`
   transition: opacity 0.45s;
   user-select: none;
   pointer-events: none;
+
+  ${props =>
+    props.shouldContain &&
+    css`
+      object-fit: contain;
+    `}
 
   ${props =>
     props.isLoaded &&
