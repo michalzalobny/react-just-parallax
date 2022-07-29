@@ -138,17 +138,6 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             </S.Shape9Wrapper>
           </MouseParallax>
         </S.PicturesContainer>
-
-        <S.Container>
-          <MouseParallax scrollContainerRef={scrollContainer}>
-            <S.Box />
-          </MouseParallax>
-        </S.Container>
-        <S.Container>
-          <MouseParallax scrollContainerRef={scrollContainer} strength={-0.1}>
-            <S.Box $floating />
-          </MouseParallax>
-        </S.Container>
       </S.Wrapper>
     </>
   );
