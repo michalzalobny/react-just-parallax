@@ -25,6 +25,7 @@ export interface ScrollParallaxProps {
   lerpEase?: number;
   isHorizontal?: boolean;
   isAbsolutelyPositioned?: boolean;
+  zIndex?: number;
 }
 
 export type ScrollParallaxHandle = {
@@ -50,6 +51,7 @@ export const ScrollParallax = forwardRef<
     lerpEase = 0.06,
     isHorizontal = false,
     isAbsolutelyPositioned = false,
+    zIndex = null,
   } = props;
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
   const parentSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -219,6 +221,7 @@ export const ScrollParallax = forwardRef<
           position: isAbsolutelyPositioned ? "absolute" : "relative",
           top: 0,
           left: 0,
+          zIndex: zIndex ? zIndex : "initial",
         }}
       >
         <span

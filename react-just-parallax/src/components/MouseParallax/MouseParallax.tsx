@@ -17,6 +17,7 @@ export interface MouseParallaxProps {
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
   isAbsolutelyPositioned?: boolean;
+  zIndex?: number;
 }
 
 const DEFAULT_FPS = 60;
@@ -46,6 +47,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     enableOnTouchDevice = false,
     isAbsolutelyPositioned = false,
     lerpEase = 0.06,
+    zIndex = null,
   } = props;
   const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -285,6 +287,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
           position: isAbsolutelyPositioned ? "absolute" : "relative",
           top: 0,
           left: 0,
+          zIndex: zIndex ? zIndex : "initial",
         }}
       >
         <span
