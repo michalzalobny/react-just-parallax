@@ -84,7 +84,7 @@ export const Text = styled(motion.p)`
   text-transform: uppercase;
   color: black; //#E2C4A3 #b0a3e2 #9BDBD8
   transition: 0;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.05vw;
 `;
 
 export const TextWrapper = styled.div`
