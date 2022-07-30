@@ -80,16 +80,17 @@ export const MotionWrapper = styled(motion.div)`
 export const Text = styled(motion.p)`
   font-family: 'teko';
   font-weight: 800;
-  font-size: 1.5vw;
+  font-size: 1.6vw;
   text-transform: uppercase;
   color: black; //#E2C4A3 #b0a3e2 #9BDBD8
   transition: 0;
+  letter-spacing: 0.8px;
 `;
 
 export const TextWrapper = styled.div`
   overflow: hidden;
 
-  transform: translateY(-580%);
+  transform: translateY(-540%);
 `;
 
 export const TextContainer = styled(motion.div)`

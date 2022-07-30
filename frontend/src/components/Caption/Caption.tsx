@@ -43,11 +43,11 @@ export const Caption = (props: Props) => {
   );
 
   const translateBadgeYValue = useTransform(scrollRatioRest, v => {
-    return `${(1 - v) * -500}%`;
+    return `${(1 - v) * -480}%`;
   });
 
   const translateBadgeXValue = useTransform(scrollRatioRest, v => {
-    return `${(1 - v) * -101}%`;
+    return `${(1 - v) * 101}%`;
   });
 
   useEffect(() => {
