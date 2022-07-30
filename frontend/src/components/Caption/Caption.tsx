@@ -101,7 +101,7 @@ export const Caption = (props: Props) => {
         >
           <S.MotionWrapper
             style={{
-              // scale: scaleValue,
+              scale: scaleValue,
               x: translateXValue,
             }}
           >
