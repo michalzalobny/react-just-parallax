@@ -66,6 +66,33 @@ export class TextSketch {
     this._ctx.clip();
   }
 
+  _scaleContext() {
+    if (!this._ctx) return;
+
+    const desiredScale = 1 - 0.515 * this._scrollRatioRest;
+    const scale = desiredScale * this._pixelRatio;
+    const sFactor = (scale - 1 * this._pixelRatio) * 0.5;
+    const tX = -this._rendererBounds.width * sFactor;
+    const tY = -this._rendererBounds.height * sFactor;
+    this._ctx.setTransform(scale, 0, 0, scale, tX, tY);
+  }
+
+  _drawText() {
+    if (!this._ctx) return;
+    this._ctx.fillText(
+      this._textValue,
+      this._textMeasures.width * this._scrollRatioRest * 0.53 * 0.5 +
+        this._rendererBounds.width * TextSketch.edgeSize +
+        this._translateOffset.x -
+        this._textMeasures.width * this._scrollRatioQuicker * 0.52 - //defines when to stop offseting
+        this._textMeasures.width * 0.01, //extra letter offset due to font settings
+      this._rendererBounds.height / 2 +
+        this._textMeasures.height / 2 +
+        this._translateOffset.y -
+        this._textMeasures.width * -this._scrollRatioRest * -0.05 * 0
+    );
+  }
+
   update(updateInfo: UpdateInfo) {
     if (!this._ctx) return;
 
@@ -81,20 +108,9 @@ export class TextSketch {
 
     this._ctx.save();
     this._clipRect();
+    this._scaleContext();
 
-    this._ctx.fillText(
-      this._textValue,
-      this._textMeasures.width * this._scrollRatioRest * 0.53 +
-        this._rendererBounds.width * TextSketch.edgeSize +
-        this._translateOffset.x -
-        this._textMeasures.width * this._scrollRatioQuicker * 0.52 - //defines when to stop offseting
-        this._textMeasures.width * 0.01, //extra letter offset due to font settings
-      this._rendererBounds.height / 2 +
-        this._textMeasures.height / 2 +
-        this._translateOffset.y -
-        this._textMeasures.width * -this._scrollRatioRest * -0.05 * 0
-    );
-
+    this._drawText();
     this._ctx.restore();
   }
 
@@ -111,17 +127,6 @@ export class TextSketch {
       x: destination,
       duration,
       ease: TextSketch.defaultEase,
-    });
-  }
-
-  _animateFontSize(destination: number, duration: number) {
-    return gsap.to(this._textMeasures, {
-      fontSize: destination,
-      duration,
-      ease: TextSketch.defaultEase,
-      onUpdate: () => {
-        this._updateFontSize();
-      },
     });
   }
 
@@ -158,9 +163,6 @@ export class TextSketch {
 
   setScrollRatioRest(value: number) {
     this._scrollRatioRest = value;
-    const defaultValue = this._rendererBounds.width * 0.417;
-    this._textMeasures.fontSize = defaultValue - defaultValue * 0.53 * value;
-    this._updateFontSize();
   }
 
   animateIn() {
@@ -168,9 +170,7 @@ export class TextSketch {
 
     this._transitionTl;
     // .add(this._animateOffsetX(-300, 1.2))
-    // .add(this._animateFontSize(900, 2.5));
     // .add(this._animateOffsetX(0, 1.2))
-    // .add(this._animateFontSize(100, 0.8));
   }
 
   destroy() {
