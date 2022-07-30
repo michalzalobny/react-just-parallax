@@ -60,7 +60,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const targetY = useRef(0);
   const syncRenderRef = useRef<null | Process>(null);
   const syncUpdateRef = useRef<null | Process>(null);
-  const shouldUpdate = useRef(false);
+  const shouldUpdate = useRef(true);
   const parallaxContainerRefRect = useRef<Rect>(defaultRect);
   const mouseMove = useRef(new MouseMove());
   const observer = useRef<null | IntersectionObserver>(null);
