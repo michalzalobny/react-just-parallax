@@ -19,6 +19,8 @@ export const DocsInfo = (props: Props) => {
           React Just Parallax is a React library for scroll and mousemove parallax effect ✨ Open
           source, production-ready
         </S.Paragraph>
+
+        <S.Paragraph>Work in progress...</S.Paragraph>
         {/* <MouseParallax scrollContainerRef={scrollContainerRef}>
           <S.Box />
         </MouseParallax>
