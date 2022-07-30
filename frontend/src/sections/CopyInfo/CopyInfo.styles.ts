@@ -41,10 +41,10 @@ export const AuthorWrapper = styled.h1`
 export const LogoWrapper = styled.h1`
   position: fixed;
   z-index: 20;
-  top: 10px;
+  top: 16px;
   left: 20px;
   display: flex;
-  width: 190px;
+  width: 150px;
 
   &:before {
     content: '';
@@ -53,6 +53,7 @@ export const LogoWrapper = styled.h1`
   }
 
   ${media.tablet} {
+    width: 190px;
     top: 30px;
     left: 50px;
   }
