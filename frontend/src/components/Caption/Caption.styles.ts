@@ -76,3 +76,20 @@ export const MotionWrapper = styled(motion.div)`
   width: 100%;
   height: 100%;
 `;
+
+export const Text = styled(motion.p)`
+  font-family: 'teko';
+  font-weight: 800;
+  font-size: 1.5vw;
+  text-transform: uppercase;
+  color: black; //#E2C4A3 #b0a3e2 #9BDBD8
+`;
+
+export const TextWrapper = styled.div`
+  overflow: hidden;
+  position: absolute;
+  z-index: 3;
+  left: 7%;
+  top: 50%;
+  transform: translateY(-580%);
+`;

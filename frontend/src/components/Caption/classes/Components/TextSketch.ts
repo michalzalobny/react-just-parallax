@@ -69,7 +69,7 @@ export class TextSketch {
   _scaleContext() {
     if (!this._ctx) return;
 
-    const desiredScale = 1 - 0.515 * this._scrollRatioRest;
+    const desiredScale = 1 - 0.51 * this._scrollRatioRest;
     const scale = desiredScale * this._pixelRatio;
     const sFactor = (scale - 1 * this._pixelRatio) * 0.5;
     const tX = -this._rendererBounds.width * sFactor;
@@ -89,7 +89,7 @@ export class TextSketch {
       this._rendererBounds.height / 2 +
         this._textMeasures.height / 2 +
         this._translateOffset.y -
-        this._textMeasures.width * -this._scrollRatioRest * -0.05 * 0
+        this._textMeasures.width * -this._scrollRatioRest * 0.05 * 0
     );
   }
 

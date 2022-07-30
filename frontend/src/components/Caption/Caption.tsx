@@ -42,6 +42,10 @@ export const Caption = (props: Props) => {
     v => v * windowSizeRef.current.windowWidth * -0.5
   );
 
+  const translateYValue = useTransform(scrollRatioRest, v => {
+    return `${(1 - v) * 100}%`;
+  });
+
   useEffect(() => {
     if (!rendererEl.current) return;
     appState.app = new App({
@@ -94,6 +98,9 @@ export const Caption = (props: Props) => {
     <>
       <S.Wrapper>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
+        <S.TextWrapper>
+          <S.Text style={{ y: translateYValue }}>react just</S.Text>
+        </S.TextWrapper>
         <S.MotionWrapper
           style={{
             x: translateXValue2,
