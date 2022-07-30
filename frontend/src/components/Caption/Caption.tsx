@@ -102,11 +102,11 @@ export const Caption = (props: Props) => {
     <>
       <S.Wrapper>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
-        <S.TextContainer style={{ y: translateBadgeYValue }}>
+        {/* <S.TextContainer style={{ y: translateBadgeYValue }}>
           <S.TextWrapper>
             <S.Text style={{ x: translateBadgeXValue }}>react just</S.Text>
           </S.TextWrapper>
-        </S.TextContainer>
+        </S.TextContainer> */}
         <S.MotionWrapper
           style={{
             x: translateXValue2,

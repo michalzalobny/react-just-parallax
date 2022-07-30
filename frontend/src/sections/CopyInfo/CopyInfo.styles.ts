@@ -16,8 +16,8 @@ export const GithubWrapper = styled.div`
 
   ${media.tablet} {
     transform: none;
-    bottom: 20px;
-    left: 30px;
+    bottom: 30px;
+    left: 50px;
   }
 `;
 
@@ -33,8 +33,28 @@ export const AuthorWrapper = styled.h1`
   ${s1};
 
   ${media.tablet} {
-    bottom: 20px;
-    right: 30px;
+    bottom: 30px;
+    right: 50px;
+  }
+`;
+
+export const LogoWrapper = styled.h1`
+  position: fixed;
+  z-index: 20;
+  top: 10px;
+  left: 20px;
+  display: flex;
+  width: 190px;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-bottom: 33%;
+  }
+
+  ${media.tablet} {
+    top: 30px;
+    left: 50px;
   }
 `;
 

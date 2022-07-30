@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { PreloadImage } from 'components/PreloadImage/PreloadImage';
 import { LinkHandler } from 'components/LinkHandler/LinkHandler';
 
 import * as S from './CopyInfo.styles';
+import logoSrc from './images/logo.svg';
 
 interface Props {
   repoHref?: string;
@@ -24,6 +26,9 @@ export const CopyInfo = (props: Props) => {
           <S.AuthorLink>@michalzalobny</S.AuthorLink>
         </LinkHandler>
       </S.AuthorWrapper>
+      <S.LogoWrapper>
+        <PreloadImage shouldContain imageSrc={logoSrc as string} alt="React Just Parallax" />
+      </S.LogoWrapper>
     </>
   );
 };
