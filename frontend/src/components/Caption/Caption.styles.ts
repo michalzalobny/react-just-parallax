@@ -1,21 +1,15 @@
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
 
-interface WrapperProps {
-  $elHeight: number;
-  isHeightReady: boolean;
-}
-
-export const Wrapper = styled.div<WrapperProps>`
-  position: sticky;
+export const Wrapper = styled.div`
+  position: fixed;
+  z-index: -1;
   top: 0;
   left: 0;
   width: 100%;
-  height: ${props =>
-    props.isHeightReady
-      ? props.$elHeight.toString() + 'px'
-      : '100vh'}; //It's only used to fix height on mobile (normally 100vh would be enough)
+  height: 100%;
   overflow: hidden;
+  background-color: #b0a3e2;
 `;
 
 export const CanvasWrapper = styled.div`
@@ -36,6 +30,17 @@ export const BackgroundCanvasWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: -1;
+  user-select: none;
+  pointer-events: none;
+`;
+
+export const CoverBackgroundCanvasWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
   user-select: none;
   pointer-events: none;
 `;

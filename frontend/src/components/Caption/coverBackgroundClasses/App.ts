@@ -1,23 +1,17 @@
 import debounce from 'lodash.debounce';
-import FontFaceObserver from 'fontfaceobserver';
 import { MotionValue } from 'framer-motion';
 
 import { sharedValues } from 'utils/sharedValues';
 import { Bounds } from 'utils/sharedTypes';
 
-import { TextSketch } from './Components/TextSketch';
+import { BackgroundSketch } from './Components/BackgroundSketch';
 
 interface Constructor {
-  rendererEl: HTMLDivElement;
-  setShouldReveal: React.Dispatch<React.SetStateAction<boolean>>;
+  rendererEl: HTMLDivElement | null;
   scrollRatio: MotionValue<any>;
-  scrollRatioQuicker: MotionValue<any>;
-  scrollRatioRest: MotionValue<any>;
 }
 
 export class App {
-  static backgroundColor = 'rgba(244,244,244,1)';
-
   _rendererEl: HTMLDivElement;
   _rafId: number | null = null;
   _isResumed = true;
@@ -25,44 +19,24 @@ export class App {
   _canvas: HTMLCanvasElement;
   _pixelRatio = 1;
   _ctx: CanvasRenderingContext2D | null;
-  _setShouldRevealReact;
   _rendererBounds: Bounds = { width: 100, height: 100 };
-  _textSketch: TextSketch;
-  _scrollRatioRest = 0;
+  _backgroundSketch: BackgroundSketch;
 
-  constructor({
-    scrollRatioRest,
-    rendererEl,
-    setShouldReveal,
-    scrollRatio,
-    scrollRatioQuicker,
-  }: Constructor) {
-    this._rendererEl = rendererEl;
-    this._setShouldRevealReact = setShouldReveal;
+  constructor({ scrollRatio, rendererEl }: Constructor) {
+    this._rendererEl = rendererEl as HTMLDivElement;
     this._canvas = document.createElement('canvas');
     this._rendererEl.appendChild(this._canvas);
     this._ctx = this._canvas.getContext('2d');
-    this._textSketch = new TextSketch({
+    this._backgroundSketch = new BackgroundSketch({
       ctx: this._ctx,
-      text: 'PARA LLAX',
     });
 
-    this._preloadFont();
     this._onResize();
     this._addListeners();
     this._resumeAppFrame();
 
     scrollRatio.onChange(v => {
-      this._textSketch.setScrollRatio(v as number);
-    });
-
-    scrollRatioQuicker.onChange(v => {
-      this._textSketch.setScrollRatioQuicker(v as number);
-    });
-
-    scrollRatioRest.onChange(v => {
-      this._textSketch.setScrollRatioRest(v as number);
-      this._scrollRatioRest = v as number;
+      this._backgroundSketch.setScrollRatio(v as number);
     });
   }
 
@@ -74,8 +48,8 @@ export class App {
     this._rendererBounds.height = clientRect.height;
     this._pixelRatio = Math.min(window.devicePixelRatio, 2);
     this._setSizes();
-    this._textSketch.setRendererBounds(this._rendererBounds);
-    this._textSketch.setPixelRatio(this._pixelRatio);
+    this._backgroundSketch.setRendererBounds(this._rendererBounds);
+    this._backgroundSketch.setPixelRatio(this._pixelRatio);
   }
 
   _setSizes() {
@@ -93,30 +67,8 @@ export class App {
     }
   }
 
-  _preloadFont() {
-    const fontA = new FontFaceObserver('opensans');
-    const fontB = new FontFaceObserver('teko');
-
-    Promise.all([fontA.load(null, 2500), fontB.load(null, 2500)])
-      .then(
-        () => {
-          this._onLoaded();
-        },
-        () => {
-          this._onLoaded();
-          console.warn('Fonts were loading too long (over 1500ms)');
-        }
-      )
-      .catch(err => {
-        this._onLoaded();
-        console.warn('Some critical font are not available:', err);
-      });
-  }
-
   _onLoaded() {
-    this._textSketch.setRendererBounds(this._rendererBounds);
-    this._setShouldRevealReact(true);
-    this._textSketch.animateIn();
+    this._backgroundSketch.setRendererBounds(this._rendererBounds);
   }
 
   _onVisibilityChange = () => {
@@ -173,7 +125,7 @@ export class App {
     this._lastFrameTime = time;
 
     this._clear();
-    this._textSketch.update({ delta, slowDownFactor, time });
+    this._backgroundSketch.update({ delta, slowDownFactor, time });
   };
 
   _stopAppFrame() {
@@ -190,6 +142,6 @@ export class App {
     this._stopAppFrame();
     this._removeListeners();
 
-    this._textSketch.destroy();
+    this._backgroundSketch.destroy();
   }
 }

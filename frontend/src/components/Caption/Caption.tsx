@@ -7,21 +7,25 @@ import { ShowOff } from 'sections/ShowOff/ShowOff';
 import { appState } from './Caption.state';
 import { App } from './classes/App';
 import * as Background from './backgroundClasses/App';
+import * as CoverBackground from './coverBackgroundClasses/App';
 import * as S from './Caption.styles';
 
 interface Props {
   scrollRatio: MotionValue<any>;
   scrollRatioQuicker: MotionValue<any>;
   scrollRatioRest: MotionValue<any>;
+  scrollRatioClose: MotionValue<any>;
   scrollContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const Caption = (props: Props) => {
-  const { scrollRatioRest, scrollRatioQuicker, scrollRatio, scrollContainerRef } = props;
+  const { scrollRatioClose, scrollRatioRest, scrollRatioQuicker, scrollRatio, scrollContainerRef } =
+    props;
   const rendererEl = useRef<HTMLDivElement | null>(null);
   const backgroundRendererEl = useRef<HTMLDivElement | null>(null);
+  const coverBackgroundRendererEl = useRef<HTMLDivElement | null>(null);
   const [shouldReveal, setShouldReveal] = useState(false);
-  const { windowSize, windowSizeRef } = useWindowSize();
+  const { windowSizeRef } = useWindowSize();
 
   const scaleValue = useTransform(scrollRatioQuicker, v => v * 0.2 + 0.8);
   const translateXValue = useTransform(scrollRatioQuicker, v => {
@@ -71,9 +75,24 @@ export const Caption = (props: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!rendererEl.current) return;
+    appState.coverBackground = new CoverBackground.App({
+      rendererEl: coverBackgroundRendererEl.current,
+      scrollRatio: scrollRatioClose,
+    });
+
+    return () => {
+      if (appState.coverBackground) {
+        appState.coverBackground.destroy();
+        appState.coverBackground = null;
+      }
+    };
+  }, []);
+
   return (
     <>
-      <S.Wrapper isHeightReady={windowSize.isReady} $elHeight={windowSize.windowHeight}>
+      <S.Wrapper>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
         <S.MotionWrapper
           style={{
@@ -106,6 +125,7 @@ export const Caption = (props: Props) => {
         </S.MotionWrapper>
 
         <S.BackgroundCanvasWrapper ref={backgroundRendererEl} />
+        <S.CoverBackgroundCanvasWrapper ref={coverBackgroundRendererEl} />
         <S.CanvasWrapper ref={rendererEl} />
       </S.Wrapper>
     </>

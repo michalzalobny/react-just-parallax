@@ -9,7 +9,7 @@ import { Head } from 'seo/Head/Head';
 
 import * as S from './IndexPage.styles';
 
-const quickerPoint = 0.4;
+const quickerPoint = 0.2;
 
 const sat = (x: number) => {
   return Math.min(Math.max(x, 0), 1);
@@ -45,13 +45,14 @@ export default function IndexPage() {
   );
 
   const scrollYPaddedQuicker = useTransform(scrollYPadded, v => remap(0, quickerPoint, 0, 1, v));
-  const scrollYPaddedRest = useTransform(
-    scrollYPadded,
-    v => remap(quickerPoint + 0.25, 0.85, 0, 1, v) //+0.1 starts the animation a bit later and ends it at 0.75
+  const scrollYPaddedRest = useTransform(scrollYPadded, v =>
+    remap(quickerPoint * 2, quickerPoint * 3, 0, 1, v)
   );
+  const scrollYPaddedClose = useTransform(scrollYPadded, v => remap(quickerPoint * 4, 1, 0, 1, v));
   const scrollRatio = useSpring(scrollYPadded, springSettings);
   const scrollRatioQuicker = useSpring(scrollYPaddedQuicker, springSettings);
   const scrollRatioRest = useSpring(scrollYPaddedRest, springSettings);
+  const scrollRatioClose = useSpring(scrollYPaddedClose, springSettings);
 
   return (
     <>
@@ -62,6 +63,7 @@ export default function IndexPage() {
             scrollContainerRef={scrollContainerRef}
             scrollRatioQuicker={scrollRatioQuicker}
             scrollRatioRest={scrollRatioRest}
+            scrollRatioClose={scrollRatioClose}
             scrollRatio={scrollRatio}
           />
         </S.CaptionWrapper>
