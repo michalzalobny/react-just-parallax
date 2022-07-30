@@ -19,8 +19,8 @@ interface Props {
   scrollContainer: React.MutableRefObject<HTMLDivElement | null>;
 }
 
-const defStrength = -0.15;
-const mulC = 1.2;
+const defStrength = -0.24;
+const mulC = 0.3;
 const mul1 = 0.84;
 const mul2 = 0.82;
 const mul3 = 0.7;
