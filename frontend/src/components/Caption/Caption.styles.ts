@@ -83,13 +83,18 @@ export const Text = styled(motion.p)`
   font-size: 1.5vw;
   text-transform: uppercase;
   color: black; //#E2C4A3 #b0a3e2 #9BDBD8
+  transition: 0;
 `;
 
 export const TextWrapper = styled.div`
   overflow: hidden;
+
+  transform: translateY(-580%);
+`;
+
+export const TextContainer = styled(motion.div)`
   position: absolute;
   z-index: 3;
   left: 7%;
   top: 50%;
-  transform: translateY(-580%);
 `;

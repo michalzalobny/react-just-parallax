@@ -49,6 +49,7 @@ export default function IndexPage() {
     remap(quickerPoint * 2, quickerPoint * 3, 0, 1, v)
   );
   const scrollYPaddedClose = useTransform(scrollYPadded, v => remap(quickerPoint * 4, 1, 0, 1, v));
+
   const scrollRatio = useSpring(scrollYPadded, springSettings);
   const scrollRatioQuicker = useSpring(scrollYPaddedQuicker, springSettings);
   const scrollRatioRest = useSpring(scrollYPaddedRest, springSettings);

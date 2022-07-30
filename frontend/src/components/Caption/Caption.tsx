@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MotionValue, useTransform } from 'framer-motion';
+import { MotionValue, useTransform, motion } from 'framer-motion';
 
 import { useWindowSize } from 'hooks/useWindowSize';
 import { ShowOff } from 'sections/ShowOff/ShowOff';
@@ -42,8 +42,12 @@ export const Caption = (props: Props) => {
     v => v * windowSizeRef.current.windowWidth * -0.5
   );
 
-  const translateYValue = useTransform(scrollRatioRest, v => {
-    return `${(1 - v) * 100}%`;
+  const translateBadgeYValue = useTransform(scrollRatioRest, v => {
+    return `${(1 - v) * -500}%`;
+  });
+
+  const translateBadgeXValue = useTransform(scrollRatioRest, v => {
+    return `${(1 - v) * -101}%`;
   });
 
   useEffect(() => {
@@ -98,9 +102,11 @@ export const Caption = (props: Props) => {
     <>
       <S.Wrapper>
         <S.ReadyWrapper shouldReveal={shouldReveal} />
-        <S.TextWrapper>
-          <S.Text style={{ y: translateYValue }}>react just</S.Text>
-        </S.TextWrapper>
+        <S.TextContainer style={{ y: translateBadgeYValue }}>
+          <S.TextWrapper>
+            <S.Text style={{ x: translateBadgeXValue }}>react just</S.Text>
+          </S.TextWrapper>
+        </S.TextContainer>
         <S.MotionWrapper
           style={{
             x: translateXValue2,
