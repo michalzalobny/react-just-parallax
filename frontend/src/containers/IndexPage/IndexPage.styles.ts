@@ -16,7 +16,7 @@ export const DocsWrapper = styled.div`
 `;
 
 export const CaptionWrapper = styled.div`
-  height: 400vh;
+  height: 360vh;
 `;
 
 export const Wrapper = styled.div`
