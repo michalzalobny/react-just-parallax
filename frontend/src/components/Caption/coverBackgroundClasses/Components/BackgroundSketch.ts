@@ -44,7 +44,7 @@ export class BackgroundSketch {
       this._ctx.lineTo(n, r);
     }
 
-    this._ctx.fillStyle = 'rgba(244,244,244,1)';
+    this._ctx.fillStyle = 'rgba(255,255,255,1)';
     this._ctx.fill();
   }
 

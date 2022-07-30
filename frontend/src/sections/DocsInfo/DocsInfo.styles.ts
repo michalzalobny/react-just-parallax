@@ -1,54 +1,35 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
+import { media } from 'utils/media';
 
 export const Container = styled.div`
   width: 100%;
-  height: 40rem;
+  height: 120rem;
   position: relative;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10rem;
+  padding: 3.5rem;
 
-  &:not(:first-child) {
-    margin-top: 15rem;
-  }
-
-  &:last-child {
-    margin-bottom: 15rem;
-  }
-
-  &:nth-child(1) {
-    background-color: red;
-  }
-  &:nth-child(2) {
-    background-color: purple;
-  }
-  &:nth-child(3) {
-    background-color: brown;
-  }
-  &:nth-child(4) {
-    background-color: violet;
+  ${media.tablet} {
+    padding: 7rem;
   }
 `;
 
-interface BoxProps {
-  $floating?: boolean;
-}
+export const Title = styled.h2`
+  font-size: 2.5rem;
 
-export const Box = styled.div<BoxProps>`
-  width: 100px;
-  position: relative;
-  background: black;
+  text-align: left;
+  font-weight: 800;
 
-  ${props =>
-    props.$floating &&
-    css`
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    `}
-
-  &:before {
-    content: '';
-    display: block;
-    width: 100%;
-    padding-bottom: 100%;
+  ${media.tablet} {
+    font-size: 3rem;
   }
+`;
+
+export const Paragraph = styled.p`
+  font-size: 15px;
+  margin: 35px 0;
+  line-height: 1.6;
 `;

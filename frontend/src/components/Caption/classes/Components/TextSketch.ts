@@ -52,7 +52,7 @@ export class TextSketch {
       this._ctx.lineTo(n, r);
     }
 
-    this._ctx.fillStyle = 'white';
+    this._ctx.fillStyle = 'rgb(244,244,244)';
     this._ctx.fill();
   }
 

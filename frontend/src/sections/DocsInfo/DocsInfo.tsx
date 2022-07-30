@@ -13,7 +13,13 @@ export const DocsInfo = (props: Props) => {
   return (
     <>
       <S.Container>
-        <MouseParallax scrollContainerRef={scrollContainerRef}>
+        <S.Title>Getting Started</S.Title>
+        <S.Paragraph>Welcome to the React Just Parallax documentation!</S.Paragraph>
+        <S.Paragraph>
+          React Just Parallax is a React library for scroll and mousemove parallax effect ✨ Open
+          source, production-ready
+        </S.Paragraph>
+        {/* <MouseParallax scrollContainerRef={scrollContainerRef}>
           <S.Box />
         </MouseParallax>
       </S.Container>
@@ -30,7 +36,7 @@ export const DocsInfo = (props: Props) => {
       <S.Container>
         <ScrollParallax scrollContainerRef={scrollContainerRef}>
           <S.Box $floating />
-        </ScrollParallax>
+        </ScrollParallax> */}
       </S.Container>
     </>
   );

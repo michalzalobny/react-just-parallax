@@ -11,9 +11,7 @@ export const ScrollContainer = styled.div`
   overflow: auto;
 `;
 
-export const DocsWrapper = styled.div`
-  background-color: green;
-`;
+export const DocsWrapper = styled.div``;
 
 export const CaptionWrapper = styled.div`
   height: 360vh;
@@ -21,9 +19,9 @@ export const CaptionWrapper = styled.div`
 
 export const Wrapper = styled.div`
   margin: 0 auto;
-  width: 90%;
+  width: 80%;
 
   ${media.tablet} {
-    width: 130rem;
+    width: 100rem;
   }
 `;
