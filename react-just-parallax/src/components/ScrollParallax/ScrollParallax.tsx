@@ -26,7 +26,7 @@ export interface ScrollParallaxProps {
   isHorizontal?: boolean;
   isAbsolutelyPositioned?: boolean;
   zIndex?: number;
-  neverPause?: boolean;
+  shouldPause?: boolean;
 }
 
 export type ScrollParallaxHandle = {
@@ -53,7 +53,7 @@ export const ScrollParallax = forwardRef<
     isHorizontal = false,
     isAbsolutelyPositioned = false,
     zIndex = null,
-    neverPause = false,
+    shouldPause = true,
   } = props;
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
   const parentSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -175,7 +175,7 @@ export const ScrollParallax = forwardRef<
     targetY.current = offsetY;
 
     //dont check if is intersecting etc.
-    if (neverPause) return;
+    if (!shouldPause) return;
 
     if (
       Math.abs(targetY.current) >

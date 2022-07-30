@@ -18,7 +18,7 @@ export interface MouseParallaxProps {
   lerpEase?: number;
   isAbsolutelyPositioned?: boolean;
   zIndex?: number;
-  neverPause?: boolean;
+  shouldPause?: boolean;
 }
 
 const DEFAULT_FPS = 60;
@@ -49,7 +49,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     isAbsolutelyPositioned = false,
     lerpEase = 0.06,
     zIndex = null,
-    neverPause = false,
+    shouldPause = true,
   } = props;
   const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -209,7 +209,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const updateValuesDebounced = debounce(updateValues, 150);
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    if (neverPause) return;
+    if (!shouldPause) return;
     const isIntersecting = entries[0].isIntersecting;
     if (isIntersecting) {
       shouldUpdate.current = true;
