@@ -11,7 +11,7 @@ export interface HeadProps {
 
 export const Head = (props: HeadProps) => {
   const {
-    ogImage = 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1650138958/og-100_mvbgru.jpg',
+    ogImage = 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1659183816/ogimage-100_jec2sx.jpg',
     title = 'React Just Parallax',
     description = 'React library for scroll and mousemove parallax effect, open source, production-ready',
   } = props;
@@ -22,7 +22,7 @@ export const Head = (props: HeadProps) => {
       <meta name="description" content={description} />
       <link
         rel="icon"
-        href="https://res.cloudinary.com/dpv0ukspz/image/upload/v1650137433/icon_wghyio.ico"
+        href="https://res.cloudinary.com/dpv0ukspz/image/upload/v1659184024/favicon_hdctby.ico"
       />
 
       <meta property="og:type" content="website" />
