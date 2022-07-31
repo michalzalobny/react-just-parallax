@@ -86,7 +86,7 @@ import { ScrollParallax, ScrollParallaxHandle } from "react-just-parallax";
 
 export const MyComponent = () => {
   const [display, setDisplay] = useState(false);
-  const scrollParallaxRef = useRef<ScrollParallaxHandle \| null>(null);
+  const scrollParallaxRef = useRef<ScrollParallaxHandle | null>(null);
 
   useEffect(() => {
     scrollParallaxRef.current?.updateValues();
