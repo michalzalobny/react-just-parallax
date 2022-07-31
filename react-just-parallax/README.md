@@ -20,13 +20,15 @@ npm install react-just-parallax
 import { MouseParallax, ScrollParallax } from "react-just-parallax";
 
 export const MyComponent = () => (
-  <MouseParallax>
-    <p>I'm reacting to mouse move</p>
-  </MouseParallax>
+  <>
+    <MouseParallax>
+      <p>I'm reacting to mouse move</p>
+    </MouseParallax>
 
-  <ScrollParallax>
-    <p>I'm reacting to scroll</p>
-  </ScrollParallax>
+    <ScrollParallax>
+      <p>I'm reacting to scroll</p>
+    </ScrollParallax>
+  </>
 );
 ```
 
