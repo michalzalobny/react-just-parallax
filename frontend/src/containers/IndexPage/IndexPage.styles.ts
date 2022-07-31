@@ -11,7 +11,9 @@ export const ScrollContainer = styled.div`
   overflow: auto;
 `;
 
-export const DocsWrapper = styled.div``;
+export const DocsWrapper = styled.div`
+  margin-top: -20vh;
+`;
 
 export const CaptionWrapper = styled.div`
   height: 360vh;
