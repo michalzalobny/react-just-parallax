@@ -12,16 +12,16 @@ This repo contains the source code for [React Just Parallax](https://github.com/
 
 ### 📦 NPM Link
 
-[Link to official NPM page](https://www.npmjs.com/package/react-just-parallax/).
+- [Link to official NPM page](https://www.npmjs.com/package/react-just-parallax/).
 
 ### 📜 Docs
 
-Check out [our documentation and examples](https://react-just-parallax.michalzalobny.com/) for guides and a full API reference.
+- Check out [our documentation and examples](https://react-just-parallax.michalzalobny.com/) for guides and a full API reference.
 
 ### ⚖️ License
 
-React Just Parallax is MIT licensed.
+- React Just Parallax is MIT licensed.
 
 ### ✍🏻 Author
 
-[@michalzalobny](https://twitter.com/michalzalobny)
+- [@michalzalobny](https://twitter.com/michalzalobny)
