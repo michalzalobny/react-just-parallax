@@ -13,8 +13,8 @@ export class TextSketch {
   static defaultEase = 'expo.inOut';
   static edgeSize = 0.07;
 
-  _rendererBounds: Bounds = { width: 100, height: 0 };
-  _translateOffset = { x: 0, y: 100 };
+  _rendererBounds: Bounds = { width: 1, height: 1 };
+  _translateOffset = { x: 0, y: 0 };
   _textValue: string;
   _ctx: CanvasRenderingContext2D | null;
   _pixelRatio = 1;
@@ -168,7 +168,7 @@ export class TextSketch {
   animateIn() {
     this._transitionTl = gsap.timeline();
 
-    this._transitionTl.add(this._animateOffsetY(0, 1.5));
+    // this._transitionTl.add(this._animateOffsetY(0, 1.5));
     // .add(this._animateOffsetX(0, 1.2))
   }
 

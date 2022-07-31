@@ -12,7 +12,7 @@ export const ScrollContainer = styled.div`
 `;
 
 export const DocsWrapper = styled.div`
-  margin-top: -20vh;
+  margin-top: -30vh;
 `;
 
 export const CaptionWrapper = styled.div`
