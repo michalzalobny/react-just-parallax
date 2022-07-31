@@ -41,6 +41,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             scrollContainerRef={scrollContainer}
             strength={defStrength * mulC}
             zIndex={5}
+            shouldPause={false}
           >
             <S.ContoursWrapper>
               <PreloadImage shouldContain imageSrc={frameSrc as string} alt="leafs contour" />
@@ -50,6 +51,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul1}
+            shouldPause={false}
           >
             <S.Shape1Wrapper>
               <PreloadImage shouldContain imageSrc={shape1Src as string} alt="flower shape" />
@@ -60,6 +62,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul2}
+            shouldPause={false}
           >
             <S.Shape2Wrapper>
               <PreloadImage shouldContain imageSrc={shape2Src as string} alt="flower shape" />
@@ -70,6 +73,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul3}
+            shouldPause={false}
           >
             <S.Shape3Wrapper>
               <PreloadImage shouldContain imageSrc={shape3Src as string} alt="flower shape" />
@@ -80,6 +84,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul4}
+            shouldPause={false}
           >
             <S.Shape4Wrapper>
               <PreloadImage shouldContain imageSrc={shape4Src as string} alt="flower shape" />
@@ -90,6 +95,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul5}
+            shouldPause={false}
             zIndex={1}
           >
             <S.Shape5Wrapper>
@@ -101,6 +107,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul6}
+            shouldPause={false}
           >
             <S.Shape6Wrapper>
               <PreloadImage shouldContain imageSrc={shape6Src as string} alt="flower shape" />
@@ -111,6 +118,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul7}
+            shouldPause={false}
             zIndex={1}
           >
             <S.Shape7Wrapper>
@@ -122,6 +130,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul8}
+            shouldPause={false}
           >
             <S.Shape8Wrapper>
               <PreloadImage shouldContain imageSrc={shape8Src as string} alt="flower shape" />
@@ -132,6 +141,7 @@ export const ShowOff = ({ scrollContainer }: Props) => {
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainer}
             strength={defStrength * mul9}
+            shouldPause={false}
           >
             <S.Shape9Wrapper>
               <PreloadImage shouldContain imageSrc={shape9Src as string} alt="flower shape" />
