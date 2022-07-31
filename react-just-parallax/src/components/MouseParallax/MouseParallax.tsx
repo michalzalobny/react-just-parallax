@@ -209,13 +209,14 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const updateValuesDebounced = debounce(updateValues, 150);
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    if (!shouldPause) return;
     const isIntersecting = entries[0].isIntersecting;
     if (isIntersecting) {
       shouldUpdate.current = true;
       resumeAppFrame();
       mouseMove.current.setShouldUpdate(true);
     } else {
+      //dont check if is intersecting etc.
+      if (!shouldPause) return;
       shouldUpdate.current = false;
       stopAppFrame();
       mouseMove.current.setShouldUpdate(false);

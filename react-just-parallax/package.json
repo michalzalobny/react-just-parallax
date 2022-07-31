@@ -1,6 +1,6 @@
 {
   "name": "react-just-parallax",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "description": "React library for scroll and mousemove parallax effect ✨ Open source, production-ready",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

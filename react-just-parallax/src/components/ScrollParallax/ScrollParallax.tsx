@@ -174,15 +174,14 @@ export const ScrollParallax = forwardRef<
     targetX.current = offsetX;
     targetY.current = offsetY;
 
-    //dont check if is intersecting etc.
-    if (!shouldPause) return;
-
     if (
       Math.abs(targetY.current) >
         windowSizeRef.current.windowHeight * SHOULD_UPDATE_OFFSET ||
       Math.abs(targetX.current) >
         windowSizeRef.current.windowWidth * SHOULD_UPDATE_OFFSET
     ) {
+      //dont check if is intersecting etc.
+      if (!shouldPause) return;
       shouldUpdate.current = false;
     } else {
       shouldUpdate.current = true;
