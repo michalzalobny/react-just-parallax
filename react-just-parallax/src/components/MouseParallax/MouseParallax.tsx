@@ -11,13 +11,13 @@ import { isTouchDevice } from "../../utils/isTouchDevice";
 export interface MouseParallaxProps {
   strength?: number;
   children?: React.ReactNode;
-  parallaxContainerRef?: React.MutableRefObject<any>;
-  scrollContainerRef?: React.MutableRefObject<any>; //Should be passed if parallaxed element is situated in other scrollable HTML element
+  parallaxContainerRef?: React.MutableRefObject<any> | null;
+  scrollContainerRef?: React.MutableRefObject<any> | null; //Should be passed if parallaxed element is situated in other scrollable HTML element
   shouldResetPosition?: boolean;
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
   isAbsolutelyPositioned?: boolean;
-  zIndex?: number;
+  zIndex?: number | null;
   shouldPause?: boolean;
 }
 
@@ -42,8 +42,8 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const {
     children,
     strength = 0.2,
-    parallaxContainerRef,
-    scrollContainerRef,
+    parallaxContainerRef = null,
+    scrollContainerRef = null,
     shouldResetPosition = false,
     enableOnTouchDevice = false,
     isAbsolutelyPositioned = false,

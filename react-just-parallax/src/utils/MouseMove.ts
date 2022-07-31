@@ -92,7 +92,7 @@ export class MouseMove extends EventDispatcher {
     this._targetEl.removeEventListener("mouseout", this._onMouseLeave);
   }
 
-  init(targetEl?: React.MutableRefObject<any>) {
+  init(targetEl?: React.MutableRefObject<any> | null) {
     this._targetEl = window;
     if (targetEl && targetEl.current) {
       this._targetEl = targetEl.current;

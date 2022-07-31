@@ -20,12 +20,12 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 export interface ScrollParallaxProps {
   strength?: number;
   children?: React.ReactNode;
-  scrollContainerRef?: React.MutableRefObject<any>;
+  scrollContainerRef?: React.MutableRefObject<any> | null;
   enableOnTouchDevice?: boolean;
   lerpEase?: number;
   isHorizontal?: boolean;
   isAbsolutelyPositioned?: boolean;
-  zIndex?: number;
+  zIndex?: number | null;
   shouldPause?: boolean;
 }
 
@@ -47,7 +47,7 @@ export const ScrollParallax = forwardRef<
   const {
     children,
     strength = 0.2,
-    scrollContainerRef,
+    scrollContainerRef = null,
     enableOnTouchDevice = true,
     lerpEase = 0.06,
     isHorizontal = false,
