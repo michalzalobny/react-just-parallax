@@ -48,8 +48,6 @@ export const MyComponent = () => (
 );
 ```
 
-<br>
-
 ### Props for MouseParallax
 
 | Name                   | Type                           | Default | Description                                                                                                                                              |
@@ -64,8 +62,6 @@ export const MyComponent = () => (
 | parallaxContainerRef   | React.MutableRefObject \| null | null    | By default, element reacts to mousemove on window. You can specify any other container using this prop to make element react only within given container |
 | shouldResetPosition    | boolean                        | false   | Resets element's position if cursor leaves window or leaves `parallaxContainerRef`                                                                       |
 
-<br>
-
 ### Props for ScrollParallax
 
 | Name                   | Type                           | Default | Description                                                                                       |
@@ -79,11 +75,7 @@ export const MyComponent = () => (
 | isHorizontal           | boolean                        | false   | Enable if using horizontal scrolling                                                              |
 | scrollContainerRef     | React.MutableRefObject \| null | null    | Use when element is situated in scrollable element other than window                              |
 
-<br>
-
 ### Recalculating values on demand for ScrollParallax
-
-<br>
 
 It's sometimes necessary to update values such as element's position or sizes on demand, for example if the DOM structure changes.
 
