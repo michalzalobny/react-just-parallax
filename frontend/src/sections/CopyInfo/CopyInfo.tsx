@@ -19,11 +19,11 @@ export const CopyInfo = (props: Props) => {
     <>
       <S.GithubWrapper>
         <LinkHandler isExternal elHref={repoHref}>
-          <S.GithubLink>GitHub repo</S.GithubLink>
+          <S.GithubLink>GitHub repo with documentation</S.GithubLink>
         </LinkHandler>
       </S.GithubWrapper>
       <S.AuthorWrapper>
-        React Just Parallax by
+        React Just Parallax - showcase by
         <LinkHandler isExternal elHref="https://twitter.com/michalzalobny">
           <S.AuthorLink>@michalzalobny</S.AuthorLink>
         </LinkHandler>
