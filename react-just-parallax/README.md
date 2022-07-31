@@ -10,6 +10,26 @@
 
 React Just Parallax is an open source, production-ready library that's designed for all creative developers and more.
 
+### 🐇 Quick start
+
+```
+npm install react-just-parallax
+```
+
+```jsx
+import { MouseParallax, ScrollParallax } from "react-just-parallax";
+
+export const MyComponent = () => (
+  <MouseParallax>
+    <p>I'm reacting to mouse move</p>
+  </MouseParallax>
+
+  <ScrollParallax>
+    <p>I'm reacting to scroll</p>
+  </ScrollParallax>
+);
+```
+
 ### 📦 NPM Link
 
 - [Link to official NPM page](https://www.npmjs.com/package/react-just-parallax/).
