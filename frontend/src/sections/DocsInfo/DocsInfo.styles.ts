@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { media } from 'utils/media';
+import { underline } from 'utils/sharedStyled';
 
 export const Container = styled.div`
   width: 100%;
@@ -18,13 +19,24 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2.8rem;
 
   text-align: left;
   font-weight: 800;
 
   ${media.tablet} {
-    font-size: 3rem;
+    font-size: 3.5rem;
+  }
+`;
+
+export const TitleSecondary = styled.h2`
+  font-size: 2rem;
+
+  text-align: left;
+  font-weight: 800;
+
+  ${media.tablet} {
+    font-size: 2.5rem;
   }
 `;
 
@@ -32,4 +44,11 @@ export const Paragraph = styled.p`
   font-size: 15px;
   margin: 35px 0;
   line-height: 1.6;
+`;
+
+export const InlineLink = styled.span`
+  display: inline-block;
+  font-weight: 800;
+  position: relative;
+  ${underline};
 `;

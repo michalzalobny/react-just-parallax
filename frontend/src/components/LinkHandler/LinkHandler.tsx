@@ -14,17 +14,17 @@ export const LinkHandler = (props: Props) => {
   return (
     <>
       {isExternal ? (
-        <a style={{ display: 'flex' }} href={elHref} rel="noreferrer" target="_blank">
+        <a style={{ display: 'inline-block' }} href={elHref} rel="noreferrer" target="_blank">
           {children}
         </a>
       ) : onClickFn ? (
-        <button style={{ display: 'flex' }} onClick={() => onClickFn()}>
+        <button style={{ display: 'inline-block' }} onClick={() => onClickFn()}>
           {children}
         </button>
       ) : (
         elHref && (
           <Link href={elHref} passHref>
-            <a style={{ display: 'flex' }}>{children}</a>
+            <a style={{ display: 'inline-block' }}>{children}</a>
           </Link>
         )
       )}

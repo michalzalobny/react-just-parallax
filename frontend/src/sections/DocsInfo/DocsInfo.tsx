@@ -1,6 +1,8 @@
 import React from 'react';
 import { MouseParallax, ScrollParallax } from 'react-just-parallax';
 
+import { LinkHandler } from 'components/LinkHandler/LinkHandler';
+
 import * as S from './DocsInfo.styles';
 
 interface Props {
@@ -13,14 +15,26 @@ export const DocsInfo = (props: Props) => {
   return (
     <>
       <S.Container>
-        <S.Title>Getting Started</S.Title>
-        <S.Paragraph>Welcome to the React Just Parallax documentation!</S.Paragraph>
+        <S.Title>React Just Parallax</S.Title>
+
         <S.Paragraph>
           React Just Parallax is a React library for scroll and mousemove parallax effect ✨ Open
           source, production-ready
         </S.Paragraph>
 
-        <S.Paragraph>Work in progress...</S.Paragraph>
+        {/* <S.TitleSecondary>MouseParallax</S.TitleSecondary> */}
+
+        <S.Paragraph>
+          Showcase page is under construction, in the meantime, check our{' '}
+          <LinkHandler
+            isExternal
+            elHref="https://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax"
+          >
+            <S.InlineLink>documentation</S.InlineLink>
+          </LinkHandler>{' '}
+          on GitHub
+        </S.Paragraph>
+
         {/* <MouseParallax scrollContainerRef={scrollContainerRef}>
           <S.Box />
         </MouseParallax>
