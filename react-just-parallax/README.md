@@ -89,7 +89,7 @@ Library can't know of this kind of changes so it is not able to handle it by its
 import { ScrollParallax, ScrollParallaxHandle } from "react-just-parallax";
 
 export const MyComponent = () => {
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
   const scrollParallaxRef = useRef<ScrollParallaxHandle | null>(null);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export const MyComponent = () => {
       </ScrollParallax>
 
       {display && (
-        <button onClick={() => setDisplay((prev) => !prev)}>
+        <button onClick={() => setDisplay((false)}>
           Disappear me
         </button>
       )}
