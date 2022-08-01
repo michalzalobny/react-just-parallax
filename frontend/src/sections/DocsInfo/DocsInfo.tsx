@@ -25,7 +25,7 @@ export const DocsInfo = (props: Props) => {
         {/* <S.TitleSecondary>MouseParallax</S.TitleSecondary> */}
 
         <S.Paragraph>
-          ⚒️🏗️ Showcase page is under construction, in the meantime, check our{' '}
+          ⚒️🏗️ Showcase page is under construction, in the meantime, check{' '}
           <LinkHandler isExternal elHref="https://github.com/michalzalobny/react-just-parallax">
             <S.InlineLink>documentation</S.InlineLink>
           </LinkHandler>{' '}
