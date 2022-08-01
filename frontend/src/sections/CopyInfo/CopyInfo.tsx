@@ -11,9 +11,7 @@ interface Props {
 }
 
 export const CopyInfo = (props: Props) => {
-  const {
-    repoHref = 'https://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax',
-  } = props;
+  const { repoHref = 'https://github.com/michalzalobny/react-just-parallax/' } = props;
 
   return (
     <>
