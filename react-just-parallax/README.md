@@ -18,7 +18,7 @@ React Just Parallax is an open source, production-ready library that's designed 
 
 - [Link to official NPM page](https://www.npmjs.com/package/react-just-parallax/).
 
-### 📜 Docs
+### 📜 Examples
 
 - Check out [our examples and showcase page](https://react-just-parallax.michalzalobny.com/) for guides.
 
