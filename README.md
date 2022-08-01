@@ -9,6 +9,10 @@
 <br>
 
 This repo contains the source code for [React Just Parallax](https://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax), source code for [documentation page](https://github.com/michalzalobny/react-just-parallax/tree/main/frontend) and source code for [testing the package locally](https://github.com/michalzalobny/react-just-parallax/tree/main/cra-for-testing).
+- Written in TypeScript
+- Super lightweight
+- Easy to use
+- blazing fast
 
 ### 📦 NPM Link
 
@@ -16,7 +20,7 @@ This repo contains the source code for [React Just Parallax](https://github.com/
 
 ### 📜 Docs
 
-- Check out [our examples](https://react-just-parallax.michalzalobny.com/) for guides.
+- Check out [our examples and showcase page](https://react-just-parallax.michalzalobny.com/) for guides.
 
 ### ⚖️ License
 
