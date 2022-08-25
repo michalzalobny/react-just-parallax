@@ -9,6 +9,7 @@
 <br>
 
 This repo contains the source code for [React Just Parallax](https://github.com/michalzalobny/react-just-parallax/tree/main/react-just-parallax), source code for [documentation page](https://github.com/michalzalobny/react-just-parallax/tree/main/frontend) and source code for [testing the package locally](https://github.com/michalzalobny/react-just-parallax/tree/main/cra-for-testing).
+
 - Written in TypeScript
 - Super lightweight
 - Easy to use
@@ -56,7 +57,7 @@ export const MyComponent = () => (
 
 | Name                   | Type                           | Default | Description                                                                                                                                              |
 | ---------------------- | ------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| strength               | number                         | 0.2     | enParallax offset multiplier. Moving mouse by 10 pixels will move element position by 10px \* strength                                                   |
+| strength               | number                         | 0.14    | Parallax offset multiplier. Moving mouse by 10 pixels will move element position by 10px \* strength                                                     |
 | lerpEase               | number                         | 0.06    | Determines how quick the interpolation between offset values occurs (the higher the quicker)                                                             |
 | isAbsolutelyPositioned | boolean                        | false   | If the element you want to use parallax on is positioned absolutely, set this prop to `true`                                                             |
 | zIndex                 | number \| null                 | null    | Specify element's outer container z-index (useful while using `isAbsolutelyPositioned` prop)                                                             |
@@ -70,7 +71,7 @@ export const MyComponent = () => (
 
 | Name                   | Type                           | Default | Description                                                                                       |
 | ---------------------- | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------- |
-| strength               | number                         | 0.2     | Parallax offset multiplier. Scrolling by 10 pixels will move element position by 10px \* strength |
+| strength               | number                         | 0.14    | Parallax offset multiplier. Scrolling by 10 pixels will move element position by 10px \* strength |
 | lerpEase               | number                         | 0.06    | Determines how quick the interpolation between offset values occurs (the higher the quicker)      |
 | isAbsolutelyPositioned | boolean                        | false   | If the element you want to use parallax on is positioned absolutely, set this prop to `true`      |
 | zIndex                 | number \| null                 | null    | Specify element's outer container z-index (useful while using `isAbsolutelyPositioned` prop)      |

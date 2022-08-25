@@ -41,7 +41,7 @@ const defaultRect: Rect = {
 export const MouseParallax = (props: MouseParallaxProps) => {
   const {
     children,
-    strength = 0.2,
+    strength = 0.14,
     parallaxContainerRef = null,
     scrollContainerRef = null,
     shouldResetPosition = false,
@@ -97,8 +97,8 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     yMultiplier *= 0.5;
 
     //Changes direction and strength
-    xMultiplier *= -strength;
-    yMultiplier *= -strength;
+    xMultiplier *= strength;
+    yMultiplier *= strength;
 
     parallaxSpanRef.current.style.transform = `translate(${
       currentX.current * xMultiplier

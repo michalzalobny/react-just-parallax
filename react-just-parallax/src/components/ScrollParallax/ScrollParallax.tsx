@@ -46,7 +46,7 @@ export const ScrollParallax = forwardRef<
   }));
   const {
     children,
-    strength = 0.2,
+    strength = 0.14,
     scrollContainerRef = null,
     enableOnTouchDevice = true,
     lerpEase = 0.06,
@@ -93,8 +93,8 @@ export const ScrollParallax = forwardRef<
     let isHorizontalValue = isHorizontal ? 1 : 0;
 
     parallaxSpanRef.current.style.transform = `translate(${
-      currentX.current * -strength * isHorizontalValue
-    }px, ${currentY.current * -strength * (1 - isHorizontalValue)}px)`;
+      currentX.current * strength * isHorizontalValue
+    }px, ${currentY.current * strength * (1 - isHorizontalValue)}px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     if (!shouldUpdate.current) return;
