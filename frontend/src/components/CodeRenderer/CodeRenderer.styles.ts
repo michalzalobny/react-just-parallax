@@ -12,6 +12,8 @@ export const SyntaxWrapper = styled.div`
   pre {
     background: transparent !important;
     padding: 0 !important;
+    font-family: 'Open Sans' !important;
+    letter-spacing: 0.3px;
   }
 `;
 
