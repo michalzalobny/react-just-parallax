@@ -33,11 +33,7 @@ export const DocsInfo = (props: Props) => {
         </S.Paragraph>
         <S.ExampleWrapper $bgColor="#FFB66B">
           <S.Ring $dim />
-          <ScrollParallax
-            strength={-0.12}
-            isAbsolutelyPositioned
-            scrollContainerRef={scrollContainerRef}
-          >
+          <ScrollParallax isAbsolutelyPositioned scrollContainerRef={scrollContainerRef}>
             <S.Ring />
           </ScrollParallax>
         </S.ExampleWrapper>
@@ -58,7 +54,6 @@ export const DocsInfo = (props: Props) => {
           <MouseParallax
             parallaxContainerRef={mouseContainerRef}
             enableOnTouchDevice
-            strength={-0.12}
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainerRef}
           >
