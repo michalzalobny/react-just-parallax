@@ -12,11 +12,19 @@ export const ScrollContainer = styled.div`
 `;
 
 export const DocsWrapper = styled.div`
-  margin-top: -30vh;
+  margin-top: -40vh;
+
+  ${media.tablet} {
+    margin-top: -50vh;
+  }
 `;
 
 export const CaptionWrapper = styled.div`
-  height: 360vh;
+  height: 300vh;
+
+  ${media.tablet} {
+    height: 340vh;
+  }
 `;
 
 export const Wrapper = styled.div`

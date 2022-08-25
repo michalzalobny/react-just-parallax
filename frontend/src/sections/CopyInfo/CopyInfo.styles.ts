@@ -13,8 +13,10 @@ export const GithubWrapper = styled.div`
   color: white;
   transform-origin: bottom left;
   transform: rotate(-90deg) translateY(calc(100% + 16px)) translateX(15px);
+  display: none;
 
   ${media.tablet} {
+    display: initial;
     transform: none;
     bottom: 30px;
     left: 50px;
