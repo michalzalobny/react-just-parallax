@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { MouseParallax, ScrollParallax } from 'react-just-parallax';
 
 import { LinkHandler } from 'components/LinkHandler/LinkHandler';
@@ -10,16 +10,26 @@ interface Props {
   scrollContainerRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
-const mouseText = `<Wrapper>
-  <MouseParallax strength={-0.12}>
-    <Ring />
+const scrollText = `import { ScrollParallax } from 'react-just-parallax';
+
+<div className='wrapper'>
+  <ScrollParallax isAbsolutelyPositioned>
+    <span className='ring'/>
+  </ScrollParallax>
+</div>
+`;
+
+const mouseText = `import { MouseParallax } from 'react-just-parallax';
+
+<div className='wrapper'>
+  <MouseParallax enableOnTouchDevice isAbsolutelyPositioned>
+    <span className='ring'/>
   </MouseParallax>
-</Wrapper>
+</div>
 `;
 
 export const DocsInfo = (props: Props) => {
   const { scrollContainerRef } = props;
-  const mouseContainerRef = useRef(null);
 
   return (
     <>
@@ -38,7 +48,7 @@ export const DocsInfo = (props: Props) => {
           </ScrollParallax>
         </S.ExampleWrapper>
         <S.Paragraph>Example code:</S.Paragraph>
-        <CodeRenderer codeText={mouseText} />
+        <CodeRenderer codeText={scrollText} />
 
         <S.SectionSeparator />
 
@@ -49,10 +59,9 @@ export const DocsInfo = (props: Props) => {
             <S.InlineLink>official npm page</S.InlineLink>
           </LinkHandler>
         </S.Paragraph>
-        <S.ExampleWrapper ref={mouseContainerRef} $bgColor="#6d66ff">
+        <S.ExampleWrapper $bgColor="#6d66ff">
           <S.Ring $dim />
           <MouseParallax
-            parallaxContainerRef={mouseContainerRef}
             enableOnTouchDevice
             isAbsolutelyPositioned
             scrollContainerRef={scrollContainerRef}
