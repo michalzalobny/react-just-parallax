@@ -11,13 +11,13 @@ interface Props {
 }
 
 export const CopyInfo = (props: Props) => {
-  const { repoHref = 'https://github.com/michalzalobny/react-just-parallax/' } = props;
+  const { repoHref = 'https://www.npmjs.com/package/react-just-parallax' } = props;
 
   return (
     <>
       <S.GithubWrapper>
         <LinkHandler isExternal elHref={repoHref}>
-          <S.GithubLink>GitHub repo with documentation</S.GithubLink>
+          <S.GithubLink>NPM Official page</S.GithubLink>
         </LinkHandler>
       </S.GithubWrapper>
       <S.AuthorWrapper>
