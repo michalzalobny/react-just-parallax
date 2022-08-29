@@ -19,7 +19,7 @@ This repo contains the source code for [React Just Parallax](https://github.com/
 
 - [Link to official NPM page](https://www.npmjs.com/package/react-just-parallax/).
 
-### 📜 Examlpes
+### 📜 Examples
 
 - Check out [our examples and showcase page](https://react-just-parallax.michalzalobny.com/) for guides.
 
