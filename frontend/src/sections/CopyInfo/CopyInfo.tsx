@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { PreloadImage } from 'components/PreloadImage/PreloadImage';
 import { LinkHandler } from 'components/LinkHandler/LinkHandler';
@@ -26,9 +27,11 @@ export const CopyInfo = (props: Props) => {
           <S.AuthorLink>@michalzalobny</S.AuthorLink>
         </LinkHandler>
       </S.AuthorWrapper>
-      <S.LogoWrapper>
-        <PreloadImage shouldContain imageSrc={logoSrc as string} alt="React Just Parallax" />
-      </S.LogoWrapper>
+      <Link href="/" passHref>
+        <S.LogoWrapper>
+          <PreloadImage shouldContain imageSrc={logoSrc as string} alt="React Just Parallax" />
+        </S.LogoWrapper>
+      </Link>
     </>
   );
 };

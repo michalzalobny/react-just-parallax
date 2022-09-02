@@ -40,7 +40,8 @@ export const AuthorWrapper = styled.h1`
   }
 `;
 
-export const LogoWrapper = styled.h1`
+export const LogoWrapper = styled.a`
+  cursor: pointer;
   position: fixed;
   z-index: 20;
   top: 16px;
