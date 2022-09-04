@@ -18,6 +18,24 @@ export const ImageContainer = styled.div`
   overflow: hidden;
   position: relative;
   clip-path: inset(0% round 15px);
+
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 75%,
+      rgba(0, 0, 0, 1) 100%
+    );
+    opacity: 0.4;
+  }
 `;
 
 interface IconWrapperProps {
@@ -58,4 +76,21 @@ export const TileContainer = styled.div`
       margin-bottom: 80px;
     }
   }
+`;
+
+export const TitleWrapper = styled.div`
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+`;
+
+export const Title = styled.p`
+  font-size: 22px;
+  color: white;
+
+  width: 100%;
+  line-height: 1.2;
+  padding: 8%;
 `;

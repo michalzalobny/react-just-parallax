@@ -73,6 +73,9 @@ export const GameTile = (props: Props) => {
               <PreloadImage imageSrc={imageSrc} alt={alt} />
             </S.ImageWrapper>
           </ScrollParallax>
+          <S.TitleWrapper>
+            <S.Title>{title}</S.Title>
+          </S.TitleWrapper>
         </S.ImageContainer>
       </S.TileContainer>
     </>
