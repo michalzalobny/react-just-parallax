@@ -13,29 +13,30 @@ export interface LogoAsset {
 export const getStaticProps: GetStaticProps = () => {
   const gameAssets: GameAsset[] = [
     {
+      src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/Horizon_Forbidden_West_nvvpvs.jpg',
+      name: 'Horizon Forbidden West',
+    },
+    {
       src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/cyberpunk_lsevxo.jpg',
       name: 'Cyberpunk 2077',
-    },
-    {
-      src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114956/fifa23_kkme4i.jpg',
-      name: 'Fifa 23',
-    },
-    {
-      src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/ghost-of-tsushima_tsjwzk.jpg',
-      name: 'Ghost of Tsushima',
     },
     {
       src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/God-of-War-Ragnarok-Featured-image_wubfns.jpg',
       name: 'God of War Ragnarok',
     },
-    {
-      src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/Horizon_Forbidden_West_nvvpvs.jpg',
-      name: 'Horizon Forbidden West',
-    },
+
     {
       src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/spider_man_miles_morales_kx1klv.jpg',
       name: 'Spider-Man: Miles Morales',
     },
+    {
+      src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114956/fifa23_kkme4i.jpg',
+      name: 'Fifa 23',
+    },
+    // {
+    //   src: 'https://res.cloudinary.com/dpv0ukspz/image/upload/v1662114954/ghost-of-tsushima_tsjwzk.jpg',
+    //   name: 'Ghost of Tsushima',
+    // },
   ];
 
   const logoAssets: LogoAsset[] = [

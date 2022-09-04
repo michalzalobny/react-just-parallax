@@ -42,7 +42,7 @@ export const GameTile = (props: Props) => {
           isAbsolutelyPositioned
           scrollContainerRef={scrollContainer}
         >
-          <S.IconWrapper yTranslate={0} xTranslate={-50} style={{ width: 220 }}>
+          <S.IconWrapper positionRight yTranslate={0} style={{ width: 220 }}>
             <PreloadImage
               shouldContain
               alt={logoAssets[getSeed(0)].name}
@@ -50,7 +50,7 @@ export const GameTile = (props: Props) => {
             />
           </S.IconWrapper>
 
-          <S.IconWrapper yTranslate={-40} xTranslate={-20} style={{ width: 110 }}>
+          <S.IconWrapper positionBottom yTranslate={-40} style={{ width: 110 }}>
             <PreloadImage
               shouldContain
               alt={logoAssets[getSeed(2)].name}

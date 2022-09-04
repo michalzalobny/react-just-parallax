@@ -39,9 +39,9 @@ export const ImageContainer = styled.div`
 `;
 
 interface IconWrapperProps {
-  xTranslate: number;
   yTranslate: number;
   positionRight?: boolean;
+  positionBottom?: boolean;
 }
 
 export const IconWrapper = styled.div<IconWrapperProps>`
@@ -50,7 +50,14 @@ export const IconWrapper = styled.div<IconWrapperProps>`
   left: 0;
   top: 0;
 
-  transform: ${props => `translateX(${props.xTranslate}%) translateY(${props.yTranslate}%)`};
+  transform: ${props =>
+    `translateX(${props.positionRight ? '50' : '-50'}%) translateY(${props.yTranslate}%)`};
+
+  &:before {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
 
   ${props =>
     props.positionRight &&
@@ -59,11 +66,12 @@ export const IconWrapper = styled.div<IconWrapperProps>`
       right: 0;
     `}
 
-  &:before {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
-  }
+  ${props =>
+    props.positionBottom &&
+    css`
+      top: initial;
+      bottom: 0;
+    `}
 `;
 
 export const TileContainer = styled.div`
