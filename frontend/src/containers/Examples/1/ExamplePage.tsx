@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 
 import { Head } from 'seo/Head/Head';
+import { GameTile } from 'components/GameTile/GameTile';
 
 import * as S from './ExamplePage.styles';
 import { GameAsset, LogoAsset } from './ExamplePage.data';
@@ -13,10 +14,6 @@ interface Props {
 export default function ExamplePage(props: Props) {
   const { gameAssets, logoAssets } = props;
 
-  React.useEffect(() => {
-    console.log(gameAssets, logoAssets);
-  }, [gameAssets, logoAssets]);
-
   const scrollContainerRef = useRef<null | HTMLDivElement>(null);
 
   return (
@@ -24,7 +21,17 @@ export default function ExamplePage(props: Props) {
       <Head />
       <S.ScrollContainer ref={scrollContainerRef}>
         <S.Wrapper>
-          <h1>test</h1>
+          {gameAssets.map((item, key) => (
+            <GameTile
+              itemKey={key}
+              logoAssets={logoAssets}
+              scrollContainer={scrollContainerRef}
+              alt={item.name}
+              title={item.name}
+              imageSrc={item.src}
+              key={item.src}
+            />
+          ))}
         </S.Wrapper>
       </S.ScrollContainer>
     </>

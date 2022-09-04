@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { media } from 'utils/media';
 
@@ -13,10 +13,12 @@ export const ScrollContainer = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  margin: 0 auto;
-  width: 80%;
+  margin: 200px auto;
+
+  width: 85%;
+  position: relative;
 
   ${media.tablet} {
-    width: 100rem;
+    width: 60rem;
   }
 `;
