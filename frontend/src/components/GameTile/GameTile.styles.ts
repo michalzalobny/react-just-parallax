@@ -34,7 +34,7 @@ export const ImageContainer = styled.div`
       rgba(0, 0, 0, 0) 75%,
       rgba(0, 0, 0, 1) 100%
     );
-    opacity: 0.4;
+    opacity: 0.3;
   }
 `;
 
@@ -93,4 +93,5 @@ export const Title = styled.p`
   width: 100%;
   line-height: 1.2;
   padding: 8%;
+  padding-bottom: 5%;
 `;
