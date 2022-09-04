@@ -87,7 +87,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Title = styled.p`
-  font-size: 22px;
+  font-size: 20px;
   color: white;
 
   width: 100%;
