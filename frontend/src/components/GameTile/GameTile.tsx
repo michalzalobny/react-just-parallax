@@ -49,15 +49,7 @@ export const GameTile = (props: Props) => {
               imageSrc={logoAssets[getSeed(0)].src}
             />
           </S.IconWrapper>
-        </ScrollParallax>
 
-        <ScrollParallax
-          shouldPause={false}
-          zIndex={100}
-          strength={-0.2}
-          isAbsolutelyPositioned
-          scrollContainerRef={scrollContainer}
-        >
           <S.IconWrapper yTranslate={-40} xTranslate={-20} style={{ width: 110 }}>
             <PreloadImage
               shouldContain
