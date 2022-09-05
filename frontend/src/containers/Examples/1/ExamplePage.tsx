@@ -26,7 +26,7 @@ export default function ExamplePage(props: Props) {
             'https://github.com/michalzalobny/react-just-parallax/tree/main/frontend/src/containers/Examples/1'
           }
         >
-          <S.GithubLink>This example repo</S.GithubLink>
+          <S.GithubLink>This page&#8216;s code</S.GithubLink>
         </LinkHandler>
       </S.GithubWrapper>
       <Head />
