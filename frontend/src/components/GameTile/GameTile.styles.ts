@@ -34,7 +34,7 @@ export const ImageContainer = styled.div`
       rgba(0, 0, 0, 0) 75%,
       rgba(0, 0, 0, 1) 100%
     );
-    opacity: 0.3;
+    opacity: 0.35;
   }
 `;
 
@@ -42,6 +42,7 @@ interface IconWrapperProps {
   yTranslate: number;
   positionRight?: boolean;
   positionBottom?: boolean;
+  isSmaller?: boolean;
 }
 
 export const IconWrapper = styled.div<IconWrapperProps>`
@@ -72,6 +73,22 @@ export const IconWrapper = styled.div<IconWrapperProps>`
       top: initial;
       bottom: 0;
     `}
+
+  width:15rem;
+
+  ${props =>
+    props.isSmaller &&
+    css`
+      width: 8rem;
+    `}
+  ${media.tablet} {
+    width: 24rem;
+    ${props =>
+      props.isSmaller &&
+      css`
+        width: 13rem;
+      `}
+  }
 `;
 
 export const TileContainer = styled.div`

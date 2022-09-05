@@ -21,7 +21,7 @@ export const GameTile = (props: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const seedRandom1 = useMemo(() => {
-    const t = seedRandom(title.substring(0, itemKey + 2));
+    const t = seedRandom(title.substring(3, itemKey + 2));
     return t[itemKey % 4];
   }, [itemKey, title]);
 
@@ -42,7 +42,7 @@ export const GameTile = (props: Props) => {
           isAbsolutelyPositioned
           scrollContainerRef={scrollContainer}
         >
-          <S.IconWrapper positionRight yTranslate={0} style={{ width: 220 }}>
+          <S.IconWrapper positionBottom positionRight yTranslate={0}>
             <PreloadImage
               shouldContain
               alt={logoAssets[getSeed(0)].name}
@@ -50,17 +50,27 @@ export const GameTile = (props: Props) => {
             />
           </S.IconWrapper>
 
-          <S.IconWrapper positionBottom yTranslate={-40} style={{ width: 110 }}>
+          {(getSeed(2) === 0 || getSeed(2) === 2) && (
+            <S.IconWrapper yTranslate={-20} isSmaller>
+              <PreloadImage
+                shouldContain
+                alt={logoAssets[getSeed(2)].name}
+                imageSrc={logoAssets[getSeed(2)].src}
+              />
+            </S.IconWrapper>
+          )}
+
+          <S.IconWrapper yTranslate={20}>
             <PreloadImage
               shouldContain
-              alt={logoAssets[getSeed(2)].name}
-              imageSrc={logoAssets[getSeed(2)].src}
+              alt={logoAssets[getSeed(3)].name}
+              imageSrc={logoAssets[getSeed(3)].src}
             />
           </S.IconWrapper>
         </ScrollParallax>
 
         <S.ImageContainer>
-          <ScrollParallax lerpEase={0.08} strength={0.1} scrollContainerRef={scrollContainer}>
+          <ScrollParallax lerpEase={0.05} strength={0.06} scrollContainerRef={scrollContainer}>
             <S.ImageWrapper ref={containerRef}>
               <PreloadImage imageSrc={imageSrc} alt={alt} />
             </S.ImageWrapper>

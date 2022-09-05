@@ -14,12 +14,13 @@ export const ScrollContainer = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  margin: 200px auto;
+  margin: 120px auto;
 
   width: 85%;
   position: relative;
 
   ${media.tablet} {
     width: 60rem;
+    margin: 100px auto;
   }
 `;
