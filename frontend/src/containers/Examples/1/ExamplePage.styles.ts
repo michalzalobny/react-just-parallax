@@ -18,6 +18,8 @@ export const Wrapper = styled.div`
 
   width: 85%;
   position: relative;
+  user-select: none;
+  pointer-events: none;
 
   ${media.tablet} {
     width: 60rem;

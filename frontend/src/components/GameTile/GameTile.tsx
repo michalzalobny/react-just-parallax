@@ -36,9 +36,10 @@ export const GameTile = (props: Props) => {
     <>
       <S.TileContainer>
         <ScrollParallax
-          shouldPause={false}
+          lerpEase={0.05}
+          // shouldPause={false}
           zIndex={100}
-          strength={-0.2}
+          strength={-0.15}
           isAbsolutelyPositioned
           scrollContainerRef={scrollContainer}
         >
