@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 
 import { Head } from 'seo/Head/Head';
 import { GameTile } from 'components/GameTile/GameTile';
+import { LinkHandler } from 'components/LinkHandler/LinkHandler';
 
 import * as S from './ExamplePage.styles';
 import { GameAsset, LogoAsset } from './ExamplePage.data';
@@ -18,6 +19,16 @@ export default function ExamplePage(props: Props) {
 
   return (
     <>
+      <S.GithubWrapper>
+        <LinkHandler
+          isExternal
+          elHref={
+            'https://github.com/michalzalobny/react-just-parallax/tree/main/frontend/src/containers/Examples/1'
+          }
+        >
+          <S.GithubLink>This example repo</S.GithubLink>
+        </LinkHandler>
+      </S.GithubWrapper>
       <Head />
       <S.ScrollContainer ref={scrollContainerRef}>
         <S.Wrapper>

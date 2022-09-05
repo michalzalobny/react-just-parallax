@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { underline, s1 } from 'utils/sharedStyled';
 
 import { media } from 'utils/media';
 
@@ -25,4 +26,31 @@ export const Wrapper = styled.div`
     width: 60rem;
     margin: 100px auto;
   }
+`;
+
+export const GithubWrapper = styled.div`
+  display: initial;
+  position: fixed;
+  z-index: 20;
+  top: 0px;
+  right: 0px;
+  mix-blend-mode: difference;
+  color: white;
+  transform-origin: bottom left;
+  transform: rotate(-90deg) translateY(calc(100% + 16px)) translateX(15px);
+  display: none;
+
+  ${media.tablet} {
+    display: initial;
+    transform: none;
+    top: 30px;
+    right: 50px;
+  }
+`;
+
+export const GithubLink = styled.span`
+  display: inline-block;
+  position: relative;
+  ${s1};
+  ${underline};
 `;
