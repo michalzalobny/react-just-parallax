@@ -1,7 +1,9 @@
-import styled, { css } from 'styled-components';
-import { underline, s1 } from 'utils/sharedStyled';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
+import { underline, s1 } from 'utils/sharedStyled';
 import { media } from 'utils/media';
+import { sharedValues } from 'utils/sharedValues';
 
 export const ScrollContainer = styled.div`
   position: absolute;
@@ -14,7 +16,7 @@ export const ScrollContainer = styled.div`
   background: white;
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(motion.div)`
   margin: 120px auto;
 
   width: 85%;
@@ -27,6 +29,23 @@ export const Wrapper = styled.div`
     margin: 100px auto;
   }
 `;
+
+Wrapper.defaultProps = {
+  variants: {
+    initial: {
+      opacity: 0,
+      y: '5vh',
+    },
+    animate: {
+      opacity: 1,
+      y: '0vh',
+      transition: {
+        delay: 0.3,
+        ...sharedValues.motion.springSlow,
+      },
+    },
+  },
+};
 
 export const GithubWrapper = styled.div`
   display: initial;

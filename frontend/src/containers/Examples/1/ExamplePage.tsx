@@ -31,7 +31,7 @@ export default function ExamplePage(props: Props) {
       </S.GithubWrapper>
       <Head />
       <S.ScrollContainer ref={scrollContainerRef}>
-        <S.Wrapper>
+        <S.Wrapper initial="initial" animate="animate">
           {gameAssets.map((item, key) => (
             <GameTile
               itemKey={key}

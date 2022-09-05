@@ -24,6 +24,19 @@ export const sharedValues = {
     LERP_EASE: 0.07,
     MOMENTUM_DAMPING: 0.8,
     MOMENTUM_CARRY: 0.6,
+    tween2: {
+      type: 'tween',
+      ease: [0.64, 0.02, 0.16, 0.97],
+      duration: 0.8,
+    },
+    springSlow: {
+      type: 'spring',
+      stiffness: 350,
+      damping: 80,
+      mass: 5,
+      restDelta: 0.001,
+      restSpeed: 0.001,
+    },
   },
   ISR_TIMEOUT: 5,
 };
