@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { media } from 'utils/media';
+import { underline, s1 } from 'utils/sharedStyled';
 
 export const ScrollContainer = styled.div`
   position: absolute;
@@ -34,4 +35,29 @@ export const Wrapper = styled.div`
   ${media.tablet} {
     width: 100rem;
   }
+`;
+
+export const GithubWrapper = styled.div`
+  display: initial;
+  position: fixed;
+  z-index: 20;
+  top: 16px;
+  right: 20px;
+  mix-blend-mode: difference;
+  color: white;
+  display: none;
+
+  ${media.tablet} {
+    display: initial;
+    transform: none;
+    top: 30px;
+    right: 50px;
+  }
+`;
+
+export const GithubLink = styled.span`
+  display: inline-block;
+  position: relative;
+  ${s1};
+  ${underline};
 `;
