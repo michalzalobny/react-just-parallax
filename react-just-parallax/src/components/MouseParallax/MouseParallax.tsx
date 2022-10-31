@@ -19,6 +19,7 @@ export interface MouseParallaxProps {
   isAbsolutelyPositioned?: boolean;
   zIndex?: number | null;
   shouldPause?: boolean;
+  cssTransform?: string;
 }
 
 const DEFAULT_FPS = 60;
@@ -50,6 +51,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     lerpEase = 0.06,
     zIndex = null,
     shouldPause = true,
+    cssTransform = "translate(calc(var(--mouse-x) * 1px), calc(var(--mouse-y) * 1px))",
   } = props;
   const { windowSizeRef } = useWindowSize();
   const parallaxSpanRef = useRef<null | HTMLSpanElement>(null);
@@ -100,9 +102,13 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     xMultiplier *= strength;
     yMultiplier *= strength;
 
-    parallaxSpanRef.current.style.transform = `translate(${
-      currentX.current * xMultiplier
-    }px, ${currentY.current * yMultiplier}px)`;
+    let animateX = currentX.current * xMultiplier;
+    let animateY = currentY.current * yMultiplier;
+
+    parallaxSpanRef.current.style.transform = cssTransform;
+
+    parallaxSpanRef.current.style.setProperty("--mouse-x", `${animateX}`);
+    parallaxSpanRef.current.style.setProperty("--mouse-y", `${animateY}`);
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     const diffX = Math.abs(targetX.current - currentX.current);
