@@ -12,7 +12,7 @@ export const SyntaxWrapper = styled.div`
   pre {
     background: transparent !important;
     padding: 0 !important;
-    font-family: 'Open Sans' !important;
+    font-family: 'opensans' !important;
     letter-spacing: 0.3px;
   }
 `;
