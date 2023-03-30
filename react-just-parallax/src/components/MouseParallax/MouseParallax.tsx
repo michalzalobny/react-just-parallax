@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import sync, { cancelSync, FrameData, Process } from "framesync";
 import debounce from "lodash.debounce";
+import Prefix from "prefix";
 
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { lerp } from "../../utils/lerp";
@@ -64,6 +65,7 @@ export const MouseParallax = (props: MouseParallaxProps) => {
   const parallaxContainerRefRect = useRef<Rect>(defaultRect);
   const mouseMove = useRef(new MouseMove());
   const observer = useRef<null | IntersectionObserver>(null);
+  const transformPrefix = useRef(Prefix("transform"));
 
   const resumeAppFrame = () => {
     if (!shouldUpdate.current) return;
@@ -100,9 +102,9 @@ export const MouseParallax = (props: MouseParallaxProps) => {
     xMultiplier *= strength;
     yMultiplier *= strength;
 
-    parallaxSpanRef.current.style.transform = `translate(${
+    parallaxSpanRef.current.style[transformPrefix.current] = `translate3d(${
       currentX.current * xMultiplier
-    }px, ${currentY.current * yMultiplier}px)`;
+    }px, ${currentY.current * yMultiplier}px, 0px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     const diffX = Math.abs(targetX.current - currentX.current);

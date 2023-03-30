@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import sync, { cancelSync, FrameData, Process } from "framesync";
 import debounce from "lodash.debounce";
+import Prefix from "prefix";
 
 import { lerp } from "../../utils/lerp";
 import { isTouchDevice } from "../../utils/isTouchDevice";
@@ -68,6 +69,7 @@ export const ScrollParallax = forwardRef<
   const parentOffsetX = useRef(1);
   const parentOffsetY = useRef(1);
   const { windowSizeRef } = useWindowSize();
+  const transformPrefix = useRef(Prefix("transform"));
 
   const resumeAppFrame = () => {
     if (!parallaxSpanRef.current) return;
@@ -92,9 +94,9 @@ export const ScrollParallax = forwardRef<
 
     let isHorizontalValue = isHorizontal ? 1 : 0;
 
-    parallaxSpanRef.current.style.transform = `translate(${
+    parallaxSpanRef.current.style[transformPrefix.current] = `translate3d(${
       currentX.current * strength * isHorizontalValue
-    }px, ${currentY.current * strength * (1 - isHorizontalValue)}px)`;
+    }px, ${currentY.current * strength * (1 - isHorizontalValue)}px, 0px)`;
   };
   const syncOnUpdate = ({ delta }: FrameData) => {
     if (!shouldUpdate.current) return;
